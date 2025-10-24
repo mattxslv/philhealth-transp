@@ -1,0 +1,6 @@
+# Vercel ignores
+node_modules
+.next
+.github-backup
+*.log
+.env*.local

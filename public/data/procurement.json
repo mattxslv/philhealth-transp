@@ -1,0 +1,155 @@
+{
+  "contracts": [
+    {
+      "id": "PROC-2024-001",
+      "projectName": "IT Infrastructure Modernization Phase 2",
+      "vendor": "TechSolutions Philippines Inc.",
+      "amount": 850000000,
+      "awardDate": "2024-08-15",
+      "contractDate": "2024-09-01",
+      "completionDate": "2025-08-31",
+      "status": "Awarded",
+      "category": "IT Services",
+      "procurementMethod": "Public Bidding"
+    },
+    {
+      "id": "PROC-2024-002",
+      "projectName": "Medical Equipment Procurement - 50 Hospitals",
+      "vendor": "MedEquip Suppliers Corp.",
+      "amount": 1250000000,
+      "awardDate": "2024-07-20",
+      "contractDate": "2024-08-05",
+      "completionDate": "2024-12-31",
+      "status": "Awarded",
+      "category": "Medical Equipment",
+      "procurementMethod": "Public Bidding"
+    },
+    {
+      "id": "PROC-2024-003",
+      "projectName": "Office Supplies and Materials (Annual)",
+      "vendor": "National Office Supplies Inc.",
+      "amount": 125000000,
+      "awardDate": "2024-01-15",
+      "contractDate": "2024-02-01",
+      "completionDate": "2025-01-31",
+      "status": "Awarded",
+      "category": "Office Supplies",
+      "procurementMethod": "Public Bidding"
+    },
+    {
+      "id": "PROC-2024-004",
+      "projectName": "Regional Office Renovation - Mindanao",
+      "vendor": "BuildRight Construction Corp.",
+      "amount": 450000000,
+      "awardDate": "2024-06-10",
+      "contractDate": "2024-07-01",
+      "completionDate": "2025-06-30",
+      "status": "Awarded",
+      "category": "Construction",
+      "procurementMethod": "Public Bidding"
+    },
+    {
+      "id": "PROC-2024-005",
+      "projectName": "Claims Processing Software Upgrade",
+      "vendor": "HealthTech Solutions Asia",
+      "amount": 680000000,
+      "awardDate": "2024-05-22",
+      "contractDate": "2024-06-15",
+      "completionDate": "2025-03-31",
+      "status": "Awarded",
+      "category": "Software",
+      "procurementMethod": "Competitive Negotiation"
+    },
+    {
+      "id": "PROC-2024-006",
+      "projectName": "Vehicle Fleet Acquisition",
+      "vendor": "AutoNation Philippines",
+      "amount": 320000000,
+      "awardDate": "2024-04-18",
+      "contractDate": "2024-05-01",
+      "completionDate": "2024-10-31",
+      "status": "Awarded",
+      "category": "Transportation",
+      "procurementMethod": "Public Bidding"
+    },
+    {
+      "id": "PROC-2024-007",
+      "projectName": "Janitorial and Maintenance Services (Annual)",
+      "vendor": "CleanPro Services Inc.",
+      "amount": 85000000,
+      "awardDate": "2024-01-08",
+      "contractDate": "2024-02-01",
+      "completionDate": "2025-01-31",
+      "status": "Awarded",
+      "category": "Services",
+      "procurementMethod": "Public Bidding"
+    },
+    {
+      "id": "PROC-2024-008",
+      "projectName": "Member Database Management System",
+      "vendor": "DataSys Technologies Corp.",
+      "amount": 950000000,
+      "awardDate": "2024-03-25",
+      "contractDate": "2024-04-15",
+      "completionDate": "2025-04-14",
+      "status": "Awarded",
+      "category": "IT Services",
+      "procurementMethod": "Public Bidding"
+    },
+    {
+      "id": "PROC-2024-009",
+      "projectName": "Cybersecurity Enhancement Program",
+      "vendor": "SecureNet Philippines Inc.",
+      "amount": 420000000,
+      "awardDate": "2024-09-05",
+      "contractDate": "2024-10-01",
+      "completionDate": "2025-09-30",
+      "status": "Awarded",
+      "category": "IT Security",
+      "procurementMethod": "Competitive Negotiation"
+    },
+    {
+      "id": "PROC-2024-010",
+      "projectName": "Training and Development Programs",
+      "vendor": "ProDev Training Institute",
+      "amount": 180000000,
+      "awardDate": "2024-02-14",
+      "contractDate": "2024-03-01",
+      "completionDate": "2025-02-28",
+      "status": "Awarded",
+      "category": "Training",
+      "procurementMethod": "Direct Contracting"
+    },
+    {
+      "id": "PROC-2024-011",
+      "projectName": "Call Center Equipment and Setup",
+      "vendor": "CommTech Solutions Corp.",
+      "amount": 215000000,
+      "awardDate": null,
+      "contractDate": null,
+      "completionDate": null,
+      "status": "Open",
+      "category": "Equipment",
+      "procurementMethod": "Public Bidding"
+    },
+    {
+      "id": "PROC-2024-012",
+      "projectName": "Data Center Cooling System Upgrade",
+      "vendor": null,
+      "amount": 275000000,
+      "awardDate": null,
+      "contractDate": null,
+      "completionDate": null,
+      "status": "Open",
+      "category": "Infrastructure",
+      "procurementMethod": "Public Bidding"
+    }
+  ],
+  "summary": {
+    "totalContracts": 125,
+    "totalValue": 18500000000,
+    "awarded": 113,
+    "open": 12,
+    "avgContractValue": 148000000
+  }
+}

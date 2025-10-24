@@ -1,0 +1,97 @@
+{
+  "annualReports": [
+    {
+      "year": 2024,
+      "revenue": 250000000000,
+      "expenditures": 235000000000,
+      "netIncome": 15000000000,
+      "totalAssets": 580000000000,
+      "totalLiabilities": 120000000000,
+      "fundBalance": 460000000000
+    },
+    {
+      "year": 2023,
+      "revenue": 232000000000,
+      "expenditures": 220000000000,
+      "netIncome": 12000000000,
+      "totalAssets": 545000000000,
+      "totalLiabilities": 115000000000,
+      "fundBalance": 430000000000
+    },
+    {
+      "year": 2022,
+      "revenue": 215000000000,
+      "expenditures": 205000000000,
+      "netIncome": 10000000000,
+      "totalAssets": 510000000000,
+      "totalLiabilities": 110000000000,
+      "fundBalance": 400000000000
+    },
+    {
+      "year": 2021,
+      "revenue": 198000000000,
+      "expenditures": 192000000000,
+      "netIncome": 6000000000,
+      "totalAssets": 475000000000,
+      "totalLiabilities": 105000000000,
+      "fundBalance": 370000000000
+    },
+    {
+      "year": 2020,
+      "revenue": 185000000000,
+      "expenditures": 180000000000,
+      "netIncome": 5000000000,
+      "totalAssets": 450000000000,
+      "totalLiabilities": 100000000000,
+      "fundBalance": 350000000000
+    }
+  ],
+  "monthlyRevenue": [
+    { "month": "Jan", "revenue": 20500000000, "expenditures": 19200000000 },
+    { "month": "Feb", "revenue": 21000000000, "expenditures": 19500000000 },
+    { "month": "Mar", "revenue": 21500000000, "expenditures": 20000000000 },
+    { "month": "Apr", "revenue": 20800000000, "expenditures": 19800000000 },
+    { "month": "May", "revenue": 21200000000, "expenditures": 19600000000 },
+    { "month": "Jun", "revenue": 20900000000, "expenditures": 19400000000 },
+    { "month": "Jul", "revenue": 21300000000, "expenditures": 20100000000 },
+    { "month": "Aug", "revenue": 21100000000, "expenditures": 19900000000 },
+    { "month": "Sep", "revenue": 20700000000, "expenditures": 19700000000 }
+  ],
+  "investments": [
+    {
+      "id": 1,
+      "type": "Government Securities",
+      "amount": 320000000000,
+      "percentage": 55.2,
+      "returns": 4.8
+    },
+    {
+      "id": 2,
+      "type": "Corporate Bonds",
+      "amount": 150000000000,
+      "percentage": 25.9,
+      "returns": 5.2
+    },
+    {
+      "id": 3,
+      "type": "Time Deposits",
+      "amount": 80000000000,
+      "percentage": 13.8,
+      "returns": 3.5
+    },
+    {
+      "id": 4,
+      "type": "Real Estate",
+      "amount": 30000000000,
+      "percentage": 5.1,
+      "returns": 6.1
+    }
+  ],
+  "administrativeCosts": [
+    { "category": "Personnel", "amount": 18500000000, "percentage": 45 },
+    { "category": "IT Systems", "amount": 8200000000, "percentage": 20 },
+    { "category": "Facilities", "amount": 6150000000, "percentage": 15 },
+    { "category": "Operations", "amount": 4920000000, "percentage": 12 },
+    { "category": "Other", "amount": 3280000000, "percentage": 8 }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "overview": {
+    "totalClaims": 4250000,
+    "approvedClaims": 4010000,
+    "deniedClaims": 240000,
+    "approvalRate": 94.3,
+    "denialRate": 5.7,
+    "averageProcessingDays": 12,
+    "totalDisbursed": 127500000000
+  },
+  "monthlyTrends": [
+    { "month": "Jan", "claims": 460000, "approved": 434000, "denied": 26000, "avgDays": 13 },
+    { "month": "Feb", "claims": 445000, "approved": 420000, "denied": 25000, "avgDays": 13 },
+    { "month": "Mar", "claims": 478000, "approved": 451000, "denied": 27000, "avgDays": 12 },
+    { "month": "Apr", "claims": 462000, "approved": 436000, "denied": 26000, "avgDays": 12 },
+    { "month": "May", "claims": 471000, "approved": 445000, "denied": 26000, "avgDays": 11 },
+    { "month": "Jun", "claims": 468000, "approved": 442000, "denied": 26000, "avgDays": 11 },
+    { "month": "Jul", "claims": 485000, "approved": 458000, "denied": 27000, "avgDays": 12 },
+    { "month": "Aug", "claims": 492000, "approved": 464000, "denied": 28000, "avgDays": 12 },
+    { "month": "Sep", "claims": 489000, "approved": 460000, "denied": 29000, "avgDays": 11 }
+  ],
+  "denialReasons": [
+    { "reason": "Incomplete Documentation", "count": 98000, "percentage": 40.8 },
+    { "reason": "Non-Covered Service", "count": 72000, "percentage": 30.0 },
+    { "reason": "Expired Membership", "count": 36000, "percentage": 15.0 },
+    { "reason": "Duplicate Claims", "count": 19200, "percentage": 8.0 },
+    { "reason": "Other", "count": 14800, "percentage": 6.2 }
+  ],
+  "claimsData": [
+    {
+      "id": "CLM-2024-0001",
+      "type": "Inpatient",
+      "region": "NCR",
+      "amount": 45000,
+      "status": "Approved",
+      "processingDays": 10,
+      "dateSubmitted": "2024-09-15"
+    },
+    {
+      "id": "CLM-2024-0002",
+      "type": "Outpatient",
+      "region": "Region IV-A",
+      "amount": 8500,
+      "status": "Approved",
+      "processingDays": 8,
+      "dateSubmitted": "2024-09-16"
+    },
+    {
+      "id": "CLM-2024-0003",
+      "type": "Emergency",
+      "region": "Region VII",
+      "amount": 32000,
+      "status": "Approved",
+      "processingDays": 12,
+      "dateSubmitted": "2024-09-14"
+    },
+    {
+      "id": "CLM-2024-0004",
+      "type": "Inpatient",
+      "region": "NCR",
+      "amount": 68000,
+      "status": "Denied",
+      "processingDays": 15,
+      "dateSubmitted": "2024-09-13",
+      "denialReason": "Incomplete Documentation"
+    },
+    {
+      "id": "CLM-2024-0005",
+      "type": "Maternity",
+      "region": "Region III",
+      "amount": 28000,
+      "status": "Approved",
+      "processingDays": 9,
+      "dateSubmitted": "2024-09-17"
+    },
+    {
+      "id": "CLM-2024-0006",
+      "type": "Dialysis",
+      "region": "Region VI",
+      "amount": 15000,
+      "status": "Approved",
+      "processingDays": 11,
+      "dateSubmitted": "2024-09-12"
+    },
+    {
+      "id": "CLM-2024-0007",
+      "type": "Z-Benefit",
+      "region": "NCR",
+      "amount": 125000,
+      "status": "Approved",
+      "processingDays": 14,
+      "dateSubmitted": "2024-09-10"
+    },
+    {
+      "id": "CLM-2024-0008",
+      "type": "Outpatient",
+      "region": "Region XII",
+      "amount": 5500,
+      "status": "Denied",
+      "processingDays": 7,
+      "dateSubmitted": "2024-09-18",
+      "denialReason": "Non-Covered Service"
+    },
+    {
+      "id": "CLM-2024-0009",
+      "type": "Inpatient",
+      "region": "CAR",
+      "amount": 52000,
+      "status": "Approved",
+      "processingDays": 13,
+      "dateSubmitted": "2024-09-11"
+    },
+    {
+      "id": "CLM-2024-0010",
+      "type": "Emergency",
+      "region": "Region VIII",
+      "amount": 38000,
+      "status": "Approved",
+      "processingDays": 10,
+      "dateSubmitted": "2024-09-16"
+    }
+  ]
+}

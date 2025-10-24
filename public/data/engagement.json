@@ -1,0 +1,111 @@
+{
+  "complaintMetrics": {
+    "totalComplaints": 8450,
+    "resolved": 7920,
+    "pending": 430,
+    "escalated": 100,
+    "resolutionRate": 93.7,
+    "avgResolutionDays": 8.5
+  },
+  "complaintCategories": [
+    { "category": "Claims Processing Delays", "count": 2850, "percentage": 33.7 },
+    { "category": "Member Services", "count": 2110, "percentage": 25.0 },
+    { "category": "Coverage Questions", "count": 1690, "percentage": 20.0 },
+    { "category": "Billing and Contributions", "count": 1015, "percentage": 12.0 },
+    { "category": "Provider Network", "count": 785, "percentage": 9.3 }
+  ],
+  "monthlyResolutions": [
+    { "month": "Jan", "received": 890, "resolved": 850, "avgDays": 9.2 },
+    { "month": "Feb", "received": 920, "resolved": 880, "avgDays": 9.0 },
+    { "month": "Mar", "received": 950, "resolved": 910, "avgDays": 8.8 },
+    { "month": "Apr", "received": 910, "resolved": 865, "avgDays": 8.6 },
+    { "month": "May", "received": 940, "resolved": 900, "avgDays": 8.4 },
+    { "month": "Jun", "received": 930, "resolved": 890, "avgDays": 8.3 },
+    { "month": "Jul", "received": 960, "resolved": 920, "avgDays": 8.2 },
+    { "month": "Aug", "received": 980, "resolved": 940, "avgDays": 8.1 },
+    { "month": "Sep", "received": 970, "resolved": 765, "avgDays": 8.5 }
+  ],
+  "policyUpdates": [
+    {
+      "id": 1,
+      "title": "Enhanced Benefits for Chronic Kidney Disease Patients",
+      "date": "2024-10-01",
+      "category": "Benefits",
+      "description": "Increased coverage limits and streamlined approval process for dialysis and kidney transplant procedures.",
+      "effectiveDate": "2024-11-01"
+    },
+    {
+      "id": 2,
+      "title": "Digital Claims Submission Portal Launch",
+      "date": "2024-09-15",
+      "category": "Technology",
+      "description": "New online platform enabling members to submit claims electronically with real-time tracking.",
+      "effectiveDate": "2024-10-01"
+    },
+    {
+      "id": 3,
+      "title": "Updated Contribution Payment Options",
+      "date": "2024-08-20",
+      "category": "Contributions",
+      "description": "Introduction of mobile payment methods and automated payment plans for voluntary members.",
+      "effectiveDate": "2024-09-01"
+    },
+    {
+      "id": 4,
+      "title": "Maternity Care Package Enhancement",
+      "date": "2024-07-10",
+      "category": "Benefits",
+      "description": "Expanded prenatal and postnatal care coverage including nutrition counseling and mental health support.",
+      "effectiveDate": "2024-08-01"
+    },
+    {
+      "id": 5,
+      "title": "Senior Citizen Benefit Improvements",
+      "date": "2024-06-25",
+      "category": "Benefits",
+      "description": "Additional coverage for geriatric care, home health services, and preventive health screenings.",
+      "effectiveDate": "2024-07-15"
+    }
+  ],
+  "publicForums": [
+    {
+      "id": 1,
+      "title": "Town Hall Meeting - NCR Region",
+      "date": "2024-11-15",
+      "location": "PhilHealth Head Office, Pasig City",
+      "status": "Scheduled",
+      "attendees": null,
+      "topics": ["UHC Implementation", "Digital Services", "Member Concerns"]
+    },
+    {
+      "id": 2,
+      "title": "Stakeholder Consultation - Healthcare Providers",
+      "date": "2024-10-20",
+      "location": "Virtual Meeting",
+      "status": "Completed",
+      "attendees": 285,
+      "topics": ["Accreditation Process", "Claims Reimbursement", "Quality Standards"]
+    },
+    {
+      "id": 3,
+      "title": "Public Forum - Visayas Region",
+      "date": "2024-09-18",
+      "location": "Cebu City Convention Center",
+      "status": "Completed",
+      "attendees": 420,
+      "topics": ["Coverage Expansion", "Member Benefits", "Complaint Resolution"]
+    }
+  ],
+  "feedback": {
+    "satisfactionScore": 4.2,
+    "totalResponses": 15680,
+    "wouldRecommend": 87.5,
+    "improvementAreas": [
+      "Faster claims processing",
+      "Better mobile app functionality",
+      "More accredited facilities",
+      "Clearer communication",
+      "Simplified procedures"
+    ]
+  }
+}
