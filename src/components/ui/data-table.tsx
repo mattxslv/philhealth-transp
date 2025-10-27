@@ -54,15 +54,15 @@ export function DataTable<TData, TValue>({
   return (
     <div className="space-y-4">
       <div className="rounded-md border border-border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        <div className="overflow-x-auto -webkit-overflow-scrolling-touch">
+          <table className="w-full min-w-[640px]">
             <thead className="bg-muted">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="px-4 py-3 text-left text-sm font-medium text-foreground"
+                      className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-medium text-foreground whitespace-nowrap"
                     >
                       {header.isPlaceholder
                         ? null
@@ -83,7 +83,7 @@ export function DataTable<TData, TValue>({
                     className="hover:bg-muted/50 transition-colors"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id} className="px-4 py-3 text-sm">
+                      <td key={cell.id} className="px-3 sm:px-4 py-3 text-xs sm:text-sm">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

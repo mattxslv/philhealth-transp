@@ -84,11 +84,6 @@ export default function ClaimsPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        <PageHeading
-          title="Operational Data"
-          description="Claims processing statistics (approval rates, denial rates with reasons, and average processing times), member coverage data, healthcare facility accreditation list, and service availability information."
-        />
-
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
@@ -122,16 +117,18 @@ export default function ClaimsPage() {
           title="Average Claims Processing Time (Monthly)"
           description="Trend of claim turnaround time in days"
         >
-          <ResponsiveContainer width="100%" height={350}>
-            <LineChart data={data.monthlyTrends}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="avgDays" stroke="#009a3d" strokeWidth={2} name="Avg Days" />
-            </LineChart>
-          </ResponsiveContainer>
+          <div className="w-full h-[300px] sm:h-[350px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data.monthlyTrends}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" fontSize={12} />
+                <YAxis fontSize={12} />
+                <Tooltip />
+                <Legend wrapperStyle={{ fontSize: '12px' }} />
+                <Line type="monotone" dataKey="avgDays" stroke="#009a3d" strokeWidth={2} name="Avg Days" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </ChartCard>
 
         {/* Approval vs Denial */}
@@ -140,42 +137,46 @@ export default function ClaimsPage() {
             title="Monthly Claims Volume"
             description="Approved vs denied claims by month"
           >
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={data.monthlyTrends}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip formatter={(value: any) => formatNumber(value)} />
-                <Legend />
-                <Bar dataKey="approved" fill="#009a3d" name="Approved" />
-                <Bar dataKey="denied" fill="#ef4444" name="Denied" />
-              </BarChart>
-            </ResponsiveContainer>
+            <div className="w-full h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data.monthlyTrends}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" fontSize={12} />
+                  <YAxis fontSize={12} />
+                  <Tooltip formatter={(value: any) => formatNumber(value)} />
+                  <Legend wrapperStyle={{ fontSize: '12px' }} />
+                  <Bar dataKey="approved" fill="#009a3d" name="Approved" />
+                  <Bar dataKey="denied" fill="#ef4444" name="Denied" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </ChartCard>
 
           <ChartCard
             title="Denial Reasons Breakdown"
             description="Distribution of claim rejection causes"
           >
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={data.denialReasons}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={(entry: any) => `${entry.reason.split(' ')[0]} (${entry.percentage}%)`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="count"
-                >
-                  {data.denialReasons.map((_: any, index: number) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value: any) => formatNumber(value)} />
-              </PieChart>
-            </ResponsiveContainer>
+            <div className="w-full h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={data.denialReasons}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(entry: any) => `${entry.reason.split(' ')[0]} (${entry.percentage}%)`}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="count"
+                  >
+                    {data.denialReasons.map((_: any, index: number) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value: any) => formatNumber(value)} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </ChartCard>
         </div>
 

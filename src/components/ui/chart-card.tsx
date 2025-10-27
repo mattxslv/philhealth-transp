@@ -12,14 +12,14 @@ export function ChartCard({ title, description, children, className }: ChartCard
   return (
     <div
       className={cn(
-        "rounded-lg border border-border bg-card p-6 shadow-sm",
+        "rounded-lg border border-border bg-card p-4 sm:p-6 shadow-sm",
         className
       )}
     >
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+      <div className="mb-3 sm:mb-4">
+        <h3 className="text-base sm:text-lg font-semibold text-foreground">{title}</h3>
         {description && (
-          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+          <p className="mt-1 text-xs sm:text-sm text-muted-foreground">{description}</p>
         )}
       </div>
       <div className="w-full">{children}</div>

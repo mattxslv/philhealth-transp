@@ -11,7 +11,6 @@ import { DollarSign, TrendingUp, Wallet } from "lucide-react";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import ReactECharts from "echarts-for-react";
 import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
 
 const COLORS = {
   primary: '#009a3d',
@@ -27,17 +26,6 @@ const COLORS = {
 export default function FinancialsPageECharts() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = mounted && theme === 'dark';
-  const textColor = isDark ? '#e5e5e5' : '#2e2e2e';
-  const axisLineColor = isDark ? '#444' : '#999';
-  const splitLineColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
 
   useEffect(() => {
     axios.get("/data/financials.json")
@@ -83,11 +71,11 @@ export default function FinancialsPageECharts() {
           color: 'rgba(0, 154, 61, 0.1)'
         }
       },
-      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
       borderColor: COLORS.primary,
       borderWidth: 2,
       textStyle: {
-        color: textColor,
+        color: '#fff',
         fontSize: 13
       },
       formatter: function(params: any) {
@@ -103,8 +91,7 @@ export default function FinancialsPageECharts() {
       top: 10,
       textStyle: {
         fontSize: 13,
-        fontWeight: 'bold',
-        color: textColor
+        fontWeight: 'bold'
       }
     },
     grid: {
@@ -119,13 +106,12 @@ export default function FinancialsPageECharts() {
       data: data.monthlyRevenue.map((m: any) => m.month),
       axisLine: {
         lineStyle: {
-          color: axisLineColor
+          color: '#999'
         }
       },
       axisLabel: {
         fontSize: 11,
-        rotate: 45,
-        color: textColor
+        rotate: 45
       }
     },
     yAxis: {
@@ -133,23 +119,16 @@ export default function FinancialsPageECharts() {
       name: 'Amount (Billions)',
       nameTextStyle: {
         fontSize: 12,
-        fontWeight: 'bold',
-        color: textColor
+        fontWeight: 'bold'
       },
       axisLabel: {
         formatter: '₱{value}B',
-        fontSize: 11,
-        color: textColor
-      },
-      axisLine: {
-        lineStyle: {
-          color: axisLineColor
-        }
+        fontSize: 11
       },
       splitLine: {
         lineStyle: {
           type: 'dashed',
-          color: splitLineColor
+          opacity: 0.3
         }
       }
     },
@@ -219,11 +198,11 @@ export default function FinancialsPageECharts() {
   const fundBalanceOption = {
     tooltip: {
       trigger: 'axis',
-      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
       borderColor: COLORS.primary,
       borderWidth: 2,
       textStyle: {
-        color: textColor,
+        color: '#fff',
         fontSize: 13
       },
       formatter: function(params: any) {
@@ -243,11 +222,8 @@ export default function FinancialsPageECharts() {
       data: data.annualReports.map((r: any) => r.year).reverse(),
       axisLine: {
         lineStyle: {
-          color: axisLineColor
+          color: '#999'
         }
-      },
-      axisLabel: {
-        color: textColor
       }
     },
     yAxis: {
@@ -255,23 +231,16 @@ export default function FinancialsPageECharts() {
       name: 'Fund Balance (Billions)',
       nameTextStyle: {
         fontSize: 12,
-        fontWeight: 'bold',
-        color: textColor
+        fontWeight: 'bold'
       },
       axisLabel: {
         formatter: '₱{value}B',
-        fontSize: 11,
-        color: textColor
-      },
-      axisLine: {
-        lineStyle: {
-          color: axisLineColor
-        }
+        fontSize: 11
       },
       splitLine: {
         lineStyle: {
           type: 'dashed',
-          color: splitLineColor
+          opacity: 0.3
         }
       }
     },
@@ -303,7 +272,7 @@ export default function FinancialsPageECharts() {
         itemStyle: {
           color: COLORS.primary,
           borderWidth: 3,
-          borderColor: isDark ? '#1a1a1a' : '#fff',
+          borderColor: '#fff',
           shadowColor: 'rgba(0, 154, 61, 0.5)',
           shadowBlur: 10
         },
@@ -321,8 +290,7 @@ export default function FinancialsPageECharts() {
           symbolSize: 70,
           label: {
             fontSize: 11,
-            fontWeight: 'bold',
-            color: '#fff'
+            fontWeight: 'bold'
           }
         },
         markLine: {
@@ -334,8 +302,7 @@ export default function FinancialsPageECharts() {
           },
           label: {
             fontSize: 11,
-            fontWeight: 'bold',
-            color: textColor
+            fontWeight: 'bold'
           }
         }
       }
@@ -348,11 +315,11 @@ export default function FinancialsPageECharts() {
   const adminCostsOption = {
     tooltip: {
       trigger: 'item',
-      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
       borderColor: COLORS.primary,
       borderWidth: 2,
       textStyle: {
-        color: textColor,
+        color: '#fff',
         fontSize: 13
       },
       formatter: function(params: any) {
@@ -364,8 +331,7 @@ export default function FinancialsPageECharts() {
       right: '5%',
       top: 'center',
       textStyle: {
-        fontSize: 12,
-        color: textColor
+        fontSize: 12
       }
     },
     series: [
@@ -377,28 +343,26 @@ export default function FinancialsPageECharts() {
         roseType: 'area',
         itemStyle: {
           borderRadius: 8,
-          borderColor: isDark ? '#1a1a1a' : '#fff',
+          borderColor: '#fff',
           borderWidth: 3,
           shadowBlur: 20,
-          shadowColor: isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)'
+          shadowColor: 'rgba(0, 0, 0, 0.3)'
         },
         label: {
           fontSize: 12,
           fontWeight: 'bold',
-          formatter: '{b}\n₱{c}B',
-          color: textColor
+          formatter: '{b}\n₱{c}B'
         },
         emphasis: {
           label: {
             show: true,
             fontSize: 14,
-            fontWeight: 'bold',
-            color: textColor
+            fontWeight: 'bold'
           },
           itemStyle: {
             shadowBlur: 30,
             shadowOffsetX: 0,
-            shadowColor: isDark ? 'rgba(0, 0, 0, 0.9)' : 'rgba(0, 0, 0, 0.5)'
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
           }
         },
         data: data.administrativeCosts.map((c: any, idx: number) => ({
@@ -419,11 +383,11 @@ export default function FinancialsPageECharts() {
   const investmentOption = {
     tooltip: {
       trigger: 'item',
-      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
       borderColor: COLORS.primary,
       borderWidth: 2,
       textStyle: {
-        color: textColor,
+        color: '#fff',
         fontSize: 13
       }
     },
@@ -444,13 +408,12 @@ export default function FinancialsPageECharts() {
         label: {
           fontSize: 12,
           fontWeight: 'bold',
-          rotate: 'radial',
-          color: textColor
+          rotate: 'radial'
         },
         itemStyle: {
           borderRadius: 7,
           borderWidth: 2,
-          borderColor: isDark ? '#1a1a1a' : '#fff'
+          borderColor: '#fff'
         },
         emphasis: {
           focus: 'ancestor'

@@ -56,7 +56,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { sidebarCollapsed, setSidebarCollapsed, sidebarOpen, setSidebarOpen } = useSidebar();
 
   return (
-    <div className="flex min-h-screen">
+    <>
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -171,20 +171,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           sidebarCollapsed ? "lg:ml-16" : "lg:ml-56"
         )}
       >
-        {/* Mobile menu button */}
-        <div className="sticky top-16 z-30 flex items-center gap-4 bg-background px-4 py-3 lg:hidden">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="rounded-md p-2 hover:bg-accent"
-            aria-label="Open sidebar"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-        </div>
-
         {/* Page content */}
-        <div className="px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">{children}</div>
+        <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 lg:pt-10 pb-4 sm:pb-6 lg:pb-8">{children}</div>
       </div>
-    </div>
+    </>
   );
 }

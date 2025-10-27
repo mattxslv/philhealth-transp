@@ -106,11 +106,6 @@ export default function FacilitiesPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        <PageHeading
-          title="Accredited Facilities"
-          description="Comprehensive directory of PhilHealth-accredited hospitals and healthcare providers"
-        />
-
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
@@ -140,10 +135,11 @@ export default function FacilitiesPage() {
         </div>
 
         {/* Filters */}
-        <div className="rounded-lg border border-border bg-card p-6">
-          <h3 className="text-lg font-semibold mb-4">Search and Filter Facilities</h3>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Search and Filter Facilities</h3>
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-4">
             <SearchBar
+              label="Search"
               value={searchTerm}
               onChange={setSearchTerm}
               placeholder="Search by name or city..."
@@ -167,7 +163,7 @@ export default function FacilitiesPage() {
               options={categories.map(c => ({ value: c, label: c === "all" ? "All Categories" : c }))}
             />
           </div>
-          <p className="mt-3 text-sm text-muted-foreground">
+          <p className="mt-3 text-xs sm:text-sm text-muted-foreground">
             Showing {filteredFacilities.length} of {data.facilities.length} facilities
           </p>
         </div>

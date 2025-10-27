@@ -4,37 +4,37 @@ import { FileText, Activity, Building2, FileCheck, Users, ShieldCheck } from "lu
 const features = [
   {
     name: "Financial Reports",
-    description: "Access audited financial statements, budget allocations, and expenditure breakdowns.",
+    description: "See how we spend the funds. Every peso, accounted for!",
     icon: FileText,
     href: "/financials",
   },
   {
     name: "Claims Analytics",
-    description: "View claims processing data, approval rates, and turnaround time statistics.",
+    description: "Real-time data on approval rates and processing times. Nothing hidden!",
     icon: Activity,
     href: "/claims",
   },
   {
     name: "Accredited Facilities",
-    description: "Search and explore our network of accredited hospitals and healthcare providers.",
+    description: "Find hospitals near you. 6,000+ facilities nationwide!",
     icon: Building2,
     href: "/facilities",
   },
   {
     name: "Procurement Records",
-    description: "Review contracts, bidding processes, and vendor information.",
+    description: "What we bought, how much, from whom. Full transparency in bidding!",
     icon: FileCheck,
     href: "/procurement",
   },
   {
     name: "Coverage Statistics",
-    description: "Track enrollment trends and membership demographics across regions.",
+    description: "How many members do we have? See enrollment trends and membership data.",
     icon: Users,
     href: "/coverage",
   },
   {
     name: "Governance",
-    description: "Access board resolutions, meeting minutes, and organizational policies.",
+    description: "Board resolutions, minutes, policies—everything is here for you.",
     icon: ShieldCheck,
     href: "/governance",
   },
@@ -46,10 +46,10 @@ export function CTASection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Explore Our Datasets
+            Explore Our Data
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Comprehensive access to PhilHealth data and information
+            Everything you need to know about PhilHealth—open and accessible for everyone
           </p>
         </div>
 

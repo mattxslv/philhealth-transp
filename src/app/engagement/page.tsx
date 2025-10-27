@@ -57,11 +57,6 @@ export default function EngagementPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        <PageHeading
-          title="Public Engagement"
-          description="Complaint and resolution statistics (how grievances are handled and resolved), policy updates and circulars, clear contact channels for inquiries and feedback, and performance metrics against targets."
-        />
-
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard

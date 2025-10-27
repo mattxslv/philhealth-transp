@@ -64,11 +64,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <SidebarProvider>
-              <div className="flex min-h-screen flex-col">
-                <Navbar />
-                <main id="main-content" className="flex-1">{children}</main>
-                <Footer />
-              </div>
+              <Navbar />
+              <main id="main-content" className="min-h-screen">{children}</main>
+              <Footer />
             </SidebarProvider>
           </ThemeProvider>
         </ErrorBoundary>

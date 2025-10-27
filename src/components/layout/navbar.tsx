@@ -23,30 +23,45 @@ export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { sidebarCollapsed } = useSidebar();
+  const { sidebarCollapsed, setSidebarOpen } = useSidebar();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/50">
       <nav 
         className={cn(
-          "flex items-center justify-between p-4 lg:px-8 transition-all duration-300",
+          "flex items-center justify-between p-4 transition-all duration-300",
+          "lg:px-8",
           sidebarCollapsed ? "lg:ml-16" : "lg:ml-56"
         )}
         aria-label="Global"
       >
-        {/* Mobile menu button */}
+        {/* Mobile - hamburger on left, search and theme on right */}
         <div className="flex lg:hidden">
           <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle navigation menu"
+            onClick={() => setSidebarOpen(true)}
+            className="rounded-md p-2 hover:bg-primary/10 transition-colors"
+            aria-label="Open sidebar"
           >
-            <Menu className="h-6 w-6" aria-hidden="true" />
+            <Menu className="h-5 w-5" />
           </button>
         </div>
-        
-        {/* Centered navigation */}
+
+        {/* Mobile center spacer */}
+        <div className="flex-1 lg:hidden" />
+
+        <div className="flex lg:hidden gap-3">
+          <GlobalSearch />
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
+            aria-label="Toggle theme"
+          >
+            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          </button>
+        </div>
+
+        {/* Centered navigation - Desktop only */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:gap-x-6">
           {navigation.map((item) => {
             const isActive = !item.external && pathname === item.href;

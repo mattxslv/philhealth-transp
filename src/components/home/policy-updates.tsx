@@ -4,31 +4,31 @@ import { formatDate } from "@/lib/utils";
 const updates = [
   {
     id: 1,
-    title: "Updated Guidelines for Z-Benefits Package",
+    title: "New Guidelines for Z-Benefits Package",
     date: "2024-10-15",
     category: "Policy",
-    description: "New comprehensive guidelines for the Z-Benefits package have been released, including expanded coverage for critical illnesses.",
+    description: "Wider coverage for critical illnesses! Check out the new guidelines that are more favorable for members.",
   },
   {
     id: 2,
-    title: "2024 Q3 Financial Report Published",
+    title: "Q3 2024 Financial Report Published!",
     date: "2024-10-10",
     category: "Financial",
-    description: "Third quarter financial statements now available, showing improved collection rates and sustained benefit payouts.",
+    description: "Higher collection rates and continuous benefit payouts. See how we spent the funds this quarter.",
   },
   {
     id: 3,
-    title: "Accreditation of 50 New Healthcare Facilities",
+    title: "50 New Hospitals Accredited!",
     date: "2024-10-05",
     category: "Facilities",
-    description: "PhilHealth expands network with 50 newly accredited hospitals and clinics across Visayas and Mindanao regions.",
+    description: "More places for treatment! 50 new hospitals in Visayas and Mindanao are now accredited.",
   },
   {
     id: 4,
-    title: "Enhanced Digital Claims Processing System",
+    title: "Digital Claims System—30% Faster!",
     date: "2024-09-28",
     category: "Technology",
-    description: "New digital platform reduces claims processing time by 30%, improving service delivery for members.",
+    description: "No more long processing times! New digital platform means faster approval of your claims.",
   },
 ];
 
@@ -38,10 +38,10 @@ export function PolicyUpdates() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Latest Updates
+            What's New?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Recent policy changes, reports, and announcements
+            Latest updates, policy changes, and announcements
           </p>
         </div>
 
