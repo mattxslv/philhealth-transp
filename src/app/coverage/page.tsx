@@ -1,16 +1,16 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
-import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { formatCurrency, formatNumber, formatPercent } from "@/lib/utils";
-import { Users, TrendingUp, DollarSign, Percent } from "lucide-react";
+import { ChartCard } from "@/components/ui/chart-card";
+import { formatNumber } from "@/lib/utils";
+import { Users, UserCheck, Percent, TrendingUp, Info } from "lucide-react";
+import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-const COLORS = ["#009a3d", "#2e2e2e", "#f59e0b", "#3b82f6", "#8b5cf6"];
+const COLORS = ["#009a3d", "#2e7d32", "#66bb6a", "#4caf50", "#81c784", "#a5d6a7", "#c8e6c9"];
 
 export default function CoveragePage() {
   const [data, setData] = useState<any>(null);
@@ -38,301 +38,255 @@ export default function CoveragePage() {
     );
   }
 
+  const membershipData = [
+    { name: "Employed Private", value: data.membershipByCategory.directContributors.subcategories.employedPrivate.total },
+    { name: "Employed Government", value: data.membershipByCategory.directContributors.subcategories.employedGovernment.total },
+    { name: "Informal Sector", value: data.membershipByCategory.directContributors.subcategories.informal.total },
+    { name: "Indigents", value: data.membershipByCategory.indirectContributors.subcategories.indigents.total },
+    { name: "Senior Citizens", value: data.membershipByCategory.indirectContributors.subcategories.seniorCitizens.total },
+    { name: "Sponsored", value: data.membershipByCategory.indirectContributors.subcategories.sponsored.total },
+    { name: "OFWs", value: data.membershipByCategory.directContributors.subcategories.ofws.total }
+  ];
+
+  const contributorTypeData = [
+    { name: "Direct Contributors", value: data.membershipByCategory.directContributors.total, percentage: data.membershipByCategory.directContributors.percentage },
+    { name: "Indirect Contributors", value: data.membershipByCategory.indirectContributors.total, percentage: data.membershipByCategory.indirectContributors.percentage }
+  ];
+
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        {/* KPI Cards */}
+        <PageHeading
+          title="Membership Coverage"
+          description="Official membership data from PhilHealth 2023 Annual Report"
+        />
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
-            title="Total Members"
-            value={formatNumber(data.overview.totalMembers)}
+            title="Total Beneficiaries"
+            value={formatNumber(data.overview.totalBeneficiaries)}
             icon={Users}
-            description="Nationwide coverage"
+            description="Registered beneficiaries in 2023"
           />
           <KPIStatCard
-            title="Direct Contributors"
-            value={formatNumber(data.overview.directContributors)}
-            icon={Users}
-            description="Active contributors"
+            title="Registered Members"
+            value={formatNumber(data.overview.registeredMembers)}
+            icon={UserCheck}
+            description="Primary members"
           />
           <KPIStatCard
-            title="Contribution Rate"
-            value={`${data.overview.contributionRate}%`}
+            title="Coverage Rate"
+            value="100%"
             icon={Percent}
-            description="Collection efficiency"
+            description="Of Philippine population"
           />
           <KPIStatCard
-            title="Total Contributions"
-            value={formatCurrency(data.overview.totalContributions)}
-            icon={DollarSign}
-            description="Year to date"
+            title="Registration Rate"
+            value="96%"
+            icon={TrendingUp}
+            description="Of target population"
           />
         </div>
-
-        {/* Membership by Category */}
-        <ChartCard
-          title="Membership Distribution by Category"
-          description="Comprehensive breakdown of members across different categories with detailed statistics and growth metrics"
-        >
-          <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Total Categories</div>
-              <div className="font-bold text-primary">{data.membershipByCategory.length}</div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <ChartCard
+            title="Membership by Category"
+            description="Distribution of members across different categories"
+          >
+            <div className="w-full h-[350px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={membershipData} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" fontSize={12} tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`} />
+                  <YAxis type="category" dataKey="name" fontSize={11} width={140} />
+                  <Tooltip formatter={(value: any) => formatNumber(value)} />
+                  <Bar dataKey="value" fill="#009a3d" name="Members" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Largest Category</div>
-              <div className="font-bold text-xs">{data.membershipByCategory.reduce((max: any, c: any) => c.count > (max?.count || 0) ? c : max).category}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Total Members</div>
-              <div className="font-bold">{formatNumber(data.membershipByCategory.reduce((sum: number, c: any) => sum + c.count, 0))}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Coverage Rate</div>
-              <div className="font-bold text-primary">{data.overview.contributionRate}%</div>
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="w-full h-[400px]">
+          </ChartCard>
+          <ChartCard
+            title="Direct vs Indirect Contributors"
+            description="Distribution by contributor type"
+          >
+            <div className="w-full h-[350px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
-                    data={data.membershipByCategory}
+                    data={contributorTypeData}
                     cx="50%"
                     cy="50%"
-                    labelLine={true}
-                    label={(entry: any) => `${entry.category}: ${entry.percentage}%`}
-                    outerRadius={120}
+                    labelLine={false}
+                    label={(entry: any) => `${entry.name}: ${entry.percentage}%`}
+                    outerRadius={100}
                     fill="#8884d8"
-                    dataKey="count"
+                    dataKey="value"
                   >
-                    {data.membershipByCategory.map((_: any, index: number) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    {contributorTypeData.map((entry: any, index: number) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
                     ))}
                   </Pie>
-                  <Tooltip 
-                    formatter={(value: any) => formatNumber(value)}
-                    contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }}
-                  />
+                  <Tooltip formatter={(value: any) => formatNumber(value)} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
+          </ChartCard>
+        </div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div className="bg-white p-6 rounded-lg shadow-sm border">
+            <h3 className="text-lg font-semibold mb-4">Direct Contributors Breakdown</h3>
             <div className="space-y-3">
-              <h4 className="font-semibold text-sm mb-3">Category Details</h4>
-              {data.membershipByCategory.map((category: any, index: number) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="w-4 h-4 rounded" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                    <div>
-                      <div className="text-sm font-medium">{category.category}</div>
-                      <div className="text-xs text-muted-foreground">Member Count</div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold">{formatNumber(category.count)}</div>
-                    <div className="text-xs text-muted-foreground">{category.percentage}% of total</div>
-                  </div>
-                </div>
-              ))}
-              <div className="mt-4 p-3 bg-primary/10 border border-primary/20 rounded-lg">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-semibold">Total Membership</span>
-                  <span className="text-sm font-bold text-primary">
-                    {formatNumber(data.membershipByCategory.reduce((sum: number, c: any) => sum + c.count, 0))}
-                  </span>
-                </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Employed Private</span>
+                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.employedPrivate.total)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Employed Government</span>
+                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.employedGovernment.total)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Informal Sector</span>
+                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.informal.total)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">OFWs</span>
+                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.ofws.total)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Lifetime Members</span>
+                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.lifetimeMembers.total)}</span>
               </div>
             </div>
           </div>
-        </ChartCard>
-
-        {/* Regional Distribution */}
-        <ChartCard
-          title="Membership by Region"
-          description="Geographic distribution analysis of PhilHealth members across all regions with comparative insights"
-        >
-          <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Total Regions</div>
-              <div className="font-bold text-primary">{data.regionalDistribution.length}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Highest Region</div>
-              <div className="font-bold text-xs">{data.regionalDistribution.reduce((max: any, r: any) => r.members > (max?.members || 0) ? r : max).region}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Average per Region</div>
-              <div className="font-bold">{formatNumber(data.regionalDistribution.reduce((sum: number, r: any) => sum + r.members, 0) / data.regionalDistribution.length)}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">National Coverage</div>
-              <div className="font-bold text-primary">Nationwide</div>
-            </div>
-          </div>
-          <div className="w-full h-[400px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data.regionalDistribution}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis 
-                  dataKey="region" 
-                  fontSize={11} 
-                  angle={-45} 
-                  textAnchor="end" 
-                  height={100}
-                  tick={{ fill: '#6b7280' }}
-                />
-                <YAxis 
-                  tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`} 
-                  fontSize={11}
-                  tick={{ fill: '#6b7280' }}
-                  label={{ value: 'Members (Millions)', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }}
-                />
-                <Tooltip 
-                  formatter={(value: any) => formatNumber(value)}
-                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }}
-                />
-                <Legend 
-                  wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
-                  iconType="rect"
-                />
-                <Bar dataKey="members" fill="#009a3d" name="Members" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </ChartCard>
-
-        {/* Historical Trends */}
-        <ChartCard
-          title="Historical Membership and Contribution Trends"
-          description="Multi-year analysis of membership growth and contribution rate efficiency with trend indicators"
-        >
-          <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Current Members</div>
-              <div className="font-bold text-primary">{formatNumber(data.historicalTrends[data.historicalTrends.length - 1].members)}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">5-Year Growth</div>
-              <div className="font-bold text-primary">
-                {formatPercent(((data.historicalTrends[data.historicalTrends.length - 1].members - data.historicalTrends[0].members) / data.historicalTrends[0].members) * 100)}
+          <div className="bg-white p-6 rounded-lg shadow-sm border">
+            <h3 className="text-lg font-semibold mb-4">Indirect Contributors Breakdown</h3>
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Indigents</span>
+                <span className="font-semibold">{formatNumber(data.membershipByCategory.indirectContributors.subcategories.indigents.total)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Senior Citizens</span>
+                <span className="font-semibold">{formatNumber(data.membershipByCategory.indirectContributors.subcategories.seniorCitizens.total)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Sponsored</span>
+                <span className="font-semibold">{formatNumber(data.membershipByCategory.indirectContributors.subcategories.sponsored.total)}</span>
               </div>
             </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Current Rate</div>
-              <div className="font-bold">{data.historicalTrends[data.historicalTrends.length - 1].contributionRate}%</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Trend Status</div>
-              <div className="font-bold text-primary">Growing</div>
-            </div>
           </div>
-          <div className="w-full h-[400px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data.historicalTrends}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis 
-                  dataKey="year" 
-                  fontSize={11}
-                  tick={{ fill: '#6b7280' }}
-                />
-                <YAxis 
-                  yAxisId="left" 
-                  tickFormatter={(value) => `${(value / 1000000).toFixed(0)}M`} 
-                  fontSize={11}
-                  tick={{ fill: '#6b7280' }}
-                  label={{ value: 'Members (Millions)', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }}
-                />
-                <YAxis 
-                  yAxisId="right" 
-                  orientation="right" 
-                  domain={[80, 90]} 
-                  fontSize={11}
-                  tick={{ fill: '#6b7280' }}
-                  label={{ value: 'Contribution Rate (%)', angle: 90, position: 'insideRight', style: { fontSize: 11, fill: '#6b7280' } }}
-                />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }}
-                />
-                <Legend 
-                  wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
-                  iconType="line"
-                />
-                <Line 
-                  yAxisId="left" 
-                  type="monotone" 
-                  dataKey="members" 
-                  stroke="#009a3d" 
-                  strokeWidth={3} 
-                  name="Total Members"
-                  dot={{ fill: '#009a3d', r: 5 }}
-                  activeDot={{ r: 7 }}
-                />
-                <Line 
-                  yAxisId="right" 
-                  type="monotone" 
-                  dataKey="contributionRate" 
-                  stroke="#ef4444" 
-                  strokeWidth={3} 
-                  name="Contribution Rate %"
-                  dot={{ fill: '#ef4444', r: 5 }}
-                  activeDot={{ r: 7 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </ChartCard>
+        </div>
 
-        {/* Monthly Contributions */}
-        <ChartCard
-          title="Monthly Contribution Collections (2024)"
-          description="Detailed monthly trend of contribution collections with cumulative totals and collection efficiency metrics"
-        >
-          <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Total Collections</div>
-              <div className="font-bold text-primary">{formatCurrency(data.monthlyContributions.reduce((sum: number, m: any) => sum + m.amount, 0))}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Average Monthly</div>
-              <div className="font-bold">{formatCurrency(data.monthlyContributions.reduce((sum: number, m: any) => sum + m.amount, 0) / 12)}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Highest Month</div>
-              <div className="font-bold text-xs">{data.monthlyContributions.reduce((max: any, m: any) => m.amount > (max?.amount || 0) ? m : max).month}</div>
-            </div>
-            <div className="bg-muted/50 p-3 rounded-lg">
-              <div className="text-muted-foreground text-xs">Collection Status</div>
-              <div className="font-bold text-primary">On Track</div>
+        {/* FUTURE ENHANCEMENT SECTION */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-6">
+          <div className="flex items-start gap-3 mb-4">
+            <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">Future Enhancement: Advanced Coverage Analytics</h3>
+              <p className="text-sm text-blue-800 mb-4">
+                The sections below show templates for what can be added when more detailed coverage data becomes available. 
+                This would include regional distribution, historical trends, demographic breakdowns, and contribution patterns.
+              </p>
             </div>
           </div>
-          <div className="w-full h-[400px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data.monthlyContributions}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis 
-                  dataKey="month" 
-                  fontSize={11}
-                  tick={{ fill: '#6b7280' }}
-                />
-                <YAxis 
-                  tickFormatter={(value) => `₱${(value / 1000000000).toFixed(1)}B`} 
-                  fontSize={11}
-                  tick={{ fill: '#6b7280' }}
-                  label={{ value: 'Amount (Billions)', angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#6b7280' } }}
-                />
-                <Tooltip 
-                  formatter={(value: any) => formatCurrency(value)}
-                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', fontSize: '12px' }}
-                />
-                <Legend 
-                  wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
-                  iconType="rect"
-                />
-                <Bar dataKey="amount" fill="#009a3d" name="Contributions" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+
+          {/* Sample Regional Distribution */}
+          <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
+            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Regional Distribution (Template)</h4>
+            <div className="w-full h-[350px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={[
+                    { region: "[Future] NCR", members: 9500000, coverage: 98 },
+                    { region: "[Future] Region III", members: 6200000, coverage: 96 },
+                    { region: "[Future] Region IV-A", members: 8100000, coverage: 97 },
+                    { region: "[Future] Region VII", members: 4800000, coverage: 95 },
+                    { region: "[Future] Region XI", members: 3200000, coverage: 94 },
+                  ]}
+                  layout="vertical"
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" fontSize={12} />
+                  <YAxis type="category" dataKey="region" fontSize={11} width={120} />
+                  <Tooltip />
+                  <Legend wrapperStyle={{ fontSize: '12px' }} />
+                  <Bar dataKey="members" fill="#009a3d" name="Members" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <p className="text-xs text-gray-500 mt-3 italic">
+              * This template shows how membership could be visualized by region with coverage percentages, 
+              helping identify areas needing increased enrollment efforts.
+            </p>
           </div>
-        </ChartCard>
+
+          {/* Sample Historical Trends */}
+          <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
+            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Historical Trends (Template)</h4>
+            <div className="w-full h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={[
+                    { year: "2020", members: 58000000, beneficiaries: 102000000 },
+                    { year: "2021", members: 59500000, beneficiaries: 104000000 },
+                    { year: "2022", members: 61000000, beneficiaries: 106500000 },
+                    { year: "2023", members: 62200000, beneficiaries: 108500000 },
+                    { year: "[Future] 2024", members: 64000000, beneficiaries: 110000000 },
+                  ]}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="year" fontSize={12} />
+                  <YAxis fontSize={12} tickFormatter={(value) => `${(value / 1000000).toFixed(0)}M`} />
+                  <Tooltip formatter={(value: any) => formatNumber(value)} />
+                  <Legend wrapperStyle={{ fontSize: '12px' }} />
+                  <Line type="monotone" dataKey="members" stroke="#009a3d" strokeWidth={2} name="Members" />
+                  <Line type="monotone" dataKey="beneficiaries" stroke="#3b82f6" strokeWidth={2} name="Beneficiaries" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <p className="text-xs text-gray-500 mt-3 italic">
+              * This template shows how membership growth trends could be tracked over time, 
+              including year-over-year comparisons and growth rate analysis.
+            </p>
+          </div>
+
+          {/* Sample Monthly Contributions */}
+          <div className="bg-white rounded-lg p-4 border border-blue-200">
+            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Monthly Enrollment Patterns (Template)</h4>
+            <div className="w-full h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={[
+                    { month: "Jan", newMembers: 125000, renewals: 890000 },
+                    { month: "Feb", newMembers: 118000, renewals: 850000 },
+                    { month: "Mar", newMembers: 142000, renewals: 920000 },
+                    { month: "Apr", newMembers: 135000, renewals: 885000 },
+                    { month: "May", newMembers: 150000, renewals: 910000 },
+                    { month: "Jun", newMembers: 128000, renewals: 875000 },
+                  ]}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" fontSize={12} />
+                  <YAxis fontSize={12} />
+                  <Tooltip formatter={(value: any) => formatNumber(value)} />
+                  <Legend wrapperStyle={{ fontSize: '12px' }} />
+                  <Line type="monotone" dataKey="newMembers" stroke="#009a3d" strokeWidth={2} name="New Members" />
+                  <Line type="monotone" dataKey="renewals" stroke="#f59e0b" strokeWidth={2} name="Renewals" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <p className="text-xs text-gray-500 mt-3 italic">
+              * This template shows how monthly enrollment patterns could be analyzed, 
+              tracking new member registrations, renewals, and seasonal trends.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+          <p className="text-sm text-blue-800">
+            <strong>Data Source:</strong> {data.metadata.source} | 
+            <strong> Reporting Period:</strong> {data.metadata.reportingPeriod} | 
+            <strong> Population Covered:</strong> {formatNumber(data.overview.populationCovered)} Filipinos
+          </p>
+        </div>
       </div>
     </DashboardLayout>
   );

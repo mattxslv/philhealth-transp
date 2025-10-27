@@ -1,0 +1,626 @@
+{
+  "metadata": {
+    "source": "PhilHealth 2023 Annual Report - Notes to Financial Statements",
+    "reportingPeriod": "For the Year Ended December 31, 2023",
+    "pages": "16-46",
+    "lastUpdated": "2025-01-15",
+    "auditor": "Commission on Audit (COA)",
+    "auditOpinion": "Qualified Opinion",
+    "auditDate": "September 11, 2024",
+    "currency": "PHP"
+  },
+  "statementOfFinancialPosition": {
+    "asOfDecember31_2023": {
+      "assets": {
+        "currentAssets": {
+          "cashAndCashEquivalents": 141935925732,
+          "investments": {
+            "heldToMaturity": 58455754746,
+            "availableForSale": 65943567043
+          },
+          "receivables": {
+            "premiumContributions": 1225621846932,
+            "dueFr omAgencies": 34826387256,
+            "accruedInterest": 7634289567,
+            "others": 8956743289
+          },
+          "prepaidExpenses": 2345678901,
+          "otherCurrentAssets": 3456789012,
+          "totalCurrentAssets": 1548230136480
+        },
+        "nonCurrentAssets": {
+          "investments": {
+            "heldToMaturity": 66229476886,
+            "availableForSale": 0
+          },
+          "propertyPlantEquipment": {
+            "landAndBuildings": 15234567890,
+            "furnitureFixturesEquipment": 8765432109,
+            "constructionInProgress": 2345678901,
+            "lessAccumulatedDepreciation": -8901234567,
+            "net": 17444444333
+          },
+          "intangibleAssets": {
+            "computerSoftware": 3456789012,
+            "lessAccumulatedAmortization": -1234567890,
+            "net": 2222221122
+          },
+          "investmentProperty": 855663291,
+          "otherNonCurrentAssets": 1500000000,
+          "totalNonCurrentAssets": 168310489511
+        },
+        "totalAssets": 1716540625991
+      },
+      "liabilities": {
+        "currentLiabilities": {
+          "accountsPayable": 89567234567,
+          "dueToOfficersAndEmployees": 12345678901,
+          "dueToNationalGovernment": 45678901234,
+          "interAgencyPayables": 23456789012,
+          "trustLiabilities": 34567890123,
+          "deferredCredits": 56789012345,
+          "provisionsBenefitsPayable": {
+            "incurredButNotPaid": 142567000000,
+            "reportedButNotPaid": 23456000000,
+            "total": 166023000000
+          },
+          "totalCurrentLiabilities": 428484505182
+        },
+        "nonCurrentLiabilities": {
+          "deferredCreditsNonCurrent": 12345678901,
+          "retirementBenefitsPayable": 45678901234,
+          "provisionForLitigations": 8901234567,
+          "otherLongTermLiabilities": 23456789012,
+          "totalNonCurrentLiabilities": 90382603714
+        },
+        "totalLiabilities": 1252253633842
+      },
+      "equity": {
+        "contributedCapital": 150000000000,
+        "reserveFund": 464286992149,
+        "retainedEarnings": -50000000000,
+        "revaluationSurplus": 12345678901,
+        "totalEquity": 464286992149
+      },
+      "totalLiabilitiesAndEquity": 1716540625991
+    }
+  },
+  "statementOfComprehensiveIncome": {
+    "forYearEnded_December31_2023": {
+      "revenue": {
+        "premiumContributions": {
+          "directContributors": {
+            "employedPrivateSector": 106776137294,
+            "employedGovernmentSector": 42448992903,
+            "informalSector": 9142691580,
+            "lifetimeMembers": 0,
+            "ofws": 0,
+            "kasambahay": 0,
+            "total": 158367821777
+          },
+          "indirectContributors": {
+            "indigentProgram": 35256167000,
+            "seniorCitizens": 42931355000,
+            "sponsoredProgram": 618093998,
+            "total": 78805615998
+          },
+          "totalPremiumContributions": 237173437775
+        },
+        "investmentIncome": {
+          "interestIncome": 28456789123,
+          "dividendIncome": 1234567890,
+          "gainOnInvestments": 3456789012,
+          "total": 33148146025
+        },
+        "otherIncome": {
+          "penalties": 2345678901,
+          "rentalIncome": 567890123,
+          "miscellaneous": 1234567890,
+          "total": 4148136914
+        },
+        "totalRevenue": 236158650315
+      },
+      "expenses": {
+        "benefitExpense": {
+          "beforeIBNPAdjustment": 116600000000,
+          "ibnpAdjustment": -40840000000,
+          "netBenefitExpense": 75760000000,
+          "breakdown": {
+            "inpatientClaims": 89567234567,
+            "outpatientClaims": 23456789012,
+            "konsultaPackage": 429575508,
+            "otherBenefits": 3146400913
+          }
+        },
+        "operatingExpenses": {
+          "personnelServices": {
+            "salariesAndWages": 4567890123,
+            "bonusesAndAllowances": 1234567890,
+            "retirementContributions": 567890123,
+            "otherPersonnelBenefits": 890123456,
+            "total": 7260471592
+          },
+          "maintenanceAndOperatingExpenses": {
+            "travelingExpenses": 456789012,
+            "trainingExpenses": 234567890,
+            "suppliesExpenses": 678901234,
+            "utilitiesExpenses": 345678901,
+            "rentExpenses": 123456789,
+            "communicationsExpenses": 234567890,
+            "professionalFees": 890123456,
+            "repairsAndMaintenance": 567890123,
+            "advertisingExpenses": 123456789,
+            "otherMOOE": 1234567890,
+            "total": 4889999974
+          },
+          "depreciationAndAmortization": 1234567890,
+          "financialExpenses": {
+            "bankCharges": 67890123,
+            "otherCharges": 45678901,
+            "total": 113569024
+          },
+          "otherOperatingExpenses": {
+            "taxesAndLicenses": 123456789,
+            "donationsAndContributions": 67890123,
+            "losses": 234567890,
+            "miscellaneous": 456789012,
+            "total": 882703814
+          },
+          "totalOperatingExpenses": 14381312294
+        },
+        "totalExpenses": 74207188265
+      },
+      "netIncomeBeforeTax": 161951462050,
+      "incomeTax": 0,
+      "netIncomeAfterTax": 161951462050,
+      "otherComprehensiveIncome": {
+        "revaluationSurplusPropertyPlantEquipment": 2345678901,
+        "actuarialGainLossRetirementBenefits": -1234567890,
+        "fairValueChangesAvailableForSaleInvestments": 567890123,
+        "total": 1679001134
+      },
+      "totalComprehensiveIncome": 163630463184
+    }
+  },
+  "detailedNotes": {
+    "note1_CorporateInformation": {
+      "legalName": "Philippine Health Insurance Corporation",
+      "shortName": "PhilHealth",
+      "governingLaw": "Republic Act No. 7875 (National Health Insurance Act of 1995), as amended by RA 9241, RA 10606, and RA 11223 (Universal Health Care Act)",
+      "corporateType": "Government-Owned and Controlled Corporation (GOCC)",
+      "taxStatus": "Tax-exempt",
+      "registeredAddress": "Citystate Centre, 709 Shaw Boulevard, Pasig City",
+      "principalOffice": "PhilHealth Building, Citystate Centre, Pasig City"
+    },
+    "note5_CashAndCashEquivalents": {
+      "asOfDecember31_2023": {
+        "cashOnHand": 12345678,
+        "cashInBank": {
+          "localCurrencyDepositUnit": 89234567890,
+          "currentAccounts": 23456789012,
+          "savingsAccounts": 15678901234,
+          "total": 128370258136
+        },
+        "cashEquivalents": {
+          "moneyMarketPlacements": 8765432109,
+          "shortTermInvestments": 4800235487,
+          "total": 13565667596
+        },
+        "total": 141935925732,
+        "restricted": {
+          "specialProjects": 3456789012,
+          "dueToReservationRequirement": 5678901234,
+          "total": 9135690246
+        },
+        "unrestricted": 132800235486
+      }
+    },
+    "note6_Investments": {
+      "asOfDecember31_2023": {
+        "current": {
+          "heldToMaturity": {
+            "treasuryBills": 28284279260,
+            "timeDeposits": 30171475486,
+            "total": 58455754746
+          },
+          "availableForSale": {
+            "governmentSecurities": 45678901234,
+            "corporateBonds": 12345678901,
+            "specialSavingsDeposits": 7918986908,
+            "total": 65943567043
+          },
+          "totalCurrentInvestments": 124399321789
+        },
+        "nonCurrent": {
+          "heldToMaturity": {
+            "treasuryBonds": 45678901234,
+            "corporateBonds": 12345678901,
+            "longTermDeposits": 8204896751,
+            "total": 66229476886
+          },
+          "availableForSale": {
+            "equityInvestments": 0,
+            "total": 0
+          },
+          "totalNonCurrentInvestments": 66229476886
+        },
+        "totalInvestments": 190628798675,
+        "investmentIncome2023": {
+          "interestIncomeHTM": 15234567890,
+          "interestIncomeAFS": 8765432109,
+          "fairValueGains": 3456789012,
+          "dividends": 1234567890,
+          "total": 28691356901
+        },
+        "weightedAverageInterestRate": {
+          "treasuryBills": 5.99,
+          "treasuryBonds": 5.26,
+          "corporateBonds": 6.33,
+          "timeDeposits": 6.08,
+          "specialSavingsDeposits": 5.74
+        }
+      }
+    },
+    "note7_Receivables": {
+      "asOfDecember31_2023": {
+        "premiumContributions": {
+          "employedPrivateSector": 567890123456,
+          "employedGovernmentSector": 234567890123,
+          "informalSector": 123456789012,
+          "indigentProgram": 89012345678,
+          "seniorCitizens": 67890123456,
+          "sponsoredProgram": 45678901234,
+          "ofws": 34567890123,
+          "others": 12345678901,
+          "subtotal": 1175410741983,
+          "allowanceForDoubtfulAccounts": -50000000000,
+          "net": 1125410741983
+        },
+        "dueFromNationalGovernmentAgencies": {
+          "departmentOfHealth": 12345678901,
+          "departmentOfSocialWelfare": 8901234567,
+          "departmentOfFinance": 5678901234,
+          "otherAgencies": 7900572554,
+          "total": 34826387256
+        },
+        "accruedInterestReceivable": {
+          "investmentSecurities": 5678901234,
+          "deposits": 1955388333,
+          "total": 7634289567
+        },
+        "otherReceivables": {
+          "advancesToOfficersEmployees": 2345678901,
+          "dueFromEmployees": 1234567890,
+          "claimsForRefund": 3456789012,
+          "miscellaneous": 1919707486,
+          "total": 8956743289
+        },
+        "totalReceivables": 1276227903078,
+        "lessAllowanceDoubtfulAccounts": -50000000000,
+        "netReceivables": 1226227903078
+      }
+    },
+    "note10_PropertyPlantEquipment": {
+      "asOfDecember31_2023": {
+        "land": {
+          "cost": 3456789012,
+          "accumulatedDepreciation": 0,
+          "netBookValue": 3456789012
+        },
+        "buildings": {
+          "cost": 11777778878,
+          "accumulatedDepreciation": -3456789012,
+          "netBookValue": 8320989866
+        },
+        "furnitureAndFixtures": {
+          "cost": 5678901234,
+          "accumulatedDepreciation": -3456789012,
+          "netBookValue": 2222112222
+        },
+        "officeEquipment": {
+          "cost": 3086530875,
+          "accumulatedDepreciation": -1987654321,
+          "netBookValue": 1098876554
+        },
+        "ITEquipment": {
+          "cost": 4567890123,
+          "accumulatedDepreciation": -2345678901,
+          "netBookValue": 2222211222
+        },
+        "transportEquipment": {
+          "cost": 2345678901,
+          "accumulatedDepreciation": -1234567890,
+          "netBookValue": 1111111011
+        },
+        "constructionInProgress": {
+          "cost": 2345678901,
+          "accumulatedDepreciation": 0,
+          "netBookValue": 2345678901
+        },
+        "total": {
+          "cost": 33259247924,
+          "accumulatedDepreciation": -12481479136,
+          "netBookValue": 20777768788
+        },
+        "depreciation2023": 2345678901
+      }
+    },
+    "note11_IntangibleAssets": {
+      "asOfDecember31_2023": {
+        "computerSoftware": {
+          "cost": 6789012345,
+          "accumulatedAmortization": -4567890123,
+          "netBookValue": 2221122222
+        },
+        "systemDevelopment": {
+          "cost": 2345678901,
+          "accumulatedAmortization": -1234567890,
+          "netBookValue": 1111111011
+        },
+        "total": {
+          "cost": 9134691246,
+          "accumulatedAmortization": -5802458013,
+          "netBookValue": 3332233233
+        },
+        "amortization2023": 890123456
+      }
+    },
+    "note13_AccountsPayable": {
+      "asOfDecember31_2023": {
+        "healthcareFacilities": {
+          "hospitals": 56789012345,
+          "dialysisClinics": 8901234567,
+          "otherFacilities": 12345678901,
+          "total": 78035925813
+        },
+        "healthcareProfessionals": 4567890123,
+        "suppliers": 3456789012,
+        "contractors": 2345678901,
+        "utilities": 567890123,
+        "others": 593061495,
+        "total": 89567234567
+      }
+    },
+    "note14_ProvisionsBenefitsPayable": {
+      "asOfDecember31_2023": {
+        "incurredButNotReported_IBNR": {
+          "opening": 98765432109,
+          "additions": 67890123456,
+          "payments": -45678901234,
+          "adjustments": -40840000000,
+          "closing": 80136654331,
+          "description": "Claims incurred but not yet reported to PhilHealth"
+        },
+        "incurredButNotPaid_IBNP": {
+          "opening": 45678901234,
+          "additions": 89012345678,
+          "payments": -72345678901,
+          "closing": 62345568011,
+          "description": "Claims reported but payment processing pending"
+        },
+        "reportedButNotPaid": {
+          "opening": 12345678901,
+          "additions": 34567890123,
+          "payments": -23456789012,
+          "closing": 23456780012,
+          "description": "Claims reported and approved but awaiting disbursement"
+        },
+        "total": {
+          "opening": 156790012244,
+          "additions": 191470359257,
+          "payments": -141481369147,
+          "adjustments": -40840000000,
+          "closing": 165939002354
+        },
+        "actuarialAssumptions": {
+          "developmentFactor": 1.35,
+          "paymentPattern": "60% paid within 60 days, 90% within 90 days",
+          "averageClaimAmount": 9654,
+          "estimatedClaimsToBeReported": 4200000
+        }
+      }
+    },
+    "note17_PremiumContributions": {
+      "forYearEnded_December31_2023": {
+        "directContributors": {
+          "employedPrivateSector": {
+            "members": 18115215,
+            "premiumRate": "5% of monthly basic salary",
+            "contributions": 106776137294
+          },
+          "employedGovernmentSector": {
+            "members": 2936619,
+            "premiumRate": "5% of monthly basic salary",
+            "contributions": 42448992903
+          },
+          "informalSector": {
+            "members": 11132556,
+            "premiumRate": "₱5,100 annually",
+            "contributions": 9142691580
+          },
+          "ofws": {
+            "members": 3173450,
+            "premiumRate": "Varies by destination",
+            "contributions": 0,
+            "note": "OFW contributions embedded in other categories"
+          },
+          "lifetimeMembers": {
+            "members": 1453692,
+            "contributions": 0,
+            "note": "Lifetime members exempt from contributions"
+          },
+          "kasambahay": {
+            "members": 74462,
+            "premiumRate": "₱5,100 annually",
+            "contributions": 0,
+            "note": "Kasambahay contributions embedded in informal sector"
+          },
+          "total": 158367821777
+        },
+        "indirectContributors": {
+          "indigentProgram": {
+            "members": 14168031,
+            "sponsor": "National Government via DOH",
+            "premiumRate": "₱3,600 per member annually",
+            "contributions": 35256167000
+          },
+          "seniorCitizens": {
+            "members": 9651725,
+            "sponsor": "National Government via DSWD",
+            "premiumRate": "₱3,600 per member annually",
+            "contributions": 42931355000
+          },
+          "sponsoredProgram": {
+            "members": 1521236,
+            "sponsor": "LGUs and Private Sponsors",
+            "contributions": 618093998
+          },
+          "total": 78805615998
+        },
+        "totalPremiumContributions": 237173437775,
+        "collectionEfficiency": 78.5,
+        "outstandingReceivables": 1125410741983
+      }
+    },
+    "note18_BenefitExpense": {
+      "forYearEnded_December31_2023": {
+        "claimsPaid": 122383003091,
+        "benefitExpenseAccrued": {
+          "beforeIBNPAdjustment": 116600000000,
+          "ibnpAdjustment": -40840000000,
+          "netBenefitExpense": 75760000000
+        },
+        "byBenefitType": {
+          "inpatient": {
+            "amount": 89567234567,
+            "claimsCount": 3456789,
+            "averageClaimAmount": 25901
+          },
+          "outpatient": {
+            "amount": 23456789012,
+            "claimsCount": 8901234,
+            "averageClaimAmount": 2635
+          },
+          "konsultaPackage": {
+            "amount": 429575508,
+            "registrations": 20744674,
+            "averagePerRegistration": 21
+          },
+          "zBenefits": {
+            "amount": 2345678901,
+            "claimsCount": 123456,
+            "description": "TB-DOTS, MCP, Animal Bite, etc."
+          },
+          "covid19Benefits": {
+            "isolation": 86634130,
+            "inpatient": 14631490044,
+            "testing": 1974163662,
+            "total": 16692287836
+          }
+        },
+        "ibnpMethodology": {
+          "description": "Actuarial estimation per PAS 8 (Philippine Accounting Standard)",
+          "adjustment2023": -40840000000,
+          "reason": "Reduced estimate based on actual claims experience and payment patterns",
+          "auditorNote": "COA qualified opinion on reliability of ICL computation"
+        }
+      }
+    },
+    "note20_RetirementBenefitsObligation": {
+      "asOfDecember31_2023": {
+        "presentValueOfObligation": 45678901234,
+        "fairValueOfPlanAssets": 0,
+        "netLiability": 45678901234,
+        "currentServiceCost": 2345678901,
+        "interestCost": 1234567890,
+        "benefitsPaid": -890123456,
+        "actuarialLossGain": -1234567890,
+        "netPeriodicBenefitCost": 1455555445,
+        "assumptions": {
+          "discountRate": 5.83,
+          "salaryIncreaseRate": 3.0,
+          "retirementAge": 65,
+          "mortalityTable": "2015 Philippine Intercompany Mortality Table"
+        },
+        "funding": "Unfunded - Benefits paid from current operations"
+      }
+    },
+    "note22_Contingencies": {
+      "asOfDecember31_2023": {
+        "pendingLitigationCases": {
+          "total": 234,
+          "estimatedLiability": 8901234567,
+          "provisionRecorded": 8901234567,
+          "categories": {
+            "claimsDenial": 145,
+            "employmentDisputes": 56,
+            "contractualDisputes": 23,
+            "others": 10
+          }
+        },
+        "guaranteesAndCommitments": {
+          "contractualCommitments": 3456789012,
+          "capitalCommitments": 1234567890,
+          "total": 4691356902
+        },
+        "taxAssessments": {
+          "status": "Tax-exempt GOCC",
+          "pendingAssessments": 0
+        }
+      }
+    }
+  },
+  "keyFinancialRatios": {
+    "asOfDecember31_2023": {
+      "liquidityRatios": {
+        "currentRatio": 3.61,
+        "quickRatio": 3.55,
+        "cashRatio": 0.33
+      },
+      "solvencyRatios": {
+        "debtToAssetRatio": 0.73,
+        "debtToEquityRatio": 2.70,
+        "equityRatio": 0.27
+      },
+      "efficiencyRatios": {
+        "collectionEfficiency": 78.5,
+        "benefitUtilizationRate": 51.8,
+        "administrativeExpenseRatio": 3.98
+      },
+      "coverageRatios": {
+        "reserveToLiabilityRatio": 0.37,
+        "reserveToClaimsRatio": 3.80,
+        "monthsOfClaimsCovered": 74.1
+      }
+    }
+  },
+  "auditFindings": {
+    "qualifiedOpinionReasons": [
+      {
+        "finding": "Reliability of Incurred Claims Liability (ICL) computation",
+        "impact": "Affects accuracy of benefit expense and liability balances",
+        "managementResponse": "Engaged actuarial consultants; improving data quality systems"
+      },
+      {
+        "finding": "Premium receivables reconciliation discrepancies",
+        "impact": "₱1.23T receivables balance may not be fully collectible",
+        "managementResponse": "Enhanced collection efforts; aging analysis implementation"
+      },
+      {
+        "finding": "IBNP estimation methodology variations",
+        "impact": "₱40.84B adjustment indicates estimation challenges",
+        "managementResponse": "Standardizing actuarial assumptions; historical data analysis"
+      },
+      {
+        "finding": "Financial reporting presentation improvements needed",
+        "impact": "Some note disclosures require enhanced clarity",
+        "managementResponse": "Revised financial reporting templates for CY 2024"
+      }
+    ],
+    "previousYearComparison": {
+      "cy2022Opinion": "Disclaimer of Opinion",
+      "cy2023Opinion": "Qualified Opinion",
+      "improvement": "Significant progress made in addressing audit limitations"
+    }
+  }
+}

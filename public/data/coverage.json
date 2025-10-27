@@ -1,43 +1,84 @@
-{
-  "overview": {
-    "totalMembers": 52400000,
-    "directContributors": 18500000,
-    "indirectContributors": 33900000,
-    "contributionRate": 87.5,
-    "totalContributions": 185000000000
+﻿{
+  "metadata": {
+    "source": "PhilHealth 2023 Annual Report (Official Audited Data)",
+    "reportingPeriod": "January 1 - December 31, 2023",
+    "lastUpdated": "2025-01-15",
+    "currency": "PHP"
   },
-  "membershipByCategory": [
-    { "category": "Formal Sector", "count": 16200000, "percentage": 30.9 },
-    { "category": "Informal Sector", "count": 8900000, "percentage": 17.0 },
-    { "category": "Indigent/Sponsored", "count": 22100000, "percentage": 42.2 },
-    { "category": "Senior Citizens", "count": 3800000, "percentage": 7.3 },
-    { "category": "Others", "count": 1400000, "percentage": 2.6 }
-  ],
-  "regionalDistribution": [
-    { "region": "NCR", "members": 8950000, "percentage": 17.1 },
-    { "region": "Region III", "members": 6280000, "percentage": 12.0 },
-    { "region": "Region IV-A", "members": 7850000, "percentage": 15.0 },
-    { "region": "Region VI", "members": 4120000, "percentage": 7.9 },
-    { "region": "Region VII", "members": 5680000, "percentage": 10.8 },
-    { "region": "Region XI", "members": 3920000, "percentage": 7.5 },
-    { "region": "Others", "members": 15600000, "percentage": 29.7 }
-  ],
-  "historicalTrends": [
-    { "year": 2020, "members": 48200000, "contributionRate": 82.3 },
-    { "year": 2021, "members": 49500000, "contributionRate": 84.1 },
-    { "year": 2022, "members": 50800000, "contributionRate": 85.7 },
-    { "year": 2023, "members": 51600000, "contributionRate": 86.5 },
-    { "year": 2024, "members": 52400000, "contributionRate": 87.5 }
-  ],
-  "monthlyContributions": [
-    { "month": "Jan", "amount": 15200000000, "members": 52100000 },
-    { "month": "Feb", "amount": 15400000000, "members": 52150000 },
-    { "month": "Mar", "amount": 15600000000, "members": 52200000 },
-    { "month": "Apr", "amount": 15500000000, "members": 52250000 },
-    { "month": "May", "amount": 15700000000, "members": 52300000 },
-    { "month": "Jun", "amount": 15800000000, "members": 52350000 },
-    { "month": "Jul", "amount": 15900000000, "members": 52400000 },
-    { "month": "Aug", "amount": 16000000000, "members": 52400000 },
-    { "month": "Sep", "amount": 16100000000, "members": 52400000 }
-  ]
+  "overview": {
+    "totalBeneficiaries": 108505167,
+    "registeredMembers": 62236523,
+    "registeredDependents": 46268644,
+    "populationCovered": 112892781,
+    "coverageRate": 100,
+    "registrationRate": 96
+  },
+  "membershipByCategory": {
+    "directContributors": {
+      "total": 66666112,
+      "members": 36895531,
+      "dependents": 29770581,
+      "percentage": 61.5,
+      "subcategories": {
+        "employedPrivate": {
+          "members": 18115215,
+          "dependents": 12645478,
+          "total": 30760693
+        },
+        "employedGovernment": {
+          "members": 2936619,
+          "dependents": 4081707,
+          "total": 7018326
+        },
+        "informal": {
+          "members": 11132556,
+          "dependents": 9542930,
+          "total": 20675486
+        },
+        "ofws": {
+          "members": 3173450,
+          "dependents": 2310831,
+          "total": 5484281
+        },
+        "lifetimeMembers": {
+          "members": 1453692,
+          "dependents": 1138628,
+          "total": 2592320
+        },
+        "kasambahay": {
+          "members": 74462,
+          "dependents": 46815,
+          "total": 121277
+        },
+        "others": {
+          "members": 9537,
+          "dependents": 4192,
+          "total": 13729
+        }
+      }
+    },
+    "indirectContributors": {
+      "total": 41839055,
+      "members": 25340992,
+      "dependents": 16498063,
+      "percentage": 38.5,
+      "subcategories": {
+        "indigents": {
+          "members": 14168031,
+          "dependents": 12022852,
+          "total": 26190883
+        },
+        "seniorCitizens": {
+          "members": 9651725,
+          "dependents": 2931958,
+          "total": 12583683
+        },
+        "sponsored": {
+          "members": 1521236,
+          "dependents": 1543253,
+          "total": 3064489
+        }
+      }
+    }
+  }
 }

@@ -1,123 +1,221 @@
 {
-  "overview": {
-    "totalClaims": 4250000,
-    "approvedClaims": 4010000,
-    "deniedClaims": 240000,
-    "approvalRate": 94.3,
-    "denialRate": 5.7,
-    "averageProcessingDays": 12,
-    "totalDisbursed": 127500000000
+  "metadata": {
+    "source": "PhilHealth 2023 Annual Report (Official Audited Data)",
+    "reportingPeriod": "January 1 - December 31, 2023",
+    "lastUpdated": "2025-01-15",
+    "currency": "PHP"
   },
-  "monthlyTrends": [
-    { "month": "Jan", "claims": 460000, "approved": 434000, "denied": 26000, "avgDays": 13 },
-    { "month": "Feb", "claims": 445000, "approved": 420000, "denied": 25000, "avgDays": 13 },
-    { "month": "Mar", "claims": 478000, "approved": 451000, "denied": 27000, "avgDays": 12 },
-    { "month": "Apr", "claims": 462000, "approved": 436000, "denied": 26000, "avgDays": 12 },
-    { "month": "May", "claims": 471000, "approved": 445000, "denied": 26000, "avgDays": 11 },
-    { "month": "Jun", "claims": 468000, "approved": 442000, "denied": 26000, "avgDays": 11 },
-    { "month": "Jul", "claims": 485000, "approved": 458000, "denied": 27000, "avgDays": 12 },
-    { "month": "Aug", "claims": 492000, "approved": 464000, "denied": 28000, "avgDays": 12 },
-    { "month": "Sep", "claims": 489000, "approved": 460000, "denied": 29000, "avgDays": 11 }
-  ],
-  "denialReasons": [
-    { "reason": "Incomplete Documentation", "count": 98000, "percentage": 40.8 },
-    { "reason": "Non-Covered Service", "count": 72000, "percentage": 30.0 },
-    { "reason": "Expired Membership", "count": 36000, "percentage": 15.0 },
-    { "reason": "Duplicate Claims", "count": 19200, "percentage": 8.0 },
-    { "reason": "Other", "count": 14800, "percentage": 6.2 }
-  ],
-  "claimsData": [
-    {
-      "id": "CLM-2024-0001",
-      "type": "Inpatient",
-      "region": "NCR",
-      "amount": 45000,
-      "status": "Approved",
-      "processingDays": 10,
-      "dateSubmitted": "2024-09-15"
+  "overview": {
+    "totalClaims": 12675634,
+    "totalAmountPaid": 122383003091,
+    "averageProcessingDays": 60,
+    "processingPolicy": "All completed claims paid within 60 days from receipt",
+    "benefitExpense": 75767225217,
+    "benefitExpenseBeforeIBNP": 116600000000,
+    "ibnpAdjustment": 40840000000,
+    "notes": "Benefit expense decreased due to IBNP adjustment computed by Actuary per PAS 8"
+  },
+  "byMembershipCategory": {
+    "directContributors": {
+      "totalAmount": 62045524816,
+      "totalCount": 6287618,
+      "percentage": 49.6,
+      "breakdown": {
+        "employedPrivate": {
+          "amount": 22021316640,
+          "count": 2139785,
+          "amountPercentage": 18,
+          "countPercentage": 17
+        },
+        "employedGovernment": {
+          "amount": 8829831816,
+          "count": 949652,
+          "amountPercentage": 7,
+          "countPercentage": 7
+        },
+        "informalSelfEarning": {
+          "amount": 22232262203,
+          "count": 2409192,
+          "amountPercentage": 18,
+          "countPercentage": 19
+        },
+        "ofws": {
+          "amount": 1153327993,
+          "count": 104029,
+          "amountPercentage": 1,
+          "countPercentage": 1
+        },
+        "lifetimeMembers": {
+          "amount": 7720793661,
+          "count": 676129,
+          "amountPercentage": 6,
+          "countPercentage": 5
+        },
+        "kasambahay": {
+          "amount": 53940889,
+          "count": 4717,
+          "amountPercentage": 0.04,
+          "countPercentage": 0.04
+        },
+        "others": {
+          "amount": 34051613,
+          "count": 4114,
+          "amountPercentage": 0.03,
+          "countPercentage": 0.03
+        }
+      }
     },
-    {
-      "id": "CLM-2024-0002",
-      "type": "Outpatient",
-      "region": "Region IV-A",
-      "amount": 8500,
-      "status": "Approved",
-      "processingDays": 8,
-      "dateSubmitted": "2024-09-16"
-    },
-    {
-      "id": "CLM-2024-0003",
-      "type": "Emergency",
-      "region": "Region VII",
-      "amount": 32000,
-      "status": "Approved",
-      "processingDays": 12,
-      "dateSubmitted": "2024-09-14"
-    },
-    {
-      "id": "CLM-2024-0004",
-      "type": "Inpatient",
-      "region": "NCR",
-      "amount": 68000,
-      "status": "Denied",
-      "processingDays": 15,
-      "dateSubmitted": "2024-09-13",
-      "denialReason": "Incomplete Documentation"
-    },
-    {
-      "id": "CLM-2024-0005",
-      "type": "Maternity",
-      "region": "Region III",
-      "amount": 28000,
-      "status": "Approved",
-      "processingDays": 9,
-      "dateSubmitted": "2024-09-17"
-    },
-    {
-      "id": "CLM-2024-0006",
-      "type": "Dialysis",
-      "region": "Region VI",
-      "amount": 15000,
-      "status": "Approved",
-      "processingDays": 11,
-      "dateSubmitted": "2024-09-12"
-    },
-    {
-      "id": "CLM-2024-0007",
-      "type": "Z-Benefit",
-      "region": "NCR",
-      "amount": 125000,
-      "status": "Approved",
-      "processingDays": 14,
-      "dateSubmitted": "2024-09-10"
-    },
-    {
-      "id": "CLM-2024-0008",
-      "type": "Outpatient",
-      "region": "Region XII",
-      "amount": 5500,
-      "status": "Denied",
-      "processingDays": 7,
-      "dateSubmitted": "2024-09-18",
-      "denialReason": "Non-Covered Service"
-    },
-    {
-      "id": "CLM-2024-0009",
-      "type": "Inpatient",
-      "region": "CAR",
-      "amount": 52000,
-      "status": "Approved",
-      "processingDays": 13,
-      "dateSubmitted": "2024-09-11"
-    },
-    {
-      "id": "CLM-2024-0010",
-      "type": "Emergency",
-      "region": "Region VIII",
-      "amount": 38000,
-      "status": "Approved",
-      "processingDays": 10,
-      "dateSubmitted": "2024-09-16"
+    "indirectContributors": {
+      "totalAmount": 60337478276,
+      "totalCount": 6388016,
+      "percentage": 50.4,
+      "breakdown": {
+        "indigents": {
+          "amount": 14303917078,
+          "count": 1638248,
+          "amountPercentage": 12,
+          "countPercentage": 13
+        },
+        "seniorCitizens": {
+          "amount": 26279897266,
+          "count": 2344525,
+          "amountPercentage": 21,
+          "countPercentage": 18
+        },
+        "sponsored": {
+          "amount": 19753663932,
+          "count": 2405243,
+          "amountPercentage": 16,
+          "countPercentage": 19
+        }
+      }
     }
-  ]
+  },
+  "byPatientType": {
+    "member": {
+      "count": 9279897,
+      "percentage": 73
+    },
+    "dependent": {
+      "count": 3395737,
+      "percentage": 27
+    }
+  },
+  "bySex": {
+    "female": {
+      "count": 6971552,
+      "percentage": 55
+    },
+    "male": {
+      "count": 5704082,
+      "percentage": 45
+    }
+  },
+  "byAgeGroup": [
+    { "ageRange": "< 1", "count": 22803 },
+    { "ageRange": "1-4", "count": 1933222 },
+    { "ageRange": "5-9", "count": 301863 },
+    { "ageRange": "10-14", "count": 197387 },
+    { "ageRange": "15-19", "count": 363358 },
+    { "ageRange": "20-24", "count": 670511 },
+    { "ageRange": "25-29", "count": 925652 },
+    { "ageRange": "30-34", "count": 950587 },
+    { "ageRange": "35-39", "count": 813860 },
+    { "ageRange": "40-44", "count": 752498 },
+    { "ageRange": "45-49", "count": 748788 },
+    { "ageRange": "50-54", "count": 846772 },
+    { "ageRange": "55-59", "count": 912079 },
+    { "ageRange": "≥ 60", "count": 3236254 }
+  ],
+  "byIllnessType": {
+    "procedural": {
+      "percentage": 74,
+      "description": "Surgical and procedural cases"
+    },
+    "medical": {
+      "percentage": 26,
+      "description": "Medical management cases"
+    }
+  },
+  "bySector": {
+    "private": {
+      "percentage": 56
+    },
+    "government": {
+      "percentage": 44
+    },
+    "international": {
+      "percentage": 0.00008,
+      "description": "Negligible international sector claims"
+    }
+  },
+  "covidAnalysis": {
+    "totalCovidClaims": {
+      "amount": 16692287836,
+      "count": 929498,
+      "amountPercentage": 14,
+      "countPercentage": 7
+    },
+    "totalNonCovidClaims": {
+      "amount": 105690715256,
+      "count": 11746136,
+      "amountPercentage": 86,
+      "countPercentage": 93
+    },
+    "covidBreakdown": {
+      "isolation": {
+        "amount": 86634130,
+        "count": 4208,
+        "amountPercentage": 0.52,
+        "countPercentage": 0.20
+      },
+      "inpatient": {
+        "amount": 14631490044,
+        "count": 72511,
+        "amountPercentage": 88,
+        "countPercentage": 8
+      },
+      "testing": {
+        "amount": 1974163662,
+        "count": 852779,
+        "amountPercentage": 12,
+        "countPercentage": 92
+      }
+    }
+  },
+  "byHCIClass": [
+    { "class": "Level 3 Hospital", "percentage": 31.8 },
+    { "class": "Level 2 Hospital", "percentage": 20.7 },
+    { "class": "Infirmary/Level 1 Hospital", "percentage": 15.7 },
+    { "class": "Primary Care Facility", "percentage": 8.5 },
+    { "class": "TB-DOTS Facility", "percentage": 6.2 },
+    { "class": "Lying-in Clinic", "percentage": 4.8 },
+    { "class": "Ambulatory Surgical Clinic", "percentage": 3.4 },
+    { "class": "Free-Standing Dialysis Clinic", "percentage": 2.9 },
+    { "class": "Birthing Home", "percentage": 2.1 },
+    { "class": "Animal Bite Treatment Center", "percentage": 1.6 },
+    { "class": "Konsulta Provider", "percentage": 1.2 },
+    { "class": "COVID-19 Testing Laboratory", "percentage": 0.7 },
+    { "class": "Drug Rehabilitation Center", "percentage": 0.3 },
+    { "class": "Community Isolation Unit", "percentage": 0.1 },
+    { "class": "Others", "percentage": 0.0 }
+  ],
+  "benefitExpenseDistribution": {
+    "description": "Benefit expense by membership category for CY 2023",
+    "total": 74207188265,
+    "breakdown": {
+      "directContributors": {
+        "amount": 34473633624,
+        "percentage": 46
+      },
+      "indirectContributors": {
+        "amount": 39303979133,
+        "percentage": 53
+      },
+      "konsulta": {
+        "amount": 429575508,
+        "percentage": 1
+      }
+    }
+  }
 }
