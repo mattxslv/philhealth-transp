@@ -1,9 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useSidebar } from "@/contexts/sidebar-context";
+import { cn } from "@/lib/utils";
 
 export function Footer() {
+  const { sidebarCollapsed } = useSidebar();
+  
   return (
-    <footer className="border-t border-border bg-secondary text-secondary-foreground">
+    <footer className={cn(
+      "bg-muted/50 dark:bg-muted/20 text-foreground transition-all duration-300",
+      sidebarCollapsed ? "lg:ml-16" : "lg:ml-56"
+    )}>
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* About */}

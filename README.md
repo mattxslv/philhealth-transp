@@ -2,6 +2,8 @@
 
 A modern, production-grade transparency and accountability portal for the Philippine Health Insurance Corporation (PhilHealth), built with Next.js 14, TypeScript, and Tailwind CSS.
 
+🌐 **Live Demo**: [https://philhealth-transp.vercel.app/](https://philhealth-transp.vercel.app/)
+
 ## Features
 
 ### Pages
@@ -26,7 +28,8 @@ A modern, production-grade transparency and accountability portal for the Philip
 
 ### Key Features
 - ✅ Fully responsive (mobile, tablet, desktop)
-- ✅ Dark mode support
+- ✅ Collapsible sidebar navigation with smooth animations
+- ✅ Dark mode support with proper theming
 - ✅ WCAG 2.1 AA accessibility compliance
 - ✅ Semantic HTML
 - ✅ Keyboard navigable
