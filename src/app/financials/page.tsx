@@ -78,12 +78,12 @@ export default function FinancialsPage() {
     <DashboardLayout>
       <div className="space-y-8">
         <PageHeading
-          title="Financial Reports"
-          description="Comprehensive financial data including revenue, expenditures, and investment portfolio"
+          title="Financial Information"
+          description="Annual financial statements and audit reports - independently audited, with clear breakdowns of revenues, expenditures, and fund balances. Includes benefit payment data, investment portfolio details, and administrative costs breakdown."
         />
 
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <KPIStatCard
             title="Total Revenue (2024)"
             value={formatCurrency(currentYear.revenue)}

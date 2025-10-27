@@ -70,8 +70,8 @@ export default function GovernancePage() {
     <DashboardLayout>
       <div className="space-y-8">
         <PageHeading
-          title="Governance & Leadership"
-          description="Board composition, meeting minutes, executive compensation, and organizational policies"
+          title="Governance & Accountability"
+          description="Board meeting minutes and resolutions, annual reports, executive compensation (salaries and benefits of key officials), and procurement contracts (major purchases and vendor selections with amounts)."
         />
 
         {/* Annual Reports */}

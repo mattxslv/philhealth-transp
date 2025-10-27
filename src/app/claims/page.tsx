@@ -85,8 +85,8 @@ export default function ClaimsPage() {
     <DashboardLayout>
       <div className="space-y-8">
         <PageHeading
-          title="Claims Analytics"
-          description="Comprehensive overview of claims processing, approval rates, and denial reasons"
+          title="Operational Data"
+          description="Claims processing statistics (approval rates, denial rates with reasons, and average processing times), member coverage data, healthcare facility accreditation list, and service availability information."
         />
 
         {/* KPI Cards */}

@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/contexts/sidebar-context";
+import { GlobalSearch } from "@/components/ui/global-search";
 
 // Main PhilHealth website navigation links
 const navigation = [
@@ -79,8 +80,9 @@ export function Navbar() {
           })}
         </div>
         
-        {/* Right section - theme toggle */}
-        <div className="hidden lg:flex lg:justify-end">
+        {/* Right section - search and theme toggle */}
+        <div className="hidden lg:flex lg:justify-end lg:gap-3">
+          <GlobalSearch />
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"

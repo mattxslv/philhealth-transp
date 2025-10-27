@@ -59,7 +59,7 @@ export default function EngagementPage() {
       <div className="space-y-8">
         <PageHeading
           title="Public Engagement"
-          description="Complaint resolution, feedback mechanisms, and policy update communications"
+          description="Complaint and resolution statistics (how grievances are handled and resolved), policy updates and circulars, clear contact channels for inquiries and feedback, and performance metrics against targets."
         />
 
         {/* KPI Cards */}

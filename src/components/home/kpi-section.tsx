@@ -4,18 +4,18 @@ import { formatCurrency, formatNumber } from "@/lib/utils";
 
 export function KPISection() {
   return (
-    <section className="py-16 bg-background">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+    <section className="py-12 sm:py-16 bg-background">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-foreground">
             Key Performance Indicators
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground px-4">
             Real-time overview of PhilHealth's operational metrics
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
             title="Total Benefit Payouts (2024)"
             value={formatCurrency(127500000000)}

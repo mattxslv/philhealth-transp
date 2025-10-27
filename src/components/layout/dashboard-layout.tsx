@@ -6,29 +6,49 @@ import {
   Home,
   DollarSign,
   Activity,
-  Users,
-  Building2,
-  FileCheck,
   ShieldCheck,
   MessageSquare,
   Menu,
   X,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  Building2,
+  ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { useSidebar } from "@/contexts/sidebar-context";
 
-const navigation = [
-  { name: "Home", href: "/", icon: Home },
-  { name: "Financials", href: "/financials", icon: DollarSign },
-  { name: "Claims", href: "/claims", icon: Activity },
-  { name: "Coverage", href: "/coverage", icon: Users },
-  { name: "Facilities", href: "/facilities", icon: Building2 },
-  { name: "Procurement", href: "/procurement", icon: FileCheck },
-  { name: "Governance", href: "/governance", icon: ShieldCheck },
-  { name: "Engagement", href: "/engagement", icon: MessageSquare },
+const navigationGroups = [
+  {
+    label: "Overview",
+    items: [
+      { name: "Home", href: "/", icon: Home },
+    ]
+  },
+  {
+    label: "Financial Reports",
+    items: [
+      { name: "Financial Information", href: "/financials", icon: DollarSign },
+      { name: "Procurement", href: "/procurement", icon: ShoppingCart },
+    ]
+  },
+  {
+    label: "Operational Data",
+    items: [
+      { name: "Claims", href: "/claims", icon: FileText },
+      { name: "Coverage", href: "/coverage", icon: Activity },
+      { name: "Facilities", href: "/facilities", icon: Building2 },
+    ]
+  },
+  {
+    label: "Governance",
+    items: [
+      { name: "Governance & Accountability", href: "/governance", icon: ShieldCheck },
+      { name: "Public Engagement", href: "/engagement", icon: MessageSquare },
+    ]
+  },
 ];
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -48,14 +68,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 z-50 h-screen transform border-r border-border bg-card transition-all duration-300 ease-in-out",
+          "fixed top-0 left-0 z-50 h-screen transform bg-gradient-to-b from-card to-card/95 border-r border-border transition-all duration-300 ease-in-out",
           sidebarCollapsed ? "w-16" : "w-56",
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
         <div className="flex h-full flex-col overflow-y-auto">
           {/* Logo in Sidebar */}
-          <div className="px-2 py-3 h-16 flex items-center justify-between gap-1">
+          <div className="px-2 h-16 flex items-center justify-between gap-1 border-b border-border/50">
             {!sidebarCollapsed && (
               <Link href="/" className="flex items-center gap-2 flex-1 min-w-0">
                 <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
@@ -98,28 +118,48 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-1 px-2 py-4" role="navigation" aria-label="Dashboard navigation">
-            {navigation.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-primary/10 hover:text-primary",
-                    sidebarCollapsed && "justify-center"
+          <nav className="flex-1 px-3 py-4" role="navigation" aria-label="Dashboard navigation">
+            <div className="space-y-6">
+              {navigationGroups.map((group, groupIndex) => (
+                <div key={group.label}>
+                  {!sidebarCollapsed && (
+                    <div className="px-3 mb-2">
+                      <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                        {group.label}
+                      </h3>
+                    </div>
                   )}
-                  onClick={() => setSidebarOpen(false)}
-                  title={sidebarCollapsed ? item.name : undefined}
-                >
-                  <item.icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
-                  {!sidebarCollapsed && <span>{item.name}</span>}
-                </Link>
-              );
-            })}
+                  {groupIndex > 0 && sidebarCollapsed && (
+                    <div className="my-3 border-t border-border/50" />
+                  )}
+                  <div className="space-y-1">
+                    {group.items.map((item) => {
+                      const isActive = pathname === item.href;
+                      return (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className={cn(
+                            "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                            isActive
+                              ? "bg-primary text-primary-foreground shadow-sm"
+                              : "text-muted-foreground hover:bg-primary/10 hover:text-primary",
+                            sidebarCollapsed && "justify-center px-2"
+                          )}
+                          onClick={() => setSidebarOpen(false)}
+                          title={sidebarCollapsed ? item.name : undefined}
+                        >
+                          <item.icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                          {!sidebarCollapsed && (
+                            <span className="break-words whitespace-normal leading-tight">{item.name}</span>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
           </nav>
         </div>
       </aside>
@@ -143,7 +183,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Page content */}
-        <div>{children}</div>
+        <div className="px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">{children}</div>
       </div>
     </div>
   );
