@@ -26,7 +26,7 @@ export function Navbar() {
   const { sidebarCollapsed, setSidebarOpen } = useSidebar();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/50 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-background border-b border-border shadow-sm">
       <nav 
         className={cn(
           "flex items-center justify-between p-4 transition-all duration-300",
