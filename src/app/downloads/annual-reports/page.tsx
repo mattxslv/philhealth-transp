@@ -57,7 +57,7 @@ export default function AnnualReportsPage() {
       <Breadcrumbs />
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 mt-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
