@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -35,29 +36,15 @@ export function Navbar() {
         )}
         aria-label="Global"
       >
-        {/* Mobile - hamburger on left, search and theme on right */}
-        <div className="flex lg:hidden">
+        {/* Left section - Mobile hamburger only */}
+        <div className="flex items-center gap-3">
+          {/* Mobile hamburger */}
           <button
             onClick={() => setSidebarOpen(true)}
-            className="rounded-md p-2 hover:bg-primary/10 transition-colors"
+            className="lg:hidden rounded-md p-2 hover:bg-primary/10 transition-colors"
             aria-label="Open sidebar"
           >
             <Menu className="h-5 w-5" />
-          </button>
-        </div>
-
-        {/* Mobile center spacer */}
-        <div className="flex-1 lg:hidden" />
-
-        <div className="flex lg:hidden gap-3">
-          <GlobalSearch />
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
-            aria-label="Toggle theme"
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           </button>
         </div>
 
@@ -95,20 +82,57 @@ export function Navbar() {
           })}
         </div>
         
-        {/* Right section - search and theme toggle */}
-        <div className="hidden lg:flex lg:justify-end lg:gap-3 lg:items-center">
-          <span className="text-xs text-muted-foreground whitespace-nowrap">
-            Last updated: December 31, 2023
-          </span>
-          <GlobalSearch />
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
-            aria-label="Toggle theme"
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </button>
+        {/* Right section - Partnership logos, search and theme toggle */}
+        <div className="flex items-center gap-3 lg:gap-4">
+          {/* Mobile - only search and theme */}
+          <div className="flex lg:hidden gap-3">
+            <GlobalSearch />
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
+              aria-label="Toggle theme"
+            >
+              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            </button>
+          </div>
+
+          {/* Desktop - full right section */}
+          <div className="hidden lg:flex lg:items-center lg:gap-4">
+            <span className="text-xs text-muted-foreground whitespace-nowrap">
+              Last updated: December 31, 2023
+            </span>
+            
+            <GlobalSearch />
+            
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
+              aria-label="Toggle theme"
+            >
+              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            </button>
+
+            {/* Partnership section - right of theme button */}
+            <div className="flex items-center gap-3 pl-4 border-l border-border">
+              <div className="text-xs text-muted-foreground">In partnership with</div>
+              <Image
+                src="/images/DICT-Logo-icon_only.png"
+                alt="DICT Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+              <Image
+                src="/images/bagong-pilipinas-logo.png"
+                alt="Bagong Pilipinas Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+            </div>
+          </div>
         </div>
       </nav>
       
@@ -119,9 +143,13 @@ export function Navbar() {
           <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-border">
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-                <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">PH</span>
-                </div>
+                <Image
+                  src="/images/philhealth logo.png"
+                  alt="PhilHealth Logo"
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                />
                 <span className="text-lg font-semibold">PhilHealth</span>
               </Link>
               <button
@@ -189,6 +217,9 @@ export function Navbar() {
                       </>
                     )}
                   </button>
+                </div>
+                <div className="py-6">
+                  <div className="text-xs text-muted-foreground mb-3">In partnership with</div>
                 </div>
               </div>
             </div>

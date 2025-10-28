@@ -8,6 +8,7 @@ import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { YearSelector } from "@/components/ui/year-selector";
 import { PageLoadingSkeleton } from "@/components/ui/skeleton";
+import { formatCurrency } from "@/lib/utils";
 import { DollarSign, TrendingUp, Wallet, PiggyBank, ChevronDown, ChevronUp, AlertCircle } from "lucide-react";
 import {
   Chart as ChartJS,

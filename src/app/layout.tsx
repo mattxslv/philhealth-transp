@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ToastProvider } from "@/components/ui/toast";
 import { SidebarProvider } from "@/contexts/sidebar-context";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -70,12 +71,14 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SidebarProvider>
-              <Navbar />
-              <main id="main-content" className="min-h-screen pt-16">{children}</main>
-              <Footer />
-              <ChatbotWidget />
-            </SidebarProvider>
+            <ToastProvider>
+              <SidebarProvider>
+                <Navbar />
+                <main id="main-content" className="min-h-screen pt-16">{children}</main>
+                <Footer />
+                <ChatbotWidget />
+              </SidebarProvider>
+            </ToastProvider>
           </ThemeProvider>
         </ErrorBoundary>
       </body>

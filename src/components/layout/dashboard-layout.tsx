@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Home,
@@ -85,15 +86,29 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <div className="flex h-full flex-col overflow-y-auto">
           {/* Logo in Sidebar */}
           <div className="px-2 h-16 flex items-center justify-between gap-1 border-b border-border/50">
-            {!sidebarCollapsed && (
+            {!sidebarCollapsed ? (
               <Link href="/" className="flex items-center gap-2 flex-1 min-w-0">
-                <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-bold text-sm">PH</span>
-                </div>
+                <Image
+                  src="/images/philhealth logo.png"
+                  alt="PhilHealth Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain flex-shrink-0"
+                />
                 <div className="flex flex-col overflow-hidden">
                   <span className="text-sm font-bold truncate">PhilHealth</span>
                   <span className="text-xs text-muted-foreground truncate">Transparency</span>
                 </div>
+              </Link>
+            ) : (
+              <Link href="/" className="flex items-center justify-center w-full">
+                <Image
+                  src="/images/philhealth logo.png"
+                  alt="PhilHealth Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
               </Link>
             )}
             

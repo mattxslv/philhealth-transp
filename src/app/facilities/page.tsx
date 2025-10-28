@@ -11,6 +11,7 @@ import { YearSelector } from "@/components/ui/year-selector";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatNumber } from "@/lib/utils";
 import { FacilityCardSkeleton } from "@/components/ui/skeleton";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { Building2, Hospital, Users, MapPin, CheckCircle, AlertCircle, Info } from "lucide-react";
 import {
   Chart as ChartJS,
@@ -99,9 +100,12 @@ export default function FacilitiesPage() {
   if (error) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="text-red-600">Error loading data: {error}</div>
-        </div>
+        <ErrorMessage
+          type="network"
+          title="Failed to Load Facilities"
+          message={`Unable to load facilities data: ${error}`}
+          onRetry={() => window.location.reload()}
+        />
       </DashboardLayout>
     );
   }

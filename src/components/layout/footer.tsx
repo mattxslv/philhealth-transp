@@ -104,35 +104,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar with Logos */}
-        <div className="mt-8 pt-6 border-t border-border/50">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-            {/* Left: Bagong Pilipinas Logo */}
-            <div className="flex items-center gap-3">
-              <div className="relative w-12 h-12 sm:w-16 sm:h-16">
-                <Image
-                  src="/images/bagong-pilipinas-logo.png"
-                  alt="Bagong Pilipinas"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Right: DICT Logo with "DEVELOPED BY:" */}
-            <div className="flex flex-col items-center sm:items-end gap-2">
-              <p className="text-xs font-semibold text-foreground">DEVELOPED BY:</p>
-              <div className="relative w-12 h-12 sm:w-16 sm:h-16">
-                <Image
-                  src="/images/DICT-Logo-icon_only.png"
-                  alt="DICT"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Bottom Bar with Logos removed as requested */}
 
         {/* Copyright */}
         <div className="mt-6 pt-4 border-t border-border/50">
