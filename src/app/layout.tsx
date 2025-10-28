@@ -72,7 +72,7 @@ export default function RootLayout({
           >
             <SidebarProvider>
               <Navbar />
-              <main id="main-content" className="min-h-screen">{children}</main>
+              <main id="main-content" className="min-h-screen pt-16">{children}</main>
               <Footer />
               <ChatbotWidget />
             </SidebarProvider>
