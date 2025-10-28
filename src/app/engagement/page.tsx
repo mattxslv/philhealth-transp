@@ -209,106 +209,158 @@ export default function EngagementPage() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-lg border border-blue-200 shadow-sm">
-          <div className="flex items-start mb-6">
-            <Info className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0 mt-1" />
+        {/* Future Enhancement: Comprehensive Engagement Dashboard */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-6">
+          <div className="flex items-start gap-3 mb-4">
+            <Info className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Future Enhancement: Complaint Analytics</h2>
-              <p className="text-gray-700 mb-6">
-                Once complaint data becomes available, this section will display interactive visualizations of complaint types, resolution trends, and satisfaction metrics.
+              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">Future Enhancements: Public Engagement & Accountability</h3>
+              <p className="text-sm text-blue-800 dark:text-blue-200 mb-4">
+                The following features are planned for implementation when engagement data becomes available:
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div className="bg-white p-6 rounded-lg shadow-md border border-blue-100">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Complaint Distribution (Sample)</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {/* Complaint Statistics */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📊 Complaint and Resolution Statistics</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Track how member grievances are handled, including complaint types, volumes, and resolution outcomes.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Total complaints by category and severity</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Resolution rates and outcomes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Average resolution time by complaint type</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Policy Updates */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📢 Policy Updates and Circulars</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Stay informed about new regulations, policy changes, and official circulars affecting PhilHealth members.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Recent policy updates and effective dates</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Official circulars and memoranda</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Impact summaries for members</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact Channels */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📞 Contact Information and Channels</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Clear and accessible contact channels for inquiries, feedback, and support requests.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Hotline numbers and email addresses</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Regional office contact details</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Social media and chat support</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Feedback System */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">💬 Feedback System</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Interactive feedback portal for members to share experiences, suggestions, and concerns.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Online feedback submission forms</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Satisfaction surveys and ratings</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Real-time tracking of submitted feedback</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Performance Metrics */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700 md:col-span-2">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">🎯 Performance Metrics Against Targets</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Measurable goals and actual performance data to track PhilHealth's service quality and efficiency.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Service level agreements (SLAs) and achievement rates</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Target vs actual performance dashboards</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Key performance indicators (KPIs) by department and region</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Sample Visualizations */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-4 text-gray-700 dark:text-gray-300">Preview: Complaint Distribution (Template)</h4>
               <div className="h-[300px]">
                 <Pie data={complaintsPieData} options={complaintsPieOptions} />
               </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 italic">
+                * Template showing complaint types breakdown
+              </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md border border-blue-100">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">Monthly Trends (Sample)</h3>
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-4 text-gray-700 dark:text-gray-300">Preview: Monthly Trends (Template)</h4>
               <div className="h-[300px]">
                 <Bar data={trendsBarData} options={trendsBarOptions} />
               </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md border border-blue-100">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">Future: Resolution Time Trends</h3>
-            <p className="text-sm text-gray-600 mb-4">Track average resolution time improvements over months</p>
-            <div className="h-[200px] flex items-center justify-center bg-gray-50 rounded border-2 border-dashed border-gray-300">
-              <p className="text-gray-500">Line chart showing resolution time trends will appear here</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-lg border border-green-200 shadow-sm">
-          <div className="flex items-start mb-6">
-            <Info className="h-6 w-6 text-green-600 mr-3 flex-shrink-0 mt-1" />
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Future Enhancement: Policy Updates Feed</h2>
-              <p className="text-gray-700 mb-6">
-                This section will display recent policy updates, circulars, and announcements affecting members.
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 italic">
+                * Template showing complaint volume trends over time
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="bg-white p-4 rounded-lg shadow border border-green-100">
-                <div className="flex items-start">
-                  <FileCheck className="h-5 w-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Policy Update #{item}</h4>
-                    <p className="text-sm text-gray-600 mb-2">Description of policy changes or announcements</p>
-                    <p className="text-xs text-gray-500">Date: Future data</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-lg border border-purple-200 shadow-sm">
-          <div className="flex items-start mb-6">
-            <Info className="h-6 w-6 text-purple-600 mr-3 flex-shrink-0 mt-1" />
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Future Enhancement: Public Consultation Calendar</h2>
-              <p className="text-gray-700 mb-6">
-                View upcoming public consultations, town halls, and stakeholder engagement events.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow border border-purple-100">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {[1, 2, 3].map((item) => (
-                  <tr key={item}>
-                    <td className="px-4 py-4 text-sm text-gray-900">Consultation Event #{item}</td>
-                    <td className="px-4 py-4 text-sm text-gray-600">Future Date</td>
-                    <td className="px-4 py-4 text-sm text-gray-600">Location TBD</td>
-                    <td className="px-4 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                        <Calendar className="w-3 h-3 mr-1" />
-                        Public
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-300 dark:border-blue-700">
+            <p className="text-xs text-blue-800 dark:text-blue-200 italic">
+              💡 <strong>Note:</strong> Public engagement data including complaint statistics and resolution metrics require integration with
+              PhilHealth's Member Services and Grievance Management systems. We are working to make this information publicly accessible for transparency.
+            </p>
           </div>
         </div>
 

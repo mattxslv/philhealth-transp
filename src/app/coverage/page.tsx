@@ -249,30 +249,49 @@ export default function CoveragePage() {
 
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <KPIStatCard
-            title="Total Membership"
-            value={formatNumber(data.overview.totalMembership)}
-            icon={Users}
-            description="Registered members & dependents"
-          />
-          <KPIStatCard
-            title="Direct Contributors"
-            value={formatNumber(data.membershipByCategory.directContributors.total)}
-            icon={UserCheck}
-            description="Employed & self-earning"
-          />
-          <KPIStatCard
-            title="Indirect Contributors"
-            value={formatNumber(data.membershipByCategory.indirectContributors.total)}
-            icon={Users}
-            description="Sponsored & indigents"
-          />
-          <KPIStatCard
-            title="Coverage Rate"
-            value="100%"
-            icon={Percent}
-            description="Universal health coverage"
-          />
+          {/* Total Membership */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 dark:from-emerald-600 dark:to-emerald-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Users className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Total Membership</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.overview.totalBeneficiaries)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Registered members & dependents</p>
+            </div>
+          </div>
+
+          {/* Direct Contributors */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <UserCheck className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Direct Contributors</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.membershipByCategory.directContributors.total)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Employed & self-earning</p>
+            </div>
+          </div>
+
+          {/* Indirect Contributors */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 dark:from-orange-600 dark:to-orange-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Users className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Indirect Contributors</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.membershipByCategory.indirectContributors.total)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Sponsored & indigents</p>
+            </div>
+          </div>
+
+          {/* Coverage Rate */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Percent className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Coverage Rate</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">100%</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Universal health coverage</p>
+            </div>
+          </div>
         </div>
 
         {/* Membership Breakdown Pie Chart */}

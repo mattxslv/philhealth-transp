@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { PageHeading } from "@/components/ui/page-heading";
-import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { YearSelector } from "@/components/ui/year-selector";
 import { formatNumber, formatCurrency } from "@/lib/utils";
-import { Users, FileText, DollarSign, Shield, Info, Calendar, Vote, Eye } from "lucide-react";
+import { FileText, DollarSign, Calendar, Download, AlertCircle, Building2 } from "lucide-react";
 
 export default function GovernancePage() {
   const [data, setData] = useState<any>(null);
@@ -48,106 +46,114 @@ export default function GovernancePage() {
         />
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <KPIStatCard
-            title="Board Members"
-            value={formatNumber(data.corporateGovernance.totalBoardMembers)}
-            icon={Users}
-            description="Board of Directors"
-          />
-          <KPIStatCard
-            title="Board Meetings"
-            value={formatNumber(data.corporateGovernance.totalBoardMeetings)}
-            icon={FileText}
-            description="Held in 2023"
-          />
-          <KPIStatCard
-            title="Board Resolutions"
-            value={formatNumber(data.corporateGovernance.totalBoardResolutions)}
-            icon={FileText}
-            description="Passed in 2023"
-          />
-          <KPIStatCard
-            title="Board Compensation"
-            value={formatCurrency(data.boardOfDirectors.boardCompensation2023.totalHonorarium)}
-            icon={DollarSign}
-            description="Total for 2023"
-          />
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h3 className="text-lg font-semibold mb-4">Board of Directors (2023)</h3>
-          <div className="space-y-4">
-            {data.boardOfDirectors.composition.map((member: any, index: number) => (
-              <div key={index} className="border-b pb-3 last:border-0">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="font-semibold text-gray-900">{member.name}</p>
-                    <p className="text-sm text-gray-600">{member.position}</p>
-                    {member.title && <p className="text-sm text-gray-500">{member.title} - {member.department}</p>}
-                    {member.credentials && <p className="text-xs text-gray-500">{member.credentials}</p>}
-                  </div>
-                  <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">{member.sector}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
-            <h3 className="text-lg font-semibold mb-4">Senior Vice Presidents</h3>
-            <div className="space-y-3">
-              {data.executiveOfficers.seniorVicePresidents.map((svp: any, index: number) => (
-                <div key={index} className="flex justify-between items-start border-b pb-2 last:border-0">
-                  <div>
-                    <p className="font-medium text-sm">{svp.name}</p>
-                    <p className="text-xs text-gray-600">{svp.sector}</p>
-                  </div>
-                </div>
-              ))}
+          {/* Board Meetings */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Calendar className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Board Meetings</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.corporateGovernance.totalBoardMeetings)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Held in {selectedYear}</p>
             </div>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
-            <h3 className="text-lg font-semibold mb-4">Executive Compensation</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Key Management Personnel (2023)</span>
-                <span className="font-semibold">{formatCurrency(data.executiveOfficers.compensation2023.keyManagementPersonnel.total)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Key Management Personnel (2022)</span>
-                <span className="font-semibold">{formatCurrency(data.executiveOfficers.compensation2022.keyManagementPersonnel.total)}</span>
-              </div>
-              <div className="mt-4 pt-4 border-t">
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Board Honorarium (2023)</span>
-                  <span className="font-semibold">{formatCurrency(data.boardOfDirectors.boardCompensation2023.totalHonorarium)}</span>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <span className="text-sm text-gray-600">Board Honorarium (2022)</span>
-                  <span className="font-semibold">{formatCurrency(data.boardOfDirectors.boardCompensation2022.totalHonorarium)}</span>
-                </div>
-              </div>
+
+          {/* Board Resolutions */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 dark:from-emerald-600 dark:to-emerald-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <FileText className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Board Resolutions</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.corporateGovernance.totalBoardResolutions)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Passed in {selectedYear}</p>
+            </div>
+          </div>
+
+          {/* Annual Reports Available */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 dark:from-orange-600 dark:to-orange-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Download className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Annual Reports</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">22</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Available (2003-2024)</p>
+            </div>
+          </div>
+
+          {/* Executive Compensation */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <DollarSign className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Executive Compensation</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatCurrency(data.boardOfDirectors.boardCompensation2023.totalHonorarium)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Board Total {selectedYear}</p>
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h3 className="text-lg font-semibold mb-4">Corporate Values</h3>
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm font-semibold text-gray-700">Vision:</p>
-              <p className="text-sm text-gray-600">{data.corporateValues.vision}</p>
-              <p className="text-xs text-gray-500 italic">{data.corporateValues.visionEnglish}</p>
+
+        {/* Board Meeting Minutes - FUTURE ENHANCEMENT */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
+              <FileText className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-700">Mission:</p>
-              <p className="text-sm text-gray-600">{data.corporateValues.mission}</p>
-              <p className="text-xs text-gray-500 italic">{data.corporateValues.missionEnglish}</p>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Board Meeting Minutes</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{data.corporateGovernance.totalBoardMeetings} meetings held in {selectedYear}</p>
             </div>
-            <div>
-              <p className="text-sm font-semibold text-gray-700 mb-2">Core Values:</p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                {data.corporateValues.coreValues.map((value: string, index: number) => (
-                  <div key={index} className="text-xs bg-green-50 text-green-800 px-3 py-2 rounded">
-                    {value}
+          </div>
+
+          <div className="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <AlertCircle className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">Future Enhancement</h4>
+                <p className="text-sm text-blue-800 dark:text-blue-200 mb-4">
+                  Detailed board meeting minutes, agendas, and voting records will be made available here. This section will include:
+                </p>
+                <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-2 ml-4">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    <span>Complete meeting minutes with discussion summaries</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    <span>Agenda items and topics discussed</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    <span>Attendance records and voting results</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    <span>Resolutions passed and their implementation status</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 mt-1">•</span>
+                    <span>Downloadable PDF documents for each meeting</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Preview Template */}
+            <div className="mt-4 bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h5 className="text-md font-semibold mb-3 text-gray-700 dark:text-gray-300">Preview: How Minutes Will Be Displayed</h5>
+              <div className="space-y-2">
+                {[
+                  { date: "December 15, 2023", title: "Regular Board Meeting #12", resolutions: 8, attendance: "13/13" },
+                  { date: "November 20, 2023", title: "Regular Board Meeting #11", resolutions: 10, attendance: "12/13" },
+                  { date: "October 10, 2023", title: "Special Board Meeting", resolutions: 5, attendance: "13/13" },
+                ].map((meeting, index) => (
+                  <div key={index} className="flex justify-between items-center p-3 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{meeting.title}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{meeting.date} • {meeting.resolutions} resolutions • Attendance: {meeting.attendance}</p>
+                      </div>
+                    </div>
+                    <Download className="w-4 h-4 text-gray-400" />
                   </div>
                 ))}
               </div>
@@ -155,150 +161,179 @@ export default function GovernancePage() {
           </div>
         </div>
 
-        {/* FUTURE ENHANCEMENT SECTION */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-6">
-          <div className="flex items-start gap-3 mb-4">
-            <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+        {/* Annual Reports - AVAILABLE */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl">
+              <Download className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+            </div>
             <div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">Future Enhancement: Advanced Governance Transparency</h3>
-              <p className="text-sm text-blue-800 mb-4">
-                The sections below show templates for what can be added when more detailed governance data becomes available. 
-                This would include detailed board member profiles, meeting minutes, voting records, and resolution tracking.
-              </p>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Annual Reports</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Comprehensive overview of achievements, challenges, and plans</p>
             </div>
           </div>
 
-          {/* Sample Board Member Profiles */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Enhanced Board Member Profiles (Template)</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                {
-                  name: "[Future] Board Member A",
-                  position: "Chairperson",
-                  sector: "Government",
-                  term: "2022-2025",
-                  attendance: "95%",
-                  committees: ["Executive Committee", "Audit Committee"]
-                },
-                {
-                  name: "[Future] Board Member B",
-                  position: "Vice-Chairperson",
-                  sector: "Private",
-                  term: "2023-2026",
-                  attendance: "92%",
-                  committees: ["Finance Committee", "Risk Management"]
-                }
-              ].map((member, index) => (
-                <div key={index} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h5 className="font-semibold text-gray-900">{member.name}</h5>
-                      <p className="text-sm text-gray-600">{member.position}</p>
-                    </div>
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                      {member.sector}
-                    </span>
-                  </div>
-                  <div className="space-y-1 text-xs text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-3 h-3" />
-                      <span>Term: {member.term}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Vote className="w-3 h-3" />
-                      <span>Attendance: {member.attendance}</span>
-                    </div>
-                    <div className="mt-2">
-                      <p className="font-medium">Committee Memberships:</p>
-                      {member.committees.map((committee, idx) => (
-                        <span key={idx} className="inline-block bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-xs mr-1 mt-1">
-                          {committee}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border-2 border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <Download className="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-2">22 Annual Reports Available (2003-2024)</h4>
+                <p className="text-sm text-emerald-800 dark:text-emerald-200 mb-4">
+                  PhilHealth annual reports provide comprehensive overviews of organizational achievements, financial performance,
+                  challenges faced, and strategic plans for the future.
+                </p>
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-emerald-200 dark:border-emerald-700">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">📥 Downloads Page Coming Soon</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">
+                    A dedicated downloads page is being prepared where you can access all 22 annual reports from 2003 to 2024.
+                    Each report includes: financial statements, operational highlights, member statistics, policy changes, and strategic initiatives.
+                  </p>
                 </div>
-              ))}
+              </div>
             </div>
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * This template shows how board member profiles could include: biographical information, 
-              educational background, professional experience, committee assignments, attendance records, 
-              and disclosure of potential conflicts of interest.
-            </p>
+          </div>
+        </div>
+
+        {/* Executive Compensation */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
+              <DollarSign className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Executive Compensation</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Salaries and benefits of key officials</p>
+            </div>
           </div>
 
-          {/* Sample Meeting Minutes */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Board Meeting Minutes Access (Template)</h4>
-            <div className="space-y-2">
-              {[
-                { date: "December 2023", title: "[Future] Regular Board Meeting #12", status: "Published", topics: 5 },
-                { date: "November 2023", title: "[Future] Regular Board Meeting #11", status: "Published", topics: 7 },
-                { date: "October 2023", title: "[Future] Special Board Meeting", status: "Published", topics: 3 },
-                { date: "September 2023", title: "[Future] Regular Board Meeting #10", status: "Published", topics: 6 },
-              ].map((meeting, index) => (
-                <div key={index} className="flex justify-between items-center p-3 border rounded hover:bg-gray-50">
-                  <div className="flex items-center gap-3">
-                    <Eye className="w-4 h-4 text-gray-400" />
-                    <div>
-                      <p className="text-sm font-medium">{meeting.title}</p>
-                      <p className="text-xs text-gray-500">{meeting.date} • {meeting.topics} agenda items</p>
-                    </div>
-                  </div>
-                  <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                    {meeting.status}
-                  </span>
+          <div className="space-y-4">
+            {/* Board Compensation */}
+            <div>
+              <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Board of Directors Honorarium</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-100 dark:border-purple-800">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{selectedYear}</p>
+                  <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{formatCurrency(data.boardOfDirectors.boardCompensation2023.totalHonorarium)}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{data.corporateGovernance.totalBoardMembers} board members</p>
                 </div>
-              ))}
+                <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">2022</p>
+                  <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{formatCurrency(data.boardOfDirectors.boardCompensation2022.totalHonorarium)}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Previous year comparison</p>
+                </div>
+              </div>
             </div>
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * This template shows how board meeting minutes could be made accessible with: 
-              date, agenda items, attendees, resolutions passed, and downloadable PDF documents.
-            </p>
+
+            {/* Key Management Personnel */}
+            <div>
+              <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Key Management Personnel</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-100 dark:border-emerald-800">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{selectedYear}</p>
+                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{formatCurrency(data.executiveOfficers.compensation2023.keyManagementPersonnel.total)}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Total compensation</p>
+                </div>
+                <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">2022</p>
+                  <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{formatCurrency(data.executiveOfficers.compensation2022.keyManagementPersonnel.total)}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Previous year comparison</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Organizational Structure - FUTURE ENHANCEMENT */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-xl">
+              <Building2 className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Organizational Structure</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Departments, units, and reporting relationships</p>
+            </div>
           </div>
 
-          {/* Sample Resolution Tracking */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Board Resolution Tracking (Template)</h4>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Resolution No.</th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Title</th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Date</th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {[
-                    { number: "[Future] 2023-145", title: "Budget Approval FY 2024", date: "Dec 15, 2023", status: "Implemented" },
-                    { number: "[Future] 2023-144", title: "Policy Amendment - Claims Processing", date: "Dec 1, 2023", status: "In Progress" },
-                    { number: "[Future] 2023-143", title: "Facility Accreditation Standards", date: "Nov 20, 2023", status: "Implemented" },
-                  ].map((resolution, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="px-4 py-2 text-xs">{resolution.number}</td>
-                      <td className="px-4 py-2 text-xs">{resolution.title}</td>
-                      <td className="px-4 py-2 text-xs">{resolution.date}</td>
-                      <td className="px-4 py-2">
-                        <span className={`text-xs px-2 py-1 rounded ${
-                          resolution.status === "Implemented" 
-                            ? "bg-green-100 text-green-800" 
-                            : "bg-yellow-100 text-yellow-800"
-                        }`}>
-                          {resolution.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="bg-orange-50 dark:bg-orange-900/20 border-2 border-orange-200 dark:border-orange-800 rounded-lg p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <AlertCircle className="w-6 h-6 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="text-lg font-semibold text-orange-900 dark:text-orange-100 mb-2">Future Enhancement</h4>
+                <p className="text-sm text-orange-800 dark:text-orange-200 mb-4">
+                  A detailed organizational chart and structure will be displayed here, including:
+                </p>
+                <ul className="text-sm text-orange-700 dark:text-orange-300 space-y-2 ml-4">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1">•</span>
+                    <span>Interactive organizational chart</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1">•</span>
+                    <span>Department and division descriptions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1">•</span>
+                    <span>Regional office structure</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1">•</span>
+                    <span>Key personnel by department</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1">•</span>
+                    <span>Contact information for each unit</span>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * This template shows how board resolutions could be tracked with: resolution number, 
-              title, description, voting record, implementation status, and related documents.
-            </p>
+          </div>
+        </div>
+
+        {/* Policy Decisions - FUTURE ENHANCEMENT */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-teal-100 dark:bg-teal-900/30 rounded-xl">
+              <FileText className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Policy Decisions</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{data.corporateGovernance.totalBoardResolutions} resolutions passed in {selectedYear}</p>
+            </div>
+          </div>
+
+          <div className="bg-teal-50 dark:bg-teal-900/20 border-2 border-teal-200 dark:border-teal-800 rounded-lg p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <AlertCircle className="w-6 h-6 text-teal-600 dark:text-teal-400 flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="text-lg font-semibold text-teal-900 dark:text-teal-100 mb-2">Future Enhancement</h4>
+                <p className="text-sm text-teal-800 dark:text-teal-200 mb-4">
+                  Detailed policy decisions, resolutions, and circulars will be accessible here, including:
+                </p>
+                <ul className="text-sm text-teal-700 dark:text-teal-300 space-y-2 ml-4">
+                  <li className="flex items-start gap-2">
+                    <span className="text-teal-500 mt-1">•</span>
+                    <span>Board resolutions with full text and voting records</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-teal-500 mt-1">•</span>
+                    <span>Policy circulars and memoranda</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-teal-500 mt-1">•</span>
+                    <span>Implementation guidelines</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-teal-500 mt-1">•</span>
+                    <span>Regulatory changes affecting members</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-teal-500 mt-1">•</span>
+                    <span>Searchable database of all policy documents</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 

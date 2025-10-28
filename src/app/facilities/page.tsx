@@ -199,30 +199,49 @@ export default function FacilitiesPage() {
         />
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <KPIStatCard
-            title="Total Facilities"
-            value={formatNumber(data.summary?.totalHealthcareFacilities || 0)}
-            icon={Building2}
-            description="Accredited nationwide"
-          />
-          <KPIStatCard
-            title="Hospitals"
-            value={formatNumber(data.summary?.totalHospitals || 0)}
-            icon={Hospital}
-            description="Hospital facilities"
-          />
-          <KPIStatCard
-            title="Healthcare Professionals"
-            value={formatNumber(data.summary?.totalHealthcareProfessionals || 0)}
-            icon={Users}
-            description="Accredited professionals"
-          />
-          <KPIStatCard
-            title="Other Facilities"
-            value={formatNumber(data.summary?.totalOtherFacilities || 0)}
-            icon={MapPin}
-            description="Clinics, centers, etc."
-          />
+          {/* Total Facilities */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 dark:from-emerald-600 dark:to-emerald-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Building2 className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Total Facilities</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.summary?.totalHealthcareFacilities || 0)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Accredited nationwide</p>
+            </div>
+          </div>
+
+          {/* Hospitals */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Hospital className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Hospitals</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.summary?.totalHospitals || 0)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Hospital facilities</p>
+            </div>
+          </div>
+
+          {/* Healthcare Professionals */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 dark:from-orange-600 dark:to-orange-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Users className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Healthcare Professionals</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.summary?.totalHealthcareProfessionals || 0)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Accredited professionals</p>
+            </div>
+          </div>
+
+          {/* Other Facilities */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <MapPin className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Other Facilities</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.summary?.totalOtherFacilities || 0)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Clinics, centers, etc.</p>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -257,22 +276,121 @@ export default function FacilitiesPage() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-6">
+        {/* Future Enhancement Section */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-6">
           <div className="flex items-start gap-3 mb-4">
-            <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+            <Info className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">Future Enhancement: Facility Directory</h3>
-              <p className="text-sm text-blue-800 mb-4">
-                The section below shows a template for searchable facility listings when detailed data becomes available.
+              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">Future Enhancements: Searchable Facility Directory</h3>
+              <p className="text-sm text-blue-800 dark:text-blue-200 mb-4">
+                The following features are planned for implementation to provide comprehensive facility information:
               </p>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Facility Listing (Template)</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {/* Searchable Database */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">🔍 Searchable Database</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Full-text search and filtering capabilities to find accredited hospitals and healthcare providers by name, location, or services.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Search by facility name, region, or city</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Filter by type, level, and ownership</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Sort by distance or rating</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact Information */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📞 Contact & Location Details</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Complete contact information and precise addresses for every accredited facility.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Full street addresses with map integration</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Phone numbers and email addresses</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Operating hours and emergency services</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Services Offered */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">🏥 Services Offered</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Detailed list of medical services, specialties, and PhilHealth benefit packages available at each facility.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Available medical specialties</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>PhilHealth benefit packages covered</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Diagnostic and treatment capabilities</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Accreditation Status */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">✅ Accreditation Status & Quality</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Current accreditation status, validity dates, and quality ratings for transparency and informed choices.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Accreditation validity and expiration dates</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Quality assessment scores</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Compliance history and certifications</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Sample Table */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700 mb-4">
+            <h4 className="text-md font-semibold mb-3 text-gray-700 dark:text-gray-300">Preview: Searchable Facility Directory (Template)</h4>
             <DataTable columns={facilityColumns} data={sampleFacilities} pageSize={5} />
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * Template showing how facilities could be listed with search and filter capabilities
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 italic">
+              * Template showing how facilities will be displayed with search, filter, and detailed information
+            </p>
+          </div>
+
+          <div className="mt-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-300 dark:border-blue-700">
+            <p className="text-xs text-blue-800 dark:text-blue-200 italic">
+              💡 <strong>Note:</strong> Detailed facility information including addresses, contact details, and services offered requires
+              integration with PhilHealth's facility accreditation database. We are coordinating with relevant departments to make this data publicly accessible.
             </p>
           </div>
         </div>

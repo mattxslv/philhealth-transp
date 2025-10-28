@@ -22,6 +22,12 @@ export const metadata: Metadata = {
   authors: [{ name: "PhilHealth" }],
   creator: "PhilHealth",
   publisher: "PhilHealth",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
   openGraph: {
     type: "website",
     locale: "en_PH",

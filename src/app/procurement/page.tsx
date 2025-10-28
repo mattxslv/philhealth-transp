@@ -184,95 +184,128 @@ export default function ProcurementPage() {
         </div>
 
         {/* FUTURE ENHANCEMENT SECTION */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-6">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-6">
           <div className="flex items-start gap-3 mb-4">
-            <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+            <Info className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">Future Enhancement: Procurement Transparency Dashboard</h3>
-              <p className="text-sm text-blue-800 mb-4">
-                The sections below show templates for what can be added when detailed procurement data becomes available. 
-                This would include contract listings, procurement timelines, vendor information, and budget allocations.
+              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">Future Enhancements: Procurement Transparency</h3>
+              <p className="text-sm text-blue-800 dark:text-blue-200 mb-4">
+                The following features are planned for implementation when procurement data becomes publicly available:
               </p>
             </div>
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {/* Government Contracts */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📄 Government Contracts Database</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Complete listing of all procurement contracts with detailed information and downloadable documents.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Contract titles and descriptions</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Award dates and contract durations</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Bidding documents and results</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contractor Information */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">🏢 Contractor/Vendor Information</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Details about winning bidders and accredited suppliers providing goods and services to PhilHealth.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Company names and registration details</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Contract award history</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Performance ratings and compliance</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contract Amounts */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">💰 Contract Amounts & Dates</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Financial details including contract values, payment schedules, and important milestone dates.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Original and amended contract amounts</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Payment disbursement records</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Start, end, and extension dates</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Procurement by Category */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📊 Procurement by Category</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Breakdown of procurement activities organized by category for better oversight and analysis.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>IT services, medical equipment, construction</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Total spending per category</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Year-over-year category trends</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
           {/* Sample Contract Listing */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
-            <h4 className="text-md font-semibold mb-3 text-gray-700 flex items-center gap-2">
-              <FileText className="w-5 h-5 text-blue-600" />
-              Sample Contract Listing (Template)
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700 mb-4">
+            <h4 className="text-md font-semibold mb-3 text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              Preview: Contract Listing with Status Tracking (Template)
             </h4>
             <DataTable 
               columns={procurementColumns} 
               data={sampleProcurementData} 
               pageSize={5}
             />
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * This is a template showing how procurement contracts could be listed with details such as:
-              project name, vendor/contractor, contract amount, award date, procurement method, 
-              status (Awarded/Ongoing/Completed), completion date, etc.
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 italic">
+              * Template showing how contracts will be displayed with: project name, vendor, amount, category, dates, and real-time status
             </p>
           </div>
 
-          {/* Sample Category Summary */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <h4 className="text-md font-semibold mb-3 text-gray-700 flex items-center gap-2">
-              <DollarSign className="w-5 h-5 text-blue-600" />
-              Sample Procurement by Category (Template)
-            </h4>
-            <div className="space-y-3">
-              {procurementCategories.map((category, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                  <div>
-                    <p className="font-medium text-gray-900">{category.name}</p>
-                    <p className="text-xs text-gray-500">{category.count} contracts</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-green-700">{formatCurrency(category.totalAmount)}</p>
-                    <p className="text-xs text-gray-500">Total Value</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * This template shows how procurement data could be categorized by: IT Services, Medical Equipment, 
-              Construction, Office Supplies, Consulting Services, Professional Services, Maintenance, etc.
+          <div className="mt-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-300 dark:border-blue-700">
+            <p className="text-xs text-blue-800 dark:text-blue-200 italic">
+              💡 <strong>Note:</strong> Detailed procurement data is managed by the PhilHealth Procurement Department and is subject to government
+              procurement transparency requirements. We are working to integrate this data for public access in compliance with transparency laws.
             </p>
-          </div>
-
-          {/* Future Features List */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200 mt-6">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Potential Future Features</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="flex items-start gap-2">
-                <Calendar className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium">Procurement Timeline</p>
-                  <p className="text-xs text-gray-600">Bidding schedule and award dates</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-2">
-                <Building className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium">Vendor Directory</p>
-                  <p className="text-xs text-gray-600">List of accredited suppliers</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-2">
-                <FileText className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium">Contract Documents</p>
-                  <p className="text-xs text-gray-600">Bid documents and awards</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-2">
-                <DollarSign className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium">Budget Allocation</p>
-                  <p className="text-xs text-gray-600">Annual procurement budget breakdown</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 

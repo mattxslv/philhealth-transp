@@ -8,7 +8,7 @@ import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { YearSelector } from "@/components/ui/year-selector";
 import { formatCurrency } from "@/lib/utils";
-import { DollarSign, TrendingUp, Wallet, PiggyBank, ChevronDown, ChevronUp } from "lucide-react";
+import { DollarSign, TrendingUp, Wallet, PiggyBank, ChevronDown, ChevronUp, AlertCircle } from "lucide-react";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -276,16 +276,15 @@ export default function FinancialsPage() {
         {/* KPI Cards with gradient backgrounds and expandable details */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {/* Total Assets Card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-xl hover:shadow-2xl transition-shadow">
-            <div 
-              className="p-6 cursor-pointer"
-              onClick={() => toggleCard('assets')}
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-              <Wallet className="h-10 w-10 text-white/90 mb-4" />
-              <p className="text-white/80 text-sm font-medium mb-1">Total Assets</p>
-              <p className="text-3xl font-bold text-white mb-2">{formatCurrency(latestData.totalAssets || 0)}</p>
-              <p className="text-white/70 text-xs">As of December 31, {selectedYear}</p>
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 dark:from-emerald-600 dark:to-emerald-800 shadow-xl hover:shadow-2xl transition-all group">
+            <div className="p-6">
+              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+              <div className="relative">
+                <Wallet className="h-10 w-10 text-white/90 mb-4" />
+                <p className="text-white/80 dark:text-white/90 text-sm font-medium mb-1">Total Assets</p>
+                <p className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">{formatCurrency(latestData.totalAssets || 0)}</p>
+                <p className="text-white/70 dark:text-white/80 text-xs">As of December 31, {selectedYear}</p>
+              </div>
             </div>
             {expandedCards.assets && assetDetails && (
               <div className="bg-white/10 backdrop-blur-sm p-4 space-y-2 border-t border-white/20">
@@ -339,16 +338,15 @@ export default function FinancialsPage() {
           </div>
 
           {/* Total Revenue Card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 shadow-xl hover:shadow-2xl transition-shadow">
-            <div 
-              className="p-6 cursor-pointer"
-              onClick={() => toggleCard('revenue')}
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-              <DollarSign className="h-10 w-10 text-white/90 mb-4" />
-              <p className="text-white/80 text-sm font-medium mb-1">Total Revenue</p>
-              <p className="text-3xl font-bold text-white mb-2">{formatCurrency(latestData.revenue || 0)}</p>
-              <p className="text-white/70 text-xs">For the year {selectedYear}</p>
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-800 shadow-xl hover:shadow-2xl transition-all group">
+            <div className="p-6">
+              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+              <div className="relative">
+                <DollarSign className="h-10 w-10 text-white/90 mb-4" />
+                <p className="text-white/80 dark:text-white/90 text-sm font-medium mb-1">Total Revenue</p>
+                <p className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">{formatCurrency(latestData.revenue || 0)}</p>
+                <p className="text-white/70 dark:text-white/80 text-xs">For the year {selectedYear}</p>
+              </div>
             </div>
             {expandedCards.revenue && revenueDetails && (
               <div className="bg-white/10 backdrop-blur-sm p-4 space-y-2 border-t border-white/20">
@@ -407,16 +405,15 @@ export default function FinancialsPage() {
           </div>
 
           {/* Total Expenses Card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 shadow-xl hover:shadow-2xl transition-shadow">
-            <div 
-              className="p-6 cursor-pointer"
-              onClick={() => toggleCard('expenses')}
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-              <TrendingUp className="h-10 w-10 text-white/90 mb-4" />
-              <p className="text-white/80 text-sm font-medium mb-1">Total Expenses</p>
-              <p className="text-3xl font-bold text-white mb-2">{formatCurrency(latestData.expenditures || 0)}</p>
-              <p className="text-white/70 text-xs">For the year {selectedYear}</p>
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 dark:from-orange-600 dark:to-orange-800 shadow-xl hover:shadow-2xl transition-all group">
+            <div className="p-6">
+              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+              <div className="relative">
+                <TrendingUp className="h-10 w-10 text-white/90 mb-4" />
+                <p className="text-white/80 dark:text-white/90 text-sm font-medium mb-1">Total Expenses</p>
+                <p className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">{formatCurrency(latestData.expenditures || 0)}</p>
+                <p className="text-white/70 dark:text-white/80 text-xs">For the year {selectedYear}</p>
+              </div>
             </div>
             {expandedCards.expenses && expenseDetails && (
               <div className="bg-white/10 backdrop-blur-sm p-4 space-y-2 border-t border-white/20">
@@ -467,16 +464,15 @@ export default function FinancialsPage() {
           </div>
 
           {/* Net Income Card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 shadow-xl hover:shadow-2xl transition-shadow">
-            <div 
-              className="p-6 cursor-pointer"
-              onClick={() => toggleCard('netIncome')}
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-              <PiggyBank className="h-10 w-10 text-white/90 mb-4" />
-              <p className="text-white/80 text-sm font-medium mb-1">Net Income</p>
-              <p className="text-3xl font-bold text-white mb-2">{formatCurrency(latestData.netIncome || 0)}</p>
-              <p className="text-white/70 text-xs">For the year {selectedYear}</p>
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-800 shadow-xl hover:shadow-2xl transition-all group">
+            <div className="p-6">
+              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+              <div className="relative">
+                <PiggyBank className="h-10 w-10 text-white/90 mb-4" />
+                <p className="text-white/80 dark:text-white/90 text-sm font-medium mb-1">Net Income</p>
+                <p className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">{formatCurrency(latestData.netIncome || 0)}</p>
+                <p className="text-white/70 dark:text-white/80 text-xs">For the year {selectedYear}</p>
+              </div>
             </div>
             {expandedCards.netIncome && (
               <div className="bg-white/10 backdrop-blur-sm p-4 space-y-2 border-t border-white/20">
@@ -556,6 +552,116 @@ export default function FinancialsPage() {
             <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Claims Paid</h3>
             <p className="text-4xl font-bold text-red-600 dark:text-red-400 mb-2">₱{((latestData.claimsPaid || 0) / 1000000000).toFixed(1)}B</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Total disbursed</p>
+          </div>
+        </div>
+
+        {/* Future Enhancements Section */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-6">
+          <div className="flex items-start gap-3 mb-4">
+            <AlertCircle className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">Future Enhancements: Advanced Financial Transparency</h3>
+              <p className="text-sm text-blue-800 dark:text-blue-200 mb-4">
+                The following features are planned for implementation when additional data becomes available:
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Quarterly Reports */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📊 Quarterly Financial Reports</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Quarterly breakdowns of revenue, expenditures, and financial position to provide more frequent updates throughout the year.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Q1, Q2, Q3, Q4 financial statements</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Quarter-over-quarter comparisons</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Seasonal trend analysis</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Audit Reports */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">🔍 Detailed Audit Reports</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Comprehensive audit findings from the Commission on Audit (COA) with recommendations and management responses.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>COA audit opinions and findings</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Management corrective action plans</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Status of audit recommendations</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Investment Portfolio */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">💼 Investment Portfolio Performance</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Detailed breakdown of where PhilHealth funds are invested and their investment returns.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Investment by asset class (bonds, securities, etc.)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Return on investment (ROI) and yields</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Risk assessment and portfolio strategy</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Administrative Costs */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📋 Administrative Costs Breakdown</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Granular details on operational expenses as a percentage of total budget, by department and function.
+              </p>
+              <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Personnel costs vs operational costs</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Department-by-department expense allocation</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span>Administrative efficiency ratios</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-300 dark:border-blue-700">
+            <p className="text-xs text-blue-800 dark:text-blue-200 italic">
+              💡 <strong>Note:</strong> These enhancements require detailed financial data that may be available in internal reports but not yet
+              published in the annual reports. We are working to make this information accessible for greater transparency.
+            </p>
           </div>
         </div>
 

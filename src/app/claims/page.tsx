@@ -158,16 +158,29 @@ export default function ClaimsPage() {
     plugins: {
       legend: {
         position: "right" as const,
+        onClick: (e: any, legendItem: any, legend: any) => {
+          const index = legendItem.index;
+          const chart = legend.chart;
+          const meta = chart.getDatasetMeta(0);
+          
+          meta.data[index].hidden = !meta.data[index].hidden;
+          chart.update();
+        },
         labels: {
           padding: 15,
           font: { size: 12 },
           generateLabels: (chart: any) => {
             const data = chart.data;
+            if (!data.datasets.length) return [];
+            const meta = chart.getDatasetMeta(0);
+            
             return data.labels.map((label: string, i: number) => ({
               text: `${label}: ${membershipValues[i].toFixed(2)}B`,
               fillStyle: COLORS[i],
-              hidden: false,
-              index: i
+              hidden: meta.data[i]?.hidden || false,
+              index: i,
+              strokeStyle: COLORS[i],
+              lineWidth: 2
             }));
           }
         }
@@ -409,30 +422,49 @@ export default function ClaimsPage() {
 
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <KPIStatCard
-            title="Total Claims"
-            value={formatNumber(data.overview.totalClaims)}
-            icon={TrendingUp}
-            description="Claims processed in 2023"
-          />
-          <KPIStatCard
-            title="Total Amount Paid"
-            value={formatCurrency(data.overview.totalAmountPaid)}
-            icon={DollarSign}
-            description="Benefits disbursed"
-          />
-          <KPIStatCard
-            title="Avg Processing Time"
-            value={`${data.overview.averageProcessingDays} days`}
-            icon={Clock}
-            description="Turnaround time"
-          />
-          <KPIStatCard
-            title="Approval Rate"
-            value="95%"
-            icon={CheckCircle}
-            description="Successfully processed"
-          />
+          {/* Total Claims */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 dark:from-emerald-600 dark:to-emerald-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <TrendingUp className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Total Claims</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.overview.totalClaims)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Claims processed in {selectedYear}</p>
+            </div>
+          </div>
+
+          {/* Total Amount Paid */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <DollarSign className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Total Amount Paid</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatCurrency(data.overview.totalAmountPaid)}</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Benefits disbursed</p>
+            </div>
+          </div>
+
+          {/* Avg Processing Time */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 dark:from-orange-600 dark:to-orange-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <Clock className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Avg Processing Time</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{data.overview.averageProcessingDays} days</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Turnaround time</p>
+            </div>
+          </div>
+
+          {/* Approval Rate */}
+          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+            <div className="relative">
+              <CheckCircle className="h-8 w-8 mb-4 opacity-90" />
+              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Approval Rate</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">95%</p>
+              <p className="text-sm text-white/70 dark:text-white/80">Successfully processed</p>
+            </div>
+          </div>
         </div>
 
         {/* Charts Row 1: Doughnut and Polar Area */}
