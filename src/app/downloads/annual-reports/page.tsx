@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Download, FileText, Calendar, HardDrive, ExternalLink } from 'lucide-react';
 import { PageHeading } from '@/components/ui/page-heading';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 interface AnnualReportFile {
   name: string;
@@ -52,7 +53,7 @@ export default function AnnualReportsPage() {
   }, []);
 
   return (
-    <>
+    <DashboardLayout>
       <Breadcrumbs />
       
       <PageHeading
@@ -218,6 +219,6 @@ export default function AnnualReportsPage() {
         <p>Storage: Google Cloud Storage (philhealth_transparency)</p>
         <p className="mt-2">Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
       </div>
-    </>
+    </DashboardLayout>
   );
 }
