@@ -37,10 +37,6 @@ export default function GovernancePage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        <PageHeading
-          title="Corporate Governance"
-          description="Official governance structure from PhilHealth 2023 Annual Report"
-        />
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
             title="Board Members"

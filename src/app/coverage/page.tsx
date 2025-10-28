@@ -8,9 +8,35 @@ import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { ChartCard } from "@/components/ui/chart-card";
 import { formatNumber } from "@/lib/utils";
 import { Users, UserCheck, Percent, TrendingUp, Info } from "lucide-react";
-import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from "chart.js";
+import { Pie, Bar, Line } from "react-chartjs-2";
 
-const COLORS = ["#009a3d", "#2e7d32", "#66bb6a", "#4caf50", "#81c784", "#a5d6a7", "#c8e6c9"];
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
+
+const COLORS = ["#009a3d", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#14b8a6"];
 
 export default function CoveragePage() {
   const [data, setData] = useState<any>(null);
@@ -38,253 +64,282 @@ export default function CoveragePage() {
     );
   }
 
-  const membershipData = [
-    { name: "Employed Private", value: data.membershipByCategory.directContributors.subcategories.employedPrivate.total },
-    { name: "Employed Government", value: data.membershipByCategory.directContributors.subcategories.employedGovernment.total },
-    { name: "Informal Sector", value: data.membershipByCategory.directContributors.subcategories.informal.total },
-    { name: "Indigents", value: data.membershipByCategory.indirectContributors.subcategories.indigents.total },
-    { name: "Senior Citizens", value: data.membershipByCategory.indirectContributors.subcategories.seniorCitizens.total },
-    { name: "Sponsored", value: data.membershipByCategory.indirectContributors.subcategories.sponsored.total },
-    { name: "OFWs", value: data.membershipByCategory.directContributors.subcategories.ofws.total }
+  const membershipLabels = [
+    "Employed Private",
+    "Employed Government",
+    "Informal Sector",
+    "Indigents",
+    "Senior Citizens",
+    "Sponsored",
+    "OFWs"
   ];
 
-  const contributorTypeData = [
-    { name: "Direct Contributors", value: data.membershipByCategory.directContributors.total, percentage: data.membershipByCategory.directContributors.percentage },
-    { name: "Indirect Contributors", value: data.membershipByCategory.indirectContributors.total, percentage: data.membershipByCategory.indirectContributors.percentage }
+  const membershipValues = [
+    data.membershipByCategory.directContributors.subcategories.employedPrivate.total,
+    data.membershipByCategory.directContributors.subcategories.employedGovernment.total,
+    data.membershipByCategory.directContributors.subcategories.informal.total,
+    data.membershipByCategory.indirectContributors.subcategories.indigents.total,
+    data.membershipByCategory.indirectContributors.subcategories.seniorCitizens.total,
+    data.membershipByCategory.indirectContributors.subcategories.sponsored.total,
+    data.membershipByCategory.directContributors.subcategories.ofws.total
   ];
+
+  // Pie Chart for Membership
+  const pieData = {
+    labels: membershipLabels,
+    datasets: [{
+      data: membershipValues,
+      backgroundColor: COLORS,
+      borderColor: "#fff",
+      borderWidth: 3,
+      hoverOffset: 15,
+    }]
+  };
+
+  const pieOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "right" as const,
+        labels: {
+          padding: 12,
+          font: { size: 11 }
+        }
+      },
+      tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        padding: 12,
+        callbacks: {
+          label: (context: any) => `${formatNumber(context.parsed)} members`
+        }
+      }
+    }
+  };
+
+  // Regional Distribution Bar Chart
+  const sampleRegions = [
+    { region: "NCR", members: 15234567 },
+    { region: "Region IV-A", members: 12345678 },
+    { region: "Region III", members: 9876543 },
+    { region: "Region VII", members: 8765432 },
+    { region: "Region VI", members: 7654321 },
+  ];
+
+  const barData = {
+    labels: sampleRegions.map(r => r.region),
+    datasets: [{
+      label: "Registered Members",
+      data: sampleRegions.map(r => r.members),
+      backgroundColor: "rgba(0, 154, 61, 0.8)",
+      borderColor: "rgb(0, 154, 61)",
+      borderWidth: 2,
+      borderRadius: 8,
+    }]
+  };
+
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        padding: 12,
+        callbacks: {
+          label: (context: any) => formatNumber(context.parsed.y) + " members"
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: (value: any) => {
+            if (value >= 1000000) return (value / 1000000).toFixed(0) + "M";
+            return formatNumber(value);
+          }
+        },
+        grid: {
+          color: "rgba(0, 0, 0, 0.05)"
+        }
+      },
+      x: {
+        grid: {
+          display: false
+        }
+      }
+    }
+  };
+
+  // Historical Growth Line Chart
+  const sampleHistory = [
+    { year: "2020", members: 95000000 },
+    { year: "2021", members: 98500000 },
+    { year: "2022", members: 101200000 },
+    { year: "2023", members: 106200000 },
+    { year: "2024", members: 109500000 },
+  ];
+
+  const lineData = {
+    labels: sampleHistory.map(h => h.year),
+    datasets: [{
+      label: "Total Membership Growth",
+      data: sampleHistory.map(h => h.members),
+      borderColor: "#009a3d",
+      backgroundColor: "rgba(0, 154, 61, 0.1)",
+      borderWidth: 3,
+      fill: true,
+      tension: 0.4,
+      pointRadius: 6,
+      pointHoverRadius: 8,
+      pointBackgroundColor: "#009a3d",
+      pointBorderColor: "#fff",
+      pointBorderWidth: 2,
+    }]
+  };
+
+  const lineOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        padding: 12,
+        callbacks: {
+          label: (context: any) => formatNumber(context.parsed.y) + " members"
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        ticks: {
+          callback: (value: any) => (value / 1000000).toFixed(0) + "M"
+        },
+        grid: {
+          color: "rgba(0, 0, 0, 0.05)"
+        }
+      },
+      x: {
+        grid: {
+          display: false
+        }
+      }
+    }
+  };
 
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        <PageHeading
-          title="Membership Coverage"
-          description="Official membership data from PhilHealth 2023 Annual Report"
-        />
+        {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
-            title="Total Beneficiaries"
-            value={formatNumber(data.overview.totalBeneficiaries)}
+            title="Total Membership"
+            value={formatNumber(data.overview.totalMembership)}
             icon={Users}
-            description="Registered beneficiaries in 2023"
+            description="Registered members & dependents"
           />
           <KPIStatCard
-            title="Registered Members"
-            value={formatNumber(data.overview.registeredMembers)}
+            title="Direct Contributors"
+            value={formatNumber(data.membershipByCategory.directContributors.total)}
             icon={UserCheck}
-            description="Primary members"
+            description="Employed & self-earning"
+          />
+          <KPIStatCard
+            title="Indirect Contributors"
+            value={formatNumber(data.membershipByCategory.indirectContributors.total)}
+            icon={Users}
+            description="Sponsored & indigents"
           />
           <KPIStatCard
             title="Coverage Rate"
             value="100%"
             icon={Percent}
-            description="Of Philippine population"
-          />
-          <KPIStatCard
-            title="Registration Rate"
-            value="96%"
-            icon={TrendingUp}
-            description="Of target population"
+            description="Universal health coverage"
           />
         </div>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <ChartCard
-            title="Membership by Category"
-            description="Distribution of members across different categories"
-          >
-            <div className="w-full h-[350px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={membershipData} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" fontSize={12} tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`} />
-                  <YAxis type="category" dataKey="name" fontSize={11} width={140} />
-                  <Tooltip formatter={(value: any) => formatNumber(value)} />
-                  <Bar dataKey="value" fill="#009a3d" name="Members" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </ChartCard>
-          <ChartCard
-            title="Direct vs Indirect Contributors"
-            description="Distribution by contributor type"
-          >
-            <div className="w-full h-[350px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={contributorTypeData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={(entry: any) => `${entry.name}: ${entry.percentage}%`}
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {contributorTypeData.map((entry: any, index: number) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value: any) => formatNumber(value)} />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </ChartCard>
-        </div>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
-            <h3 className="text-lg font-semibold mb-4">Direct Contributors Breakdown</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Employed Private</span>
-                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.employedPrivate.total)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Employed Government</span>
-                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.employedGovernment.total)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Informal Sector</span>
-                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.informal.total)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">OFWs</span>
-                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.ofws.total)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Lifetime Members</span>
-                <span className="font-semibold">{formatNumber(data.membershipByCategory.directContributors.subcategories.lifetimeMembers.total)}</span>
-              </div>
-            </div>
+
+        {/* Membership Breakdown Pie Chart */}
+        <ChartCard
+          title="Membership by Category"
+          description="Distribution of members across different enrollment categories"
+        >
+          <div className="h-[400px]">
+            <Pie data={pieData} options={pieOptions} />
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-sm border">
-            <h3 className="text-lg font-semibold mb-4">Indirect Contributors Breakdown</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Indigents</span>
-                <span className="font-semibold">{formatNumber(data.membershipByCategory.indirectContributors.subcategories.indigents.total)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Senior Citizens</span>
-                <span className="font-semibold">{formatNumber(data.membershipByCategory.indirectContributors.subcategories.seniorCitizens.total)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Sponsored</span>
-                <span className="font-semibold">{formatNumber(data.membershipByCategory.indirectContributors.subcategories.sponsored.total)}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        </ChartCard>
 
         {/* FUTURE ENHANCEMENT SECTION */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-6">
           <div className="flex items-start gap-3 mb-4">
             <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">Future Enhancement: Advanced Coverage Analytics</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">Future Enhancement: Regional & Historical Data</h3>
               <p className="text-sm text-blue-800 mb-4">
-                The sections below show templates for what can be added when more detailed coverage data becomes available. 
-                This would include regional distribution, historical trends, demographic breakdowns, and contribution patterns.
+                The sections below show templates for regional distribution and historical growth trends when detailed data becomes available.
               </p>
             </div>
           </div>
 
-          {/* Sample Regional Distribution */}
+          {/* Regional Distribution */}
           <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
             <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Regional Distribution (Template)</h4>
-            <div className="w-full h-[350px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={[
-                    { region: "[Future] NCR", members: 9500000, coverage: 98 },
-                    { region: "[Future] Region III", members: 6200000, coverage: 96 },
-                    { region: "[Future] Region IV-A", members: 8100000, coverage: 97 },
-                    { region: "[Future] Region VII", members: 4800000, coverage: 95 },
-                    { region: "[Future] Region XI", members: 3200000, coverage: 94 },
-                  ]}
-                  layout="vertical"
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" fontSize={12} />
-                  <YAxis type="category" dataKey="region" fontSize={11} width={120} />
-                  <Tooltip />
-                  <Legend wrapperStyle={{ fontSize: '12px' }} />
-                  <Bar dataKey="members" fill="#009a3d" name="Members" />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="h-[300px]">
+              <Bar data={barData} options={barOptions} />
             </div>
             <p className="text-xs text-gray-500 mt-3 italic">
-              * This template shows how membership could be visualized by region with coverage percentages, 
-              helping identify areas needing increased enrollment efforts.
+              * Bar chart template showing top 5 regions by membership
             </p>
           </div>
 
-          {/* Sample Historical Trends */}
+          {/* Historical Trends */}
           <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Historical Trends (Template)</h4>
-            <div className="w-full h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={[
-                    { year: "2020", members: 58000000, beneficiaries: 102000000 },
-                    { year: "2021", members: 59500000, beneficiaries: 104000000 },
-                    { year: "2022", members: 61000000, beneficiaries: 106500000 },
-                    { year: "2023", members: 62200000, beneficiaries: 108500000 },
-                    { year: "[Future] 2024", members: 64000000, beneficiaries: 110000000 },
-                  ]}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" fontSize={12} />
-                  <YAxis fontSize={12} tickFormatter={(value) => `${(value / 1000000).toFixed(0)}M`} />
-                  <Tooltip formatter={(value: any) => formatNumber(value)} />
-                  <Legend wrapperStyle={{ fontSize: '12px' }} />
-                  <Line type="monotone" dataKey="members" stroke="#009a3d" strokeWidth={2} name="Members" />
-                  <Line type="monotone" dataKey="beneficiaries" stroke="#3b82f6" strokeWidth={2} name="Beneficiaries" />
-                </LineChart>
-              </ResponsiveContainer>
+            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Historical Growth (Template)</h4>
+            <div className="h-[300px]">
+              <Line data={lineData} options={lineOptions} />
             </div>
             <p className="text-xs text-gray-500 mt-3 italic">
-              * This template shows how membership growth trends could be tracked over time, 
-              including year-over-year comparisons and growth rate analysis.
+              * Line chart template showing membership growth over years
             </p>
           </div>
 
-          {/* Sample Monthly Contributions */}
+          {/* Sample Enrollment Patterns */}
           <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Monthly Enrollment Patterns (Template)</h4>
-            <div className="w-full h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={[
-                    { month: "Jan", newMembers: 125000, renewals: 890000 },
-                    { month: "Feb", newMembers: 118000, renewals: 850000 },
-                    { month: "Mar", newMembers: 142000, renewals: 920000 },
-                    { month: "Apr", newMembers: 135000, renewals: 885000 },
-                    { month: "May", newMembers: 150000, renewals: 910000 },
-                    { month: "Jun", newMembers: 128000, renewals: 875000 },
-                  ]}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" fontSize={12} />
-                  <YAxis fontSize={12} />
-                  <Tooltip formatter={(value: any) => formatNumber(value)} />
-                  <Legend wrapperStyle={{ fontSize: '12px' }} />
-                  <Line type="monotone" dataKey="newMembers" stroke="#009a3d" strokeWidth={2} name="New Members" />
-                  <Line type="monotone" dataKey="renewals" stroke="#f59e0b" strokeWidth={2} name="Renewals" />
-                </LineChart>
-              </ResponsiveContainer>
+            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Enrollment Patterns (Template)</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                <p className="text-sm text-gray-600 mb-1">New Enrollments</p>
+                <p className="text-2xl font-bold text-green-600">2.5M</p>
+                <p className="text-xs text-gray-500 mt-1"> 12% from last year</p>
+              </div>
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <p className="text-sm text-gray-600 mb-1">Renewals</p>
+                <p className="text-2xl font-bold text-blue-600">94.3M</p>
+                <p className="text-xs text-gray-500 mt-1">96% retention rate</p>
+              </div>
+              <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <p className="text-sm text-gray-600 mb-1">Active Members</p>
+                <p className="text-2xl font-bold text-purple-600">103.8M</p>
+                <p className="text-xs text-gray-500 mt-1">98% of total</p>
+              </div>
             </div>
             <p className="text-xs text-gray-500 mt-3 italic">
-              * This template shows how monthly enrollment patterns could be analyzed, 
-              tracking new member registrations, renewals, and seasonal trends.
+              * Template showing enrollment statistics and trends
             </p>
           </div>
         </div>
 
+        {/* Data Source */}
         <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
           <p className="text-sm text-blue-800">
             <strong>Data Source:</strong> {data.metadata.source} | 
-            <strong> Reporting Period:</strong> {data.metadata.reportingPeriod} | 
-            <strong> Population Covered:</strong> {formatNumber(data.overview.populationCovered)} Filipinos
+            <strong> Reporting Period:</strong> {data.metadata.reportingPeriod}
           </p>
         </div>
       </div>

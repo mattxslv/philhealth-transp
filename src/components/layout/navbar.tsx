@@ -96,7 +96,10 @@ export function Navbar() {
         </div>
         
         {/* Right section - search and theme toggle */}
-        <div className="hidden lg:flex lg:justify-end lg:gap-3">
+        <div className="hidden lg:flex lg:justify-end lg:gap-3 lg:items-center">
+          <span className="text-xs text-muted-foreground whitespace-nowrap">
+            Last updated: December 31, 2023
+          </span>
           <GlobalSearch />
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

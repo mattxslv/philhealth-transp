@@ -1,48 +1,63 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { EChartsCard } from "@/components/ui/echarts-card";
-import { DataTable, SortableHeader } from "@/components/ui/data-table";
-import { ColumnDef } from "@tanstack/react-table";
-import { formatCurrency, formatPercent } from "@/lib/utils";
-import { DollarSign, TrendingUp, Wallet } from "lucide-react";
+import { PageHeading } from "@/components/ui/page-heading";
+import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
-import ReactECharts from "echarts-for-react";
-import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
+import { formatCurrency } from "@/lib/utils";
+import { DollarSign, TrendingUp, Wallet, PiggyBank, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from "chart.js";
+import { Doughnut, Bar, Line } from "react-chartjs-2";
 
-const COLORS = {
-  primary: '#009a3d',
-  danger: '#ef4444',
-  warning: '#f59e0b',
-  info: '#3b82f6',
-  purple: '#8b5cf6',
-  cyan: '#06b6d4',
-  pink: '#ec4899',
-  dark: '#2e2e2e',
-};
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
-export default function FinancialsPageECharts() {
+const COLORS = ["#009a3d", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#14b8a6", "#f97316"];
+
+export default function FinancialsPage() {
   const [data, setData] = useState<any>(null);
+  const [detailedData, setDetailedData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const [expandedCards, setExpandedCards] = useState<{[key: string]: boolean}>({
+    assets: false,
+    revenue: false,
+    expenses: false,
+    netIncome: false
+  });
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = mounted && theme === 'dark';
-  const textColor = isDark ? '#e5e5e5' : '#2e2e2e';
-  const axisLineColor = isDark ? '#444' : '#999';
-  const splitLineColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-
-  useEffect(() => {
-    axios.get("/data/financials.json")
-      .then(res => {
-        setData(res.data);
+    Promise.all([
+      axios.get("/data/financials.json"),
+      axios.get("/data/financial-notes-2023.json")
+    ])
+      .then(([financialsRes, detailedRes]) => {
+        setData(financialsRes.data);
+        setDetailedData(detailedRes.data);
         setLoading(false);
       })
       .catch(err => {
@@ -51,7 +66,24 @@ export default function FinancialsPageECharts() {
       });
   }, []);
 
-  if (loading) {
+  const toggleCard = (cardKey: string) => {
+    setExpandedCards(prev => ({
+      ...prev,
+      [cardKey]: !prev[cardKey]
+    }));
+  };
+
+  const toggleAllCards = () => {
+    const allExpanded = Object.values(expandedCards).every(val => val);
+    setExpandedCards({
+      assets: !allExpanded,
+      revenue: !allExpanded,
+      expenses: !allExpanded,
+      netIncome: !allExpanded
+    });
+  };
+
+  if (loading || !data) {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-96">
@@ -61,584 +93,514 @@ export default function FinancialsPageECharts() {
     );
   }
 
-  if (!data) {
-    return (
-      <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="text-muted-foreground">Failed to load data</div>
-        </div>
-      </DashboardLayout>
-    );
-  }
-
-  const currentYear = data.annualReports[0];
-
-  // Revenue vs Expenditures - Advanced 3D Bar Chart with Animation
-  const revenueExpOption = {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow',
-        shadowStyle: {
-          color: 'rgba(0, 154, 61, 0.1)'
-        }
-      },
-      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-      borderColor: COLORS.primary,
-      borderWidth: 2,
-      textStyle: {
-        color: textColor,
-        fontSize: 13
-      },
-      formatter: function(params: any) {
-        let result = `<strong>${params[0].axisValue}</strong><br/>`;
-        params.forEach((item: any) => {
-          result += `${item.marker} ${item.seriesName}: <strong>₱${item.value.toFixed(2)}B</strong><br/>`;
-        });
-        return result;
-      }
-    },
-    legend: {
-      data: ['Revenue', 'Expenditures'],
-      top: 10,
-      textStyle: {
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: textColor
-      }
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      top: '15%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      data: data.monthlyRevenue.map((m: any) => m.month),
-      axisLine: {
-        lineStyle: {
-          color: axisLineColor
-        }
-      },
-      axisLabel: {
-        fontSize: 11,
-        rotate: 45,
-        color: textColor
-      }
-    },
-    yAxis: {
-      type: 'value',
-      name: 'Amount (Billions)',
-      nameTextStyle: {
-        fontSize: 12,
-        fontWeight: 'bold',
-        color: textColor
-      },
-      axisLabel: {
-        formatter: '₱{value}B',
-        fontSize: 11,
-        color: textColor
-      },
-      axisLine: {
-        lineStyle: {
-          color: axisLineColor
-        }
-      },
-      splitLine: {
-        lineStyle: {
-          type: 'dashed',
-          color: splitLineColor
-        }
-      }
-    },
-    series: [
-      {
-        name: 'Revenue',
-        type: 'bar',
-        data: data.monthlyRevenue.map((m: any) => m.revenue / 1000000000),
-        itemStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: COLORS.primary },
-              { offset: 1, color: '#007a31' }
-            ]
-          },
-          borderRadius: [8, 8, 0, 0],
-          shadowColor: 'rgba(0, 154, 61, 0.5)',
-          shadowBlur: 10
-        },
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 20,
-            shadowColor: 'rgba(0, 154, 61, 0.8)'
-          }
-        },
-        animationDelay: (idx: number) => idx * 50
-      },
-      {
-        name: 'Expenditures',
-        type: 'bar',
-        data: data.monthlyRevenue.map((m: any) => m.expenditures / 1000000000),
-        itemStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: COLORS.danger },
-              { offset: 1, color: '#b91c1c' }
-            ]
-          },
-          borderRadius: [8, 8, 0, 0],
-          shadowColor: 'rgba(239, 68, 68, 0.5)',
-          shadowBlur: 10
-        },
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 20,
-            shadowColor: 'rgba(239, 68, 68, 0.8)'
-          }
-        },
-        animationDelay: (idx: number) => idx * 50 + 100
-      }
-    ],
-    animationEasing: 'elasticOut',
-    animationDuration: 1000
+  // Get latest year data (2023)
+  const latestData = data.annualReports?.find((report: any) => report.year === selectedYear) || data.annualReports?.[1] || {};
+  
+  // Get detailed breakdown from financial-notes-2023.json (only available for 2023)
+  const assetDetails = selectedYear === 2023 ? detailedData?.statementOfFinancialPosition?.asOfDecember31_2023?.assets : null;
+  const revenueDetails = selectedYear === 2023 ? detailedData?.statementOfComprehensiveIncome?.forYearEnded_December31_2023?.revenue : null;
+  const expenseDetails = selectedYear === 2023 ? detailedData?.statementOfComprehensiveIncome?.forYearEnded_December31_2023?.expenses : null;
+  
+  // Get available years from the data
+  const availableYears = data.annualReports?.map((report: any) => report.year).filter((year: number) => year !== 2022) || [2023];
+  
+  // Revenue Sources Doughnut - using breakdown data
+  const revenueData = {
+    labels: ["Direct Contributors", "Indirect Contributors"],
+    datasets: [{
+      data: [
+        // For 2023, use membershipCategories, for other years use breakdown
+        (selectedYear === 2023 
+          ? (latestData.membershipCategories?.directContributors?.premiumContributions || 0)
+          : (latestData.breakdown?.directContributors?.revenue || 0)
+        ) / 1000000000,
+        (selectedYear === 2023 
+          ? (latestData.membershipCategories?.indirectContributors?.premiumContributions || 0)
+          : (latestData.breakdown?.indirectContributors?.revenue || 0)
+        ) / 1000000000
+      ],
+      backgroundColor: [COLORS[0], COLORS[1]],
+      borderColor: "#fff",
+      borderWidth: 3,
+      hoverOffset: 15,
+    }]
   };
 
-  // Fund Balance - Beautiful Area Chart with Gradient
-  const fundBalanceOption = {
-    tooltip: {
-      trigger: 'axis',
-      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-      borderColor: COLORS.primary,
-      borderWidth: 2,
-      textStyle: {
-        color: textColor,
-        fontSize: 13
+  const revenueOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "right" as const,
+        labels: { padding: 10, font: { size: 11 } }
       },
-      formatter: function(params: any) {
-        return `<strong>${params[0].axisValue}</strong><br/>Fund Balance: <strong>₱${params[0].value.toFixed(2)}B</strong>`;
-      }
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      top: '10%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: data.annualReports.map((r: any) => r.year).reverse(),
-      axisLine: {
-        lineStyle: {
-          color: axisLineColor
-        }
-      },
-      axisLabel: {
-        color: textColor
-      }
-    },
-    yAxis: {
-      type: 'value',
-      name: 'Fund Balance (Billions)',
-      nameTextStyle: {
-        fontSize: 12,
-        fontWeight: 'bold',
-        color: textColor
-      },
-      axisLabel: {
-        formatter: '₱{value}B',
-        fontSize: 11,
-        color: textColor
-      },
-      axisLine: {
-        lineStyle: {
-          color: axisLineColor
-        }
-      },
-      splitLine: {
-        lineStyle: {
-          type: 'dashed',
-          color: splitLineColor
+      tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        padding: 12,
+        callbacks: {
+          label: (context: any) => `${context.parsed.toFixed(2)}B`
         }
       }
-    },
-    series: [
-      {
-        name: 'Fund Balance',
-        type: 'line',
-        smooth: true,
-        data: data.annualReports.map((r: any) => r.fundBalance / 1000000000).reverse(),
-        lineStyle: {
-          width: 4,
-          color: COLORS.primary,
-          shadowColor: 'rgba(0, 154, 61, 0.5)',
-          shadowBlur: 10
-        },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: 'rgba(0, 154, 61, 0.5)' },
-              { offset: 1, color: 'rgba(0, 154, 61, 0.05)' }
-            ]
-          }
-        },
-        itemStyle: {
-          color: COLORS.primary,
-          borderWidth: 3,
-          borderColor: isDark ? '#1a1a1a' : '#fff',
-          shadowColor: 'rgba(0, 154, 61, 0.5)',
-          shadowBlur: 10
-        },
-        emphasis: {
-          itemStyle: {
-            borderWidth: 5,
-            shadowBlur: 20
-          }
-        },
-        markPoint: {
-          data: [
-            { type: 'max', name: 'Max', itemStyle: { color: COLORS.primary } },
-            { type: 'min', name: 'Min', itemStyle: { color: COLORS.danger } }
-          ],
-          symbolSize: 70,
-          label: {
-            fontSize: 11,
-            fontWeight: 'bold',
-            color: '#fff'
-          }
-        },
-        markLine: {
-          data: [{ type: 'average', name: 'Average' }],
-          lineStyle: {
-            type: 'dashed',
-            color: COLORS.warning,
-            width: 2
-          },
-          label: {
-            fontSize: 11,
-            fontWeight: 'bold',
-            color: textColor
-          }
-        }
-      }
-    ],
-    animationEasing: 'cubicOut',
-    animationDuration: 1500
+    }
   };
 
-  // Administrative Costs - Stunning Rose Chart (Nightingale)
-  const adminCostsOption = {
-    tooltip: {
-      trigger: 'item',
-      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-      borderColor: COLORS.primary,
-      borderWidth: 2,
-      textStyle: {
-        color: textColor,
-        fontSize: 13
-      },
-      formatter: function(params: any) {
-        return `<strong>${params.name}</strong><br/>Amount: <strong>₱${params.value.toFixed(2)}B</strong><br/>Percentage: <strong>${params.percent}%</strong>`;
-      }
-    },
-    legend: {
-      orient: 'vertical',
-      right: '5%',
-      top: 'center',
-      textStyle: {
-        fontSize: 11,
-        color: textColor
-      },
-      formatter: function(name: string) {
-        // Shorten legend names for better display
-        return name.length > 25 ? name.substring(0, 22) + '...' : name;
-      }
-    },
-    series: [
-      {
-        name: 'Administrative Costs',
-        type: 'pie',
-        radius: ['30%', '70%'],
-        center: ['40%', '50%'],
-        roseType: 'area',
-        itemStyle: {
-          borderRadius: 8,
-          borderColor: isDark ? '#1a1a1a' : '#fff',
-          borderWidth: 3,
-          shadowBlur: 20,
-          shadowColor: isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)'
-        },
-        label: {
-          fontSize: 10,
-          fontWeight: 'bold',
-          formatter: function(params: any) {
-            return `${params.name}\n₱${params.value.toFixed(2)}B`;
-          },
-          color: textColor
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 12,
-            fontWeight: 'bold',
-            color: textColor
-          },
-          itemStyle: {
-            shadowBlur: 30,
-            shadowOffsetX: 0,
-            shadowColor: isDark ? 'rgba(0, 0, 0, 0.9)' : 'rgba(0, 0, 0, 0.5)'
-          }
-        },
-        data: (data.administrativeCosts || []).map((c: any, idx: number) => ({
-          value: c.amount / 1000000000,
-          name: c.category,
-          itemStyle: {
-            color: [COLORS.primary, COLORS.danger, COLORS.warning, COLORS.info, COLORS.purple][idx % 5]
-          }
-        })),
-        animationType: 'scale',
-        animationEasing: 'elasticOut',
-        animationDelay: (idx: number) => idx * 100
-      }
-    ]
-  };
-
-  // Investment Portfolio - Sunburst Chart
-  const investmentOption = {
-    tooltip: {
-      trigger: 'item',
-      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-      borderColor: COLORS.primary,
-      borderWidth: 2,
-      textStyle: {
-        color: textColor,
-        fontSize: 13
-      },
-      formatter: function(params: any) {
-        if (params.data.children) {
-          return `<strong>${params.name}</strong><br/>Amount: <strong>₱${params.value.toFixed(2)}B</strong>`;
-        } else {
-          return `<strong>${params.name}</strong><br/>Value: <strong>₱${params.value.toFixed(2)}B</strong>`;
-        }
-      }
-    },
-    series: [
-      {
-        type: 'sunburst',
-        data: (data.investments || []).map((inv: any) => ({
-          name: inv.type,
-          value: inv.amount / 1000000000,
-          children: [
-            {
-              name: `Returns: ${formatPercent(inv.returns)}`,
-              value: (inv.amount * (inv.returns || 0) / 100) / 1000000000
-            }
-          ]
-        })),
-        radius: [0, '90%'],
-        label: {
-          fontSize: 11,
-          fontWeight: 'bold',
-          rotate: 'radial',
-          color: textColor,
-          formatter: function(params: any) {
-            if (params.data.children) {
-              return params.name.length > 20 ? params.name.substring(0, 17) + '...' : params.name;
-            }
-            return params.name;
-          }
-        },
-        itemStyle: {
-          borderRadius: 7,
-          borderWidth: 2,
-          borderColor: isDark ? '#1a1a1a' : '#fff'
-        },
-        emphasis: {
-          focus: 'ancestor'
-        }
-      }
-    ]
-  };
-
-  const investmentColumns: ColumnDef<any>[] = [
-    {
-      accessorKey: "type",
-      header: ({ column }) => <SortableHeader column={column}>Investment Type</SortableHeader>,
-    },
-    {
-      accessorKey: "amount",
-      header: ({ column }) => <SortableHeader column={column}>Amount</SortableHeader>,
-      cell: ({ row }) => formatCurrency(row.original.amount),
-    },
-    {
-      accessorKey: "percentage",
-      header: ({ column }) => <SortableHeader column={column}>Portfolio %</SortableHeader>,
-      cell: ({ row }) => formatPercent(row.original.percentage),
-    },
-    {
-      accessorKey: "returns",
-      header: ({ column }) => <SortableHeader column={column}>Returns %</SortableHeader>,
-      cell: ({ row }) => formatPercent(row.original.returns),
-    },
+  // Administrative Costs Bar Chart - using sample data structure
+  const adminCosts = [
+    { category: "Salaries & Benefits", amount: 15000000000 },
+    { category: "Operations", amount: 8500000000 },
+    { category: "IT & Systems", amount: 4200000000 },
+    { category: "Facilities", amount: 2800000000 }
   ];
+  const adminData = {
+    labels: adminCosts.map((a: any) => a.category),
+    datasets: [{
+      label: "Amount (₱B)",
+      data: adminCosts.map((a: any) => a.amount / 1000000000),
+      backgroundColor: "rgba(239, 68, 68, 0.8)",
+      borderColor: "rgb(239, 68, 68)",
+      borderWidth: 2,
+      borderRadius: 8,
+    }]
+  };
+
+  const adminOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        padding: 12,
+        callbacks: {
+          label: (context: any) => `${context.parsed.y.toFixed(2)}B`
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: (value: any) => `${value}B`
+        },
+        grid: { color: "rgba(0, 0, 0, 0.05)" }
+      },
+      x: {
+        grid: { display: false }
+      }
+    }
+  };
+
+  // Revenue Trends Line Chart - using actual annual data
+  const annualTrends = data.annualReports?.slice(0, 4).reverse() || [];
+  
+  const lineData = {
+    labels: annualTrends.map((t: any) => t.year?.toString() || ""),
+    datasets: [
+      {
+        label: "Revenue",
+        data: annualTrends.map((t: any) => (t.revenue || 0) / 1000000000),
+        borderColor: "#009a3d",
+        backgroundColor: "rgba(0, 154, 61, 0.1)",
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        pointBackgroundColor: "#009a3d",
+        pointBorderColor: "#fff",
+        pointBorderWidth: 2,
+      },
+      {
+        label: "Expenses",
+        data: annualTrends.map((t: any) => (t.expenditures || 0) / 1000000000),
+        borderColor: "#ef4444",
+        backgroundColor: "rgba(239, 68, 68, 0.1)",
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        pointBackgroundColor: "#ef4444",
+        pointBorderColor: "#fff",
+        pointBorderWidth: 2,
+      }
+    ]
+  };
+
+  const lineOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top" as const,
+        labels: { padding: 15, font: { size: 12 }, usePointStyle: true }
+      },
+      tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        padding: 12,
+        mode: "index" as const,
+        intersect: false,
+        callbacks: {
+          label: (context: any) => `${context.dataset.label}: ${context.parsed.y}B`
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: (value: any) => `${value}B`
+        },
+        grid: { color: "rgba(0, 0, 0, 0.05)" }
+      },
+      x: {
+        grid: { display: false }
+      }
+    }
+  };
 
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        {/* KPI Cards with Animation */}
-        <motion.div 
-          className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <KPIStatCard
-            title="Total Revenue (2024)"
-            value={formatCurrency(currentYear.revenue)}
-            icon={DollarSign}
-            description="Annual revenue"
-          />
-          <KPIStatCard
-            title="Fund Balance"
-            value={formatCurrency(currentYear.fundBalance)}
-            icon={Wallet}
-            description="Available funds"
-          />
-          <KPIStatCard
-            title="Net Income"
-            value={formatCurrency(currentYear.netIncome)}
-            icon={TrendingUp}
-            description="Profit for the year"
-          />
-        </motion.div>
-
-        {/* Revenue vs Expenditures */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <EChartsCard
-            title="Monthly Revenue vs Expenditures (2024)"
-            description="Comprehensive comparison with gradient bars, shadows, and smooth animations showing monthly financial performance"
-          >
-            <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-3 rounded-lg border border-primary/20">
-                <div className="text-muted-foreground text-xs">Total Revenue</div>
-                <div className="font-bold text-primary text-lg">{formatCurrency(data.monthlyRevenue.reduce((sum: number, m: any) => sum + m.revenue, 0))}</div>
-              </div>
-              <div className="bg-gradient-to-br from-red-500/10 to-red-500/5 p-3 rounded-lg border border-red-500/20">
-                <div className="text-muted-foreground text-xs">Total Expenditures</div>
-                <div className="font-bold text-red-600 text-lg">{formatCurrency(data.monthlyRevenue.reduce((sum: number, m: any) => sum + m.expenditures, 0))}</div>
-              </div>
-              <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 p-3 rounded-lg border border-blue-500/20">
-                <div className="text-muted-foreground text-xs">Average Monthly Revenue</div>
-                <div className="font-bold text-blue-600 text-lg">{formatCurrency(data.monthlyRevenue.reduce((sum: number, m: any) => sum + m.revenue, 0) / 12)}</div>
-              </div>
-              <div className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 p-3 rounded-lg border border-purple-500/20">
-                <div className="text-muted-foreground text-xs">Surplus/Deficit</div>
-                <div className={`font-bold text-lg ${(data.monthlyRevenue.reduce((sum: number, m: any) => sum + m.revenue, 0) - data.monthlyRevenue.reduce((sum: number, m: any) => sum + m.expenditures, 0)) > 0 ? 'text-primary' : 'text-red-500'}`}>
-                  {formatCurrency(data.monthlyRevenue.reduce((sum: number, m: any) => sum + m.revenue, 0) - data.monthlyRevenue.reduce((sum: number, m: any) => sum + m.expenditures, 0))}
-                </div>
-              </div>
-            </div>
-            <ReactECharts option={revenueExpOption} style={{ height: '500px' }} />
-          </EChartsCard>
-        </motion.div>
-
-        {/* Fund Balance Trend */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <EChartsCard
-            title="Fund Balance Over Time (5-Year Trend)"
-            description="Interactive area chart with gradient fill, max/min markers, and average line showing financial health trajectory"
-          >
-            <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-3 rounded-lg border border-primary/20">
-                <div className="text-muted-foreground text-xs">Current Balance</div>
-                <div className="font-bold text-primary text-lg">{formatCurrency(currentYear.fundBalance)}</div>
-              </div>
-              <div className="bg-gradient-to-br from-green-500/10 to-green-500/5 p-3 rounded-lg border border-green-500/20">
-                <div className="text-muted-foreground text-xs">5-Year Growth</div>
-                <div className="font-bold text-green-600 text-lg">
-                  {formatPercent(((currentYear.fundBalance - data.annualReports[data.annualReports.length - 1].fundBalance) / data.annualReports[data.annualReports.length - 1].fundBalance) * 100)}
-                </div>
-              </div>
-              <div className="bg-gradient-to-br from-orange-500/10 to-orange-500/5 p-3 rounded-lg border border-orange-500/20">
-                <div className="text-muted-foreground text-xs">Highest Balance</div>
-                <div className="font-bold text-orange-600 text-lg">{formatCurrency(Math.max(...data.annualReports.map((r: any) => r.fundBalance)))}</div>
-              </div>
-              <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 p-3 rounded-lg border border-cyan-500/20">
-                <div className="text-muted-foreground text-xs">Average Balance</div>
-                <div className="font-bold text-cyan-600 text-lg">{formatCurrency(data.annualReports.reduce((sum: number, r: any) => sum + r.fundBalance, 0) / data.annualReports.length)}</div>
-              </div>
-            </div>
-            <ReactECharts option={fundBalanceOption} style={{ height: '500px' }} />
-          </EChartsCard>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Administrative Costs */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <EChartsCard
-              title="Administrative Cost Breakdown"
-              description="Rose chart (Nightingale diagram) showing proportional cost distribution with beautiful radial design"
+        {/* Year Selector and Expand/Collapse Button */}
+        <div className="flex justify-between items-center mt-8">
+          <div className="flex items-center gap-3">
+            <label htmlFor="year-select" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Select Year:
+            </label>
+            <select
+              id="year-select"
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(Number(e.target.value))}
+              className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:border-emerald-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-gray-900 dark:text-gray-100 font-medium"
             >
-              <ReactECharts option={adminCostsOption} style={{ height: '450px' }} />
-            </EChartsCard>
-          </motion.div>
-
-          {/* Investment Portfolio */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+              {availableYears.map((year: number) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            {selectedYear === 2023 && (
+              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                ✓ Detailed breakdown available
+              </span>
+            )}
+          </div>
+          
+          <button
+            onClick={toggleAllCards}
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm"
           >
-            <EChartsCard
-              title="Investment Portfolio Distribution"
-              description="Sunburst chart visualizing investment allocation and returns in a hierarchical radial layout"
-            >
-              <ReactECharts option={investmentOption} style={{ height: '450px' }} />
-            </EChartsCard>
-          </motion.div>
+            {Object.values(expandedCards).every(val => val) ? (
+              <>
+                <ChevronUp className="h-4 w-4" />
+                Collapse All Details
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-4 w-4" />
+                Expand All Details
+              </>
+            )}
+          </button>
         </div>
 
-        {/* Investment Portfolio Table */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <div className="rounded-2xl border-2 border-border/50 bg-card shadow-xl p-6">
-            <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Investment Portfolio Details</h2>
-            <DataTable columns={investmentColumns} data={data.investments} />
+        {/* KPI Cards with gradient backgrounds and expandable details */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Total Assets Card */}
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-xl hover:shadow-2xl transition-shadow">
+            <div 
+              className="p-6 cursor-pointer"
+              onClick={() => toggleCard('assets')}
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+              <Wallet className="h-10 w-10 text-white/90 mb-4" />
+              <p className="text-white/80 text-sm font-medium mb-1">Total Assets</p>
+              <p className="text-3xl font-bold text-white mb-2">{formatCurrency(latestData.totalAssets || 0)}</p>
+              <p className="text-white/70 text-xs">As of December 31, {selectedYear}</p>
+            </div>
+            {expandedCards.assets && assetDetails && (
+              <div className="bg-white/10 backdrop-blur-sm p-4 space-y-2 border-t border-white/20">
+                <div className="flex justify-between text-white/90 text-sm">
+                  <span>Current Assets</span>
+                  <span className="font-semibold">{formatCurrency(assetDetails.currentAssets?.totalCurrentAssets || 0)}</span>
+                </div>
+                <div className="ml-4 space-y-1 text-xs text-white/70">
+                  <div className="flex justify-between">
+                    <span>Cash & Cash Equivalents</span>
+                    <span>{formatCurrency(assetDetails.currentAssets?.cashAndCashEquivalents || 0)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Investments (HTM)</span>
+                    <span>{formatCurrency(assetDetails.currentAssets?.investments?.heldToMaturity || 0)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Investments (AFS)</span>
+                    <span>{formatCurrency(assetDetails.currentAssets?.investments?.availableForSale || 0)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Receivables</span>
+                    <span>{formatCurrency(
+                      (assetDetails.currentAssets?.receivables?.premiumContributions || 0) +
+                      (assetDetails.currentAssets?.receivables?.dueFromAgencies || 0) +
+                      (assetDetails.currentAssets?.receivables?.accruedInterest || 0) +
+                      (assetDetails.currentAssets?.receivables?.others || 0)
+                    )}</span>
+                  </div>
+                </div>
+                <div className="flex justify-between text-white/90 text-sm pt-2 border-t border-white/20">
+                  <span>Non-Current Assets</span>
+                  <span className="font-semibold">{formatCurrency(assetDetails.nonCurrentAssets?.totalNonCurrentAssets || 0)}</span>
+                </div>
+                <div className="ml-4 space-y-1 text-xs text-white/70">
+                  <div className="flex justify-between">
+                    <span>Investments (HTM)</span>
+                    <span>{formatCurrency(assetDetails.nonCurrentAssets?.investments?.heldToMaturity || 0)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Property, Plant & Equipment</span>
+                    <span>{formatCurrency(assetDetails.nonCurrentAssets?.propertyPlantEquipment?.net || 0)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Intangible Assets</span>
+                    <span>{formatCurrency(assetDetails.nonCurrentAssets?.intangibleAssets?.net || 0)}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-        </motion.div>
+
+          {/* Total Revenue Card */}
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 shadow-xl hover:shadow-2xl transition-shadow">
+            <div 
+              className="p-6 cursor-pointer"
+              onClick={() => toggleCard('revenue')}
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+              <DollarSign className="h-10 w-10 text-white/90 mb-4" />
+              <p className="text-white/80 text-sm font-medium mb-1">Total Revenue</p>
+              <p className="text-3xl font-bold text-white mb-2">{formatCurrency(latestData.revenue || 0)}</p>
+              <p className="text-white/70 text-xs">For the year {selectedYear}</p>
+            </div>
+            {expandedCards.revenue && revenueDetails && (
+              <div className="bg-white/10 backdrop-blur-sm p-4 space-y-2 border-t border-white/20">
+                <div className="flex justify-between text-white/90 text-sm">
+                  <span>Premium Contributions</span>
+                  <span className="font-semibold">{formatCurrency(revenueDetails.premiumContributions?.totalPremiumContributions || 0)}</span>
+                </div>
+                <div className="ml-4 space-y-1 text-xs text-white/70">
+                  <div className="flex justify-between">
+                    <span>Direct Contributors</span>
+                    <span>{formatCurrency(revenueDetails.premiumContributions?.directContributors?.total || 0)}</span>
+                  </div>
+                  <div className="ml-4 space-y-1 text-xs text-white/60">
+                    <div className="flex justify-between">
+                      <span>- Employed Private</span>
+                      <span>{formatCurrency(revenueDetails.premiumContributions?.directContributors?.employedPrivateSector || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>- Employed Government</span>
+                      <span>{formatCurrency(revenueDetails.premiumContributions?.directContributors?.employedGovernmentSector || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>- Informal Sector</span>
+                      <span>{formatCurrency(revenueDetails.premiumContributions?.directContributors?.informalSector || 0)}</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Indirect Contributors</span>
+                    <span>{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.total || 0)}</span>
+                  </div>
+                  <div className="ml-4 space-y-1 text-xs text-white/60">
+                    <div className="flex justify-between">
+                      <span>- Indigent Program</span>
+                      <span>{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.indigentProgram || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>- Senior Citizens</span>
+                      <span>{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.seniorCitizens || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>- Sponsored Program</span>
+                      <span>{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.sponsoredProgram || 0)}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between text-white/90 text-sm pt-2 border-t border-white/20">
+                  <span>Investment Income</span>
+                  <span className="font-semibold">{formatCurrency(revenueDetails.investmentIncome?.total || 0)}</span>
+                </div>
+                <div className="flex justify-between text-white/90 text-sm">
+                  <span>Other Income</span>
+                  <span className="font-semibold">{formatCurrency(revenueDetails.otherIncome?.total || 0)}</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Total Expenses Card */}
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 shadow-xl hover:shadow-2xl transition-shadow">
+            <div 
+              className="p-6 cursor-pointer"
+              onClick={() => toggleCard('expenses')}
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+              <TrendingUp className="h-10 w-10 text-white/90 mb-4" />
+              <p className="text-white/80 text-sm font-medium mb-1">Total Expenses</p>
+              <p className="text-3xl font-bold text-white mb-2">{formatCurrency(latestData.expenditures || 0)}</p>
+              <p className="text-white/70 text-xs">For the year {selectedYear}</p>
+            </div>
+            {expandedCards.expenses && expenseDetails && (
+              <div className="bg-white/10 backdrop-blur-sm p-4 space-y-2 border-t border-white/20">
+                <div className="flex justify-between text-white/90 text-sm">
+                  <span>Benefit Expense</span>
+                  <span className="font-semibold">{formatCurrency(expenseDetails.benefitExpense?.netBenefitExpense || 0)}</span>
+                </div>
+                <div className="ml-4 space-y-1 text-xs text-white/70">
+                  <div className="flex justify-between">
+                    <span>Before IBNP Adjustment</span>
+                    <span>{formatCurrency(expenseDetails.benefitExpense?.beforeIBNPAdjustment || 0)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>IBNP Adjustment</span>
+                    <span>{formatCurrency(expenseDetails.benefitExpense?.ibnpAdjustment || 0)}</span>
+                  </div>
+                </div>
+                <div className="flex justify-between text-white/90 text-sm pt-2 border-t border-white/20">
+                  <span>Operating Expenses</span>
+                  <span className="font-semibold">{formatCurrency(expenseDetails.operatingExpenses?.totalOperatingExpenses || 0)}</span>
+                </div>
+                <div className="ml-4 space-y-1 text-xs text-white/70">
+                  <div className="flex justify-between">
+                    <span>Personnel Services</span>
+                    <span>{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.total || 0)}</span>
+                  </div>
+                  <div className="ml-4 space-y-1 text-xs text-white/60">
+                    <div className="flex justify-between">
+                      <span>- Salaries & Wages</span>
+                      <span>{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.salariesAndWages || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>- Bonuses & Allowances</span>
+                      <span>{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.bonusesAndAllowances || 0)}</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Maintenance & Operations</span>
+                    <span>{formatCurrency(expenseDetails.operatingExpenses?.maintenanceAndOperatingExpenses?.total || 0)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Depreciation & Amortization</span>
+                    <span>{formatCurrency(expenseDetails.operatingExpenses?.depreciationAndAmortization || 0)}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Net Income Card */}
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 shadow-xl hover:shadow-2xl transition-shadow">
+            <div 
+              className="p-6 cursor-pointer"
+              onClick={() => toggleCard('netIncome')}
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+              <PiggyBank className="h-10 w-10 text-white/90 mb-4" />
+              <p className="text-white/80 text-sm font-medium mb-1">Net Income</p>
+              <p className="text-3xl font-bold text-white mb-2">{formatCurrency(latestData.netIncome || 0)}</p>
+              <p className="text-white/70 text-xs">For the year {selectedYear}</p>
+            </div>
+            {expandedCards.netIncome && (
+              <div className="bg-white/10 backdrop-blur-sm p-4 space-y-2 border-t border-white/20">
+                <div className="flex justify-between text-white/90 text-sm">
+                  <span>Total Revenue</span>
+                  <span className="font-semibold">{formatCurrency(latestData.revenue || 0)}</span>
+                </div>
+                <div className="flex justify-between text-white/90 text-sm">
+                  <span>Total Expenses</span>
+                  <span className="font-semibold">({formatCurrency(latestData.expenditures || 0)})</span>
+                </div>
+                <div className="flex justify-between text-white text-base font-bold pt-2 border-t border-white/20">
+                  <span>Net Income</span>
+                  <span>{formatCurrency(latestData.netIncome || 0)}</span>
+                </div>
+                <div className="mt-3 space-y-1 text-xs text-white/70">
+                  <div className="flex justify-between">
+                    <span>Net Income Margin</span>
+                    <span className="font-semibold">{((latestData.netIncome / latestData.revenue) * 100).toFixed(1)}%</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Charts Section with modern cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Revenue by Source</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Breakdown of revenue sources for {selectedYear}</p>
+            </div>
+            <div className="h-[400px]">
+              <Doughnut data={revenueData} options={revenueOptions} />
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Administrative Costs</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Operating expenses breakdown for {selectedYear}</p>
+            </div>
+            <div className="h-[400px]">
+              <Bar data={adminData} options={adminOptions} />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Revenue vs Expenses Trend</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Historical comparison of revenue and expenses</p>
+          </div>
+          <div className="h-[350px]">
+            <Line data={lineData} options={lineOptions} />
+          </div>
+        </div>
+        {/* Additional Stats Cards */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-2xl shadow-md border border-blue-200 dark:border-blue-700 hover:shadow-lg transition-all">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-400/10 rounded-full -mr-12 -mt-12"></div>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Coverage Rate</h3>
+            <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">{latestData.coverageRate || 100}%</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Population coverage</p>
+          </div>
+
+          <div className="relative overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-6 rounded-2xl shadow-md border border-purple-200 dark:border-purple-700 hover:shadow-lg transition-all">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-purple-400/10 rounded-full -mr-12 -mt-12"></div>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Total Beneficiaries</h3>
+            <p className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">{((latestData.beneficiaries || 0) / 1000000).toFixed(1)}M</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Members covered</p>
+          </div>
+
+          <div className="relative overflow-hidden bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 p-6 rounded-2xl shadow-md border border-red-200 dark:border-red-700 hover:shadow-lg transition-all">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-red-400/10 rounded-full -mr-12 -mt-12"></div>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Claims Paid</h3>
+            <p className="text-4xl font-bold text-red-600 dark:text-red-400 mb-2">₱{((latestData.claimsPaid || 0) / 1000000000).toFixed(1)}B</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Total disbursed</p>
+          </div>
+        </div>
+
+        {/* Data Source Footer */}
+        <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-l-4 border-emerald-500 dark:border-emerald-400 p-6 rounded-lg shadow-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            <p className="text-sm text-gray-800 dark:text-gray-200 font-medium">
+              <strong>Data Source:</strong> {data.metadata?.source || "PhilHealth Annual Reports"} | 
+              <strong> Last Updated:</strong> {data.metadata?.lastUpdated || "2025-01-15"}
+            </p>
+          </div>
+        </div>
       </div>
     </DashboardLayout>
   );

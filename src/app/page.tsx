@@ -7,7 +7,7 @@ import { PolicyUpdates } from "@/components/home/policy-updates";
 export default function Home() {
   return (
     <DashboardLayout>
-      <div className="space-y-0 -mt-4 sm:-mt-6 lg:-mt-8">
+      <div className="space-y-0 -mt-20">
         <div className="-ml-6 lg:-ml-8 -mr-6 lg:-mr-8">
           <Hero />
         </div>

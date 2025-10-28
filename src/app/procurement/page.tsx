@@ -131,11 +131,6 @@ export default function ProcurementPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        <PageHeading
-          title="Procurement Contracts"
-          description="Procurement information from PhilHealth"
-        />
-        
         {/* Data Not Available Notice */}
         <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded shadow-sm">
           <div className="flex items-start">
