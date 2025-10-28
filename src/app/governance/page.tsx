@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { YearSelector } from "@/components/ui/year-selector";
 import { formatNumber, formatCurrency } from "@/lib/utils";
@@ -176,18 +177,25 @@ export default function GovernancePage() {
           <div className="bg-emerald-50 dark:bg-emerald-900/20 border-2 border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
             <div className="flex items-start gap-3 mb-4">
               <Download className="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-1" />
-              <div>
+              <div className="flex-1">
                 <h4 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-2">22 Annual Reports Available (2003-2024)</h4>
                 <p className="text-sm text-emerald-800 dark:text-emerald-200 mb-4">
                   PhilHealth annual reports provide comprehensive overviews of organizational achievements, financial performance,
                   challenges faced, and strategic plans for the future.
                 </p>
                 <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-emerald-200 dark:border-emerald-700">
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">📥 Downloads Page Coming Soon</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    A dedicated downloads page is being prepared where you can access all 22 annual reports from 2003 to 2024.
-                    Each report includes: financial statements, operational highlights, member statistics, policy changes, and strategic initiatives.
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">📥 Download Annual Reports</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">
+                    Access all 22 annual reports from 2003 to 2024. Each report includes: financial statements, 
+                    operational highlights, member statistics, policy changes, and strategic initiatives.
                   </p>
+                  <Link
+                    href="/downloads/annual-reports"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
+                  >
+                    <Download className="h-4 w-4" />
+                    View All Annual Reports
+                  </Link>
                 </div>
               </div>
             </div>

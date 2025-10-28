@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Moon, Sun } from "lucide-react";
+import { Menu, Moon, Sun, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/contexts/sidebar-context";
 import { GlobalSearch } from "@/components/ui/global-search";
@@ -15,7 +15,15 @@ const navigation = [
   { name: "Members", href: "https://www.philhealth.gov.ph/members/", external: true },
   { name: "Partners", href: "https://www.philhealth.gov.ph/partners/", external: true },
   { name: "Online Services", href: "https://www.philhealth.gov.ph/services/", external: true },
-  { name: "Downloads", href: "https://www.philhealth.gov.ph/downloads/", external: true },
+  { 
+    name: "Downloads", 
+    dropdown: true,
+    items: [
+      { name: "Annual Reports", href: "/downloads/annual-reports", external: false },
+      { name: "Statistics & Charts", href: "/downloads/statistics", external: false },
+      { name: "Other Downloads", href: "https://www.philhealth.gov.ph/downloads/", external: true },
+    ]
+  },
   { name: "Transparency", href: "/", external: false },
 ];
 
@@ -23,7 +31,20 @@ export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [downloadsOpen, setDownloadsOpen] = useState(false);
+  const downloadsRef = useRef<HTMLDivElement>(null);
   const { sidebarCollapsed, setSidebarOpen } = useSidebar();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (downloadsRef.current && !downloadsRef.current.contains(event.target as Node)) {
+        setDownloadsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/50 shadow-sm">
@@ -64,6 +85,60 @@ export function Navbar() {
         {/* Centered navigation - Desktop only */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:gap-x-6">
           {navigation.map((item) => {
+            // Handle dropdown items
+            if (item.dropdown && item.items) {
+              const isActive = item.items.some(subItem => !subItem.external && pathname === subItem.href);
+              
+              return (
+                <div key={item.name} className="relative" ref={downloadsRef}>
+                  <button
+                    onClick={() => setDownloadsOpen(!downloadsOpen)}
+                    className={cn(
+                      "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary",
+                      isActive ? "text-primary" : "text-muted-foreground"
+                    )}
+                  >
+                    {item.name}
+                    <ChevronDown className={cn(
+                      "h-4 w-4 transition-transform",
+                      downloadsOpen && "rotate-180"
+                    )} />
+                  </button>
+                  
+                  {downloadsOpen && (
+                    <div className="absolute top-full left-0 mt-2 w-56 bg-background border border-border rounded-lg shadow-lg py-2 z-50">
+                      {item.items.map((subItem) => (
+                        subItem.external ? (
+                          <a
+                            key={subItem.name}
+                            href={subItem.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-accent transition-colors"
+                            onClick={() => setDownloadsOpen(false)}
+                          >
+                            {subItem.name}
+                          </a>
+                        ) : (
+                          <Link
+                            key={subItem.name}
+                            href={subItem.href}
+                            className={cn(
+                              "block px-4 py-2 text-sm hover:bg-accent transition-colors",
+                              pathname === subItem.href ? "text-primary bg-accent" : "text-muted-foreground hover:text-primary"
+                            )}
+                            onClick={() => setDownloadsOpen(false)}
+                          >
+                            {subItem.name}
+                          </Link>
+                        )
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+            
             const isActive = !item.external && pathname === item.href;
             
             if (item.external) {
@@ -83,7 +158,7 @@ export function Navbar() {
             return (
               <Link
                 key={item.name}
-                href={item.href}
+                href={item.href!}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary",
                   isActive ? "text-primary" : "text-muted-foreground"
@@ -137,6 +212,50 @@ export function Navbar() {
               <div className="-my-6 divide-y divide-border">
                 <div className="space-y-2 py-6">
                   {navigation.map((item) => {
+                    // Handle dropdown items in mobile
+                    if (item.dropdown && item.items) {
+                      const isActive = item.items.some(subItem => !subItem.external && pathname === subItem.href);
+                      
+                      return (
+                        <div key={item.name} className="space-y-1">
+                          <div className={cn(
+                            "-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7",
+                            isActive ? "text-primary" : "text-foreground"
+                          )}>
+                            {item.name}
+                          </div>
+                          <div className="ml-4 space-y-1">
+                            {item.items.map((subItem) => (
+                              subItem.external ? (
+                                <a
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary"
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  {subItem.name}
+                                </a>
+                              ) : (
+                                <Link
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  className={cn(
+                                    "block rounded-lg px-3 py-2 text-sm hover:bg-accent",
+                                    pathname === subItem.href ? "text-primary bg-accent" : "text-muted-foreground hover:text-primary"
+                                  )}
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  {subItem.name}
+                                </Link>
+                              )
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    }
+                    
                     const isActive = !item.external && pathname === item.href;
                     
                     if (item.external) {
@@ -157,7 +276,7 @@ export function Navbar() {
                     return (
                       <Link
                         key={item.name}
-                        href={item.href}
+                        href={item.href!}
                         className={cn(
                           "-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-accent",
                           isActive ? "text-primary bg-accent" : "text-foreground"

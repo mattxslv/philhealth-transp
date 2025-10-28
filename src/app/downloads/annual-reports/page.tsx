@@ -1,0 +1,223 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Download, FileText, Calendar, HardDrive, ExternalLink } from 'lucide-react';
+import { PageHeading } from '@/components/ui/page-heading';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+
+interface AnnualReportFile {
+  name: string;
+  size_bytes: number;
+  updated_time: string;
+  download_url: string;
+  year: number;
+  displayName: string;
+  sizeMB: string;
+}
+
+export default function AnnualReportsPage() {
+  const [reports, setReports] = useState<AnnualReportFile[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadReports() {
+      try {
+        const response = await fetch('/data/Annual Reports_.json');
+        const data = await response.json();
+        
+        // Parse and format the reports
+        const formattedReports = data.files
+          .filter((file: any) => file.name.endsWith('.pdf'))
+          .map((file: any) => {
+            const yearMatch = file.name.match(/ar(\d{4})\.pdf/);
+            const year = yearMatch ? parseInt(yearMatch[1]) : 0;
+            return {
+              ...file,
+              year,
+              displayName: `Annual Report ${year}`,
+              sizeMB: (file.size_bytes / (1024 * 1024)).toFixed(2)
+            };
+          })
+          .sort((a: AnnualReportFile, b: AnnualReportFile) => b.year - a.year);
+
+        setReports(formattedReports);
+      } catch (error) {
+        console.error('Error loading annual reports:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadReports();
+  }, []);
+
+  return (
+    <>
+      <Breadcrumbs />
+      
+      <PageHeading
+        title="Annual Reports"
+        description="Download official PhilHealth Annual Reports from 2003 to 2024. All reports are audited and contain comprehensive financial statements, governance information, and performance metrics."
+      />
+
+      {/* Summary Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
+              <FileText className="h-6 w-6 text-green-600 dark:text-green-400" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Total Reports</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{reports.length}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+              <Calendar className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Date Range</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">2003 - 2024</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+              <HardDrive className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Total Size</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                {(reports.reduce((sum, r) => sum + r.size_bytes, 0) / (1024 * 1024 * 1024)).toFixed(2)} GB
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Reports Grid */}
+      {loading ? (
+        <div className="text-center py-12">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-green-600 border-r-transparent"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading annual reports...</p>
+        </div>
+      ) : (
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-900/50">
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Year
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Report Name
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    File Size
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Last Updated
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                {reports.map((report) => (
+                  <tr key={report.year} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-green-100 dark:bg-green-900/30 rounded-lg">
+                          <FileText className="h-5 w-5 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div className="ml-4">
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">
+                            {report.year}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-gray-900 dark:text-white font-medium">
+                        {report.displayName}
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        PhilHealth Corporation
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900 dark:text-white">
+                        {report.sizeMB} MB
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {new Date(report.updated_time).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      <div className="flex items-center justify-center gap-2">
+                        <a
+                          href={report.download_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <Download className="h-4 w-4" />
+                          Download
+                        </a>
+                        <a
+                          href={report.download_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          View
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Footer Note */}
+      <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+        <div className="flex items-start gap-3">
+          <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+          <div className="text-sm text-blue-900 dark:text-blue-100">
+            <p className="font-semibold mb-2">About Annual Reports</p>
+            <p className="text-blue-800 dark:text-blue-200">
+              All annual reports are official documents audited by the Commission on Audit (COA). 
+              They contain comprehensive information about PhilHealth's financial performance, 
+              governance structure, membership statistics, and operational achievements for each fiscal year.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Data Attribution */}
+      <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+        <p>Data Source: PhilHealth Corporation Official Records</p>
+        <p>Storage: Google Cloud Storage (philhealth_transparency)</p>
+        <p className="mt-2">Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+      </div>
+    </>
+  );
+}
