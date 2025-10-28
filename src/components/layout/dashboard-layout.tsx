@@ -176,12 +176,12 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       {/* Main content */}
       <div 
         className={cn(
-          "flex-1 transition-all duration-300",
+          "flex-1 transition-all duration-300 pt-16",
           sidebarCollapsed ? "lg:ml-16" : "lg:ml-56"
         )}
       >
         {/* Page content */}
-        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">{children}</div>
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8 pt-4 sm:pt-6">{children}</div>
       </div>
     </>
   );

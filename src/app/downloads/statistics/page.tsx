@@ -58,7 +58,6 @@ export default function StatisticsChartsPage() {
       
       <PageHeading
         title="Statistics and Charts"
-        description="Download PhilHealth Statistics and Charts (SNC) reports from 2007 to 2024. These reports contain detailed statistical analysis, membership data, claims information, and comprehensive charts."
       />
 
       {/* Summary Stats */}

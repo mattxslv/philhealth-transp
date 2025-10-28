@@ -58,7 +58,6 @@ export default function AnnualReportsPage() {
       
       <PageHeading
         title="Annual Reports"
-        description="Download official PhilHealth Annual Reports from 2003 to 2024. All reports are audited and contain comprehensive financial statements, governance information, and performance metrics."
       />
 
       {/* Summary Stats */}
