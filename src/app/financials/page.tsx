@@ -14,7 +14,6 @@ import {
   ArcElement,
   CategoryScale,
   LinearScale,
-  BarElement,
   LineElement,
   PointElement,
   Title,
@@ -22,13 +21,12 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { Doughnut, Bar, Line } from "react-chartjs-2";
+import { Doughnut, Line } from "react-chartjs-2";
 
 ChartJS.register(
   ArcElement,
   CategoryScale,
   LinearScale,
-  BarElement,
   LineElement,
   PointElement,
   Title,
@@ -145,51 +143,7 @@ export default function FinancialsPage() {
     }
   };
 
-  // Administrative Costs Bar Chart - using sample data structure
-  const adminCosts = [
-    { category: "Salaries & Benefits", amount: 15000000000 },
-    { category: "Operations", amount: 8500000000 },
-    { category: "IT & Systems", amount: 4200000000 },
-    { category: "Facilities", amount: 2800000000 }
-  ];
-  const adminData = {
-    labels: adminCosts.map((a: any) => a.category),
-    datasets: [{
-      label: "Amount (₱B)",
-      data: adminCosts.map((a: any) => a.amount / 1000000000),
-      backgroundColor: "rgba(239, 68, 68, 0.8)",
-      borderColor: "rgb(239, 68, 68)",
-      borderWidth: 2,
-      borderRadius: 8,
-    }]
-  };
 
-  const adminOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
-        padding: 12,
-        callbacks: {
-          label: (context: any) => `${context.parsed.y.toFixed(2)}B`
-        }
-      }
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          callback: (value: any) => `${value}B`
-        },
-        grid: { color: "rgba(0, 0, 0, 0.05)" }
-      },
-      x: {
-        grid: { display: false }
-      }
-    }
-  };
 
   // Revenue Trends Line Chart - using actual annual data
   const annualTrends = data.annualReports?.slice(0, 4).reverse() || [];
@@ -552,13 +506,47 @@ export default function FinancialsPage() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
-            <div className="mb-6">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Administrative Costs</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Operating expenses breakdown for {selectedYear}</p>
+          <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-2xl p-6 shadow-lg border-2 border-dashed border-orange-300 dark:border-orange-700">
+            <div className="flex items-start gap-3 mb-4">
+              <AlertCircle className="w-8 h-8 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Administrative Costs Breakdown</h3>
+                <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                  <strong>Future Enhancement:</strong> Detailed breakdown of administrative and operating expenses
+                </p>
+              </div>
             </div>
-            <div className="h-[400px]">
-              <Bar data={adminData} options={adminOptions} />
+            
+            <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-5 border border-orange-200 dark:border-orange-700">
+              <h4 className="text-md font-semibold mb-3 text-gray-800 dark:text-gray-200">📊 Planned Visualizations</h4>
+              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span>Personnel costs breakdown (salaries, benefits, bonuses)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span>Maintenance and operating expenses by category</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span>IT and systems infrastructure costs</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span>Facilities and office expenses</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span>Administrative efficiency ratios</span>
+                </li>
+              </ul>
+              
+              <div className="mt-4 pt-4 border-t border-orange-200 dark:border-orange-700">
+                <p className="text-xs text-gray-600 dark:text-gray-400 italic">
+                  💡 <strong>Note:</strong> This data requires more granular breakdown of operating expenses from the annual report's notes to financial statements. Currently, only high-level operating expenses totals are available.
+                </p>
+              </div>
             </div>
           </div>
         </div>
