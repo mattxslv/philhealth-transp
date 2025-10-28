@@ -6,6 +6,7 @@ import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
 import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
+import { YearSelector } from "@/components/ui/year-selector";
 import { formatCurrency } from "@/lib/utils";
 import { DollarSign, TrendingUp, Wallet, PiggyBank, ChevronDown, ChevronUp } from "lucide-react";
 import {
@@ -262,48 +263,15 @@ export default function FinancialsPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        {/* Year Selector and Expand/Collapse Button */}
-        <div className="flex justify-between items-center mt-8">
-          <div className="flex items-center gap-3">
-            <label htmlFor="year-select" className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Select Year:
-            </label>
-            <select
-              id="year-select"
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(Number(e.target.value))}
-              className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:border-emerald-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-gray-900 dark:text-gray-100 font-medium"
-            >
-              {availableYears.map((year: number) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
-            {selectedYear === 2023 && (
-              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-                ✓ Detailed breakdown available
-              </span>
-            )}
-          </div>
-          
-          <button
-            onClick={toggleAllCards}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm"
-          >
-            {Object.values(expandedCards).every(val => val) ? (
-              <>
-                <ChevronUp className="h-4 w-4" />
-                Collapse All Details
-              </>
-            ) : (
-              <>
-                <ChevronDown className="h-4 w-4" />
-                Expand All Details
-              </>
-            )}
-          </button>
-        </div>
+        {/* Year Selector */}
+        <YearSelector
+          selectedYear={selectedYear}
+          availableYears={availableYears}
+          onYearChange={setSelectedYear}
+          hasDetailedBreakdown={selectedYear === 2023}
+          expandedCards={expandedCards}
+          onToggleAll={toggleAllCards}
+        />
 
         {/* KPI Cards with gradient backgrounds and expandable details */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

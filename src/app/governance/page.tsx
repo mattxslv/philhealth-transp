@@ -5,12 +5,14 @@ import axios from "axios";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
+import { YearSelector } from "@/components/ui/year-selector";
 import { formatNumber, formatCurrency } from "@/lib/utils";
 import { Users, FileText, DollarSign, Shield, Info, Calendar, Vote, Eye } from "lucide-react";
 
 export default function GovernancePage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState<number>(2023);
 
   useEffect(() => {
     axios.get("/data/governance-2023.json")
@@ -37,6 +39,14 @@ export default function GovernancePage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Year Selector */}
+        <YearSelector
+          selectedYear={selectedYear}
+          availableYears={[2023]}
+          onYearChange={setSelectedYear}
+          hasDetailedBreakdown={false}
+        />
+
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
             title="Board Members"

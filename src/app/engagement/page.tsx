@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
+import { YearSelector } from "@/components/ui/year-selector";
 import { AlertCircle, Info, TrendingUp, MessageSquare, Calendar, FileCheck } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 import {
@@ -39,6 +40,7 @@ const COLORS = ["#009a3d", "#ef4444", "#f59e0b", "#3b82f6"];
 export default function EngagementPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState<number>(2023);
 
   useEffect(() => {
     axios.get("/data/engagement.json")
@@ -149,6 +151,14 @@ export default function EngagementPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Year Selector */}
+        <YearSelector
+          selectedYear={selectedYear}
+          availableYears={[2023]}
+          onYearChange={setSelectedYear}
+          hasDetailedBreakdown={false}
+        />
+
         <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded shadow-sm">
           <div className="flex items-start">
             <AlertCircle className="h-6 w-6 text-yellow-600 mr-3 flex-shrink-0 mt-0.5" />

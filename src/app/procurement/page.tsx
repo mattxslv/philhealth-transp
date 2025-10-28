@@ -5,6 +5,7 @@ import axios from "axios";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
 import { DataTable } from "@/components/ui/data-table";
+import { YearSelector } from "@/components/ui/year-selector";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { AlertCircle, Info, FileText, Calendar, DollarSign, Building, CheckCircle, Clock } from "lucide-react";
@@ -57,6 +58,7 @@ const procurementColumns: ColumnDef<any>[] = [
 export default function ProcurementPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState<number>(2023);
 
   useEffect(() => {
     axios.get("/data/procurement.json")
@@ -131,6 +133,14 @@ export default function ProcurementPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Year Selector */}
+        <YearSelector
+          selectedYear={selectedYear}
+          availableYears={[2023]}
+          onYearChange={setSelectedYear}
+          hasDetailedBreakdown={false}
+        />
+
         {/* Data Not Available Notice */}
         <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded shadow-sm">
           <div className="flex items-start">

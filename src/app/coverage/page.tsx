@@ -6,6 +6,7 @@ import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { ChartCard } from "@/components/ui/chart-card";
+import { YearSelector } from "@/components/ui/year-selector";
 import { formatNumber } from "@/lib/utils";
 import { Users, UserCheck, Percent, TrendingUp, Info } from "lucide-react";
 import {
@@ -41,6 +42,7 @@ const COLORS = ["#009a3d", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"
 export default function CoveragePage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState<number>(2023);
 
   useEffect(() => {
     axios.get("/data/coverage.json")
@@ -237,6 +239,14 @@ export default function CoveragePage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Year Selector */}
+        <YearSelector
+          selectedYear={selectedYear}
+          availableYears={[2023]}
+          onYearChange={setSelectedYear}
+          hasDetailedBreakdown={false}
+        />
+
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard

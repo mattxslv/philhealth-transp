@@ -7,6 +7,7 @@ import { PageHeading } from "@/components/ui/page-heading";
 import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { DataTable } from "@/components/ui/data-table";
+import { YearSelector } from "@/components/ui/year-selector";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatNumber } from "@/lib/utils";
 import { Building2, Hospital, Users, MapPin, CheckCircle, AlertCircle, Info } from "lucide-react";
@@ -60,6 +61,7 @@ export default function FacilitiesPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number>(2023);
 
   useEffect(() => {
     axios.get("/data/facilities-2023.json")
@@ -188,6 +190,14 @@ export default function FacilitiesPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Year Selector */}
+        <YearSelector
+          selectedYear={selectedYear}
+          availableYears={[2023]}
+          onYearChange={setSelectedYear}
+          hasDetailedBreakdown={false}
+        />
+
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
             title="Total Facilities"

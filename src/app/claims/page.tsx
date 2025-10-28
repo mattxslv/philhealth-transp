@@ -7,6 +7,7 @@ import { PageHeading } from "@/components/ui/page-heading";
 import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { DataTable } from "@/components/ui/data-table";
+import { YearSelector } from "@/components/ui/year-selector";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { TrendingUp, DollarSign, Clock, Info, CheckCircle } from "lucide-react";
@@ -86,6 +87,7 @@ const sampleClaimsColumns: ColumnDef<any>[] = [
 export default function ClaimsPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState<number>(2023);
 
   useEffect(() => {
     axios.get("/data/claims.json")
@@ -397,6 +399,14 @@ export default function ClaimsPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Year Selector */}
+        <YearSelector
+          selectedYear={selectedYear}
+          availableYears={[2023]}
+          onYearChange={setSelectedYear}
+          hasDetailedBreakdown={false}
+        />
+
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <KPIStatCard
