@@ -55,10 +55,6 @@ export default function StatisticsChartsPage() {
   return (
     <DashboardLayout>
       <Breadcrumbs />
-      
-      <PageHeading
-        title="Statistics and Charts"
-      />
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
