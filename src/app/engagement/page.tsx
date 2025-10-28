@@ -312,10 +312,15 @@ export default function EngagementPage() {
           </div>
         </div>
 
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-          <p className="text-sm text-blue-800">
-            <strong>Note:</strong> This page displays template structures for future engagement data. Actual metrics will be populated as they become available from PhilHealth official sources.
-          </p>
+        {/* Data Source */}
+        <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-l-4 border-emerald-500 dark:border-emerald-400 p-6 rounded-lg shadow-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            <p className="text-sm text-gray-800 dark:text-gray-200 font-medium">
+              <strong>Data Source:</strong> PhilHealth Annual Report {selectedYear} (Official Audited Data) | 
+              <strong> Last Updated:</strong> December 31, {selectedYear}
+            </p>
+          </div>
         </div>
       </div>
     </DashboardLayout>

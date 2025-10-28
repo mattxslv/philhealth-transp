@@ -236,7 +236,7 @@ export default function ChatbotWidget() {
               transition={{ duration: 0.2 }}
               className="relative"
             >
-              <MessageCircle className="h-6 w-6" />
+              <span className="text-xl font-bold">AI</span>
               {/* Notification pulse */}
               <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
             </motion.div>

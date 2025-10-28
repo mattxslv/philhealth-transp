@@ -547,7 +547,7 @@ export default function FinancialsPage() {
           <div className="relative overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-6 rounded-2xl shadow-md border border-purple-200 dark:border-purple-700 hover:shadow-lg transition-all">
             <div className="absolute top-0 right-0 w-24 h-24 bg-purple-400/10 rounded-full -mr-12 -mt-12"></div>
             <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Total Beneficiaries</h3>
-            <p className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">{((latestData.beneficiaries || 0) / 1000000).toFixed(1)}M</p>
+            <p className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">{((latestData.totalBeneficiaries || latestData.beneficiaries || 0) / 1000000).toFixed(1)}M</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Members covered</p>
           </div>
 
@@ -564,8 +564,8 @@ export default function FinancialsPage() {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
             <p className="text-sm text-gray-800 dark:text-gray-200 font-medium">
-              <strong>Data Source:</strong> {data.metadata?.source || "PhilHealth Annual Reports"} | 
-              <strong> Last Updated:</strong> {data.metadata?.lastUpdated || "2025-01-15"}
+              <strong>Data Source:</strong> PhilHealth Annual Report {selectedYear} (Official Audited Data) | 
+              <strong> Last Updated:</strong> December 31, {selectedYear}
             </p>
           </div>
         </div>

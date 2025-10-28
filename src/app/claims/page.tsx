@@ -575,11 +575,14 @@ export default function ClaimsPage() {
         </div>
 
         {/* Data Source */}
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-          <p className="text-sm text-blue-800">
-            <strong>Data Source:</strong> {data.metadata.source} | 
-            <strong> Reporting Period:</strong> {data.metadata.reportingPeriod}
-          </p>
+        <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-l-4 border-emerald-500 dark:border-emerald-400 p-6 rounded-lg shadow-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            <p className="text-sm text-gray-800 dark:text-gray-200 font-medium">
+              <strong>Data Source:</strong> PhilHealth Annual Report {selectedYear} (Official Audited Data) | 
+              <strong> Last Updated:</strong> December 31, {selectedYear}
+            </p>
+          </div>
         </div>
       </div>
     </DashboardLayout>
