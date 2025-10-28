@@ -15,6 +15,8 @@ import {
   FileText,
   Building2,
   ShoppingCart,
+  Download,
+  BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
@@ -47,6 +49,13 @@ const navigationGroups = [
     items: [
       { name: "Governance & Accountability", href: "/governance", icon: ShieldCheck },
       { name: "Public Engagement", href: "/engagement", icon: MessageSquare },
+    ]
+  },
+  {
+    label: "Downloads",
+    items: [
+      { name: "Annual Reports", href: "/downloads/annual-reports", icon: Download },
+      { name: "Statistics & Charts", href: "/downloads/statistics", icon: BarChart3 },
     ]
   },
 ];
