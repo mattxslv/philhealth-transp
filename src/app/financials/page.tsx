@@ -364,8 +364,12 @@ export default function FinancialsPageECharts() {
       right: '5%',
       top: 'center',
       textStyle: {
-        fontSize: 12,
+        fontSize: 11,
         color: textColor
+      },
+      formatter: function(name: string) {
+        // Shorten legend names for better display
+        return name.length > 25 ? name.substring(0, 22) + '...' : name;
       }
     },
     series: [
@@ -383,15 +387,17 @@ export default function FinancialsPageECharts() {
           shadowColor: isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)'
         },
         label: {
-          fontSize: 12,
+          fontSize: 10,
           fontWeight: 'bold',
-          formatter: '{b}\n₱{c}B',
+          formatter: function(params: any) {
+            return `${params.name}\n₱${params.value.toFixed(2)}B`;
+          },
           color: textColor
         },
         emphasis: {
           label: {
             show: true,
-            fontSize: 14,
+            fontSize: 12,
             fontWeight: 'bold',
             color: textColor
           },
@@ -401,7 +407,7 @@ export default function FinancialsPageECharts() {
             shadowColor: isDark ? 'rgba(0, 0, 0, 0.9)' : 'rgba(0, 0, 0, 0.5)'
           }
         },
-        data: data.administrativeCosts.map((c: any, idx: number) => ({
+        data: (data.administrativeCosts || []).map((c: any, idx: number) => ({
           value: c.amount / 1000000000,
           name: c.category,
           itemStyle: {
@@ -425,27 +431,40 @@ export default function FinancialsPageECharts() {
       textStyle: {
         color: textColor,
         fontSize: 13
+      },
+      formatter: function(params: any) {
+        if (params.data.children) {
+          return `<strong>${params.name}</strong><br/>Amount: <strong>₱${params.value.toFixed(2)}B</strong>`;
+        } else {
+          return `<strong>${params.name}</strong><br/>Value: <strong>₱${params.value.toFixed(2)}B</strong>`;
+        }
       }
     },
     series: [
       {
         type: 'sunburst',
-        data: data.investments.map((inv: any) => ({
+        data: (data.investments || []).map((inv: any) => ({
           name: inv.type,
           value: inv.amount / 1000000000,
           children: [
             {
               name: `Returns: ${formatPercent(inv.returns)}`,
-              value: (inv.amount * inv.returns / 100) / 1000000000
+              value: (inv.amount * (inv.returns || 0) / 100) / 1000000000
             }
           ]
         })),
         radius: [0, '90%'],
         label: {
-          fontSize: 12,
+          fontSize: 11,
           fontWeight: 'bold',
           rotate: 'radial',
-          color: textColor
+          color: textColor,
+          formatter: function(params: any) {
+            if (params.data.children) {
+              return params.name.length > 20 ? params.name.substring(0, 17) + '...' : params.name;
+            }
+            return params.name;
+          }
         },
         itemStyle: {
           borderRadius: 7,
