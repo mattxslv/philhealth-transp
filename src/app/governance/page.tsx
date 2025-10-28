@@ -6,6 +6,7 @@ import Link from "next/link";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { YearSelector } from "@/components/ui/year-selector";
 import { formatNumber, formatCurrency } from "@/lib/utils";
+import { DataCardSkeleton } from "@/components/ui/skeleton";
 import { FileText, DollarSign, Calendar, Download, AlertCircle, Building2 } from "lucide-react";
 
 export default function GovernancePage() {
@@ -28,8 +29,16 @@ export default function GovernancePage() {
   if (loading || !data) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="text-muted-foreground">Loading governance data...</div>
+        <div className="space-y-8">
+          <div className="space-y-4">
+            <div className="h-10 w-64 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            <div className="h-5 w-96 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <DataCardSkeleton key={i} />
+            ))}
+          </div>
         </div>
       </DashboardLayout>
     );

@@ -10,6 +10,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { YearSelector } from "@/components/ui/year-selector";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatCurrency, formatNumber } from "@/lib/utils";
+import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import { TrendingUp, DollarSign, Clock, Info, CheckCircle } from "lucide-react";
 import {
   Chart as ChartJS,
@@ -104,9 +105,7 @@ export default function ClaimsPage() {
   if (loading || !data) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="text-muted-foreground">Loading claims data...</div>
-        </div>
+        <PageLoadingSkeleton />
       </DashboardLayout>
     );
   }

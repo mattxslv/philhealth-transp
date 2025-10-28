@@ -7,6 +7,7 @@ import { PageHeading } from "@/components/ui/page-heading";
 import { YearSelector } from "@/components/ui/year-selector";
 import { AlertCircle, Info, TrendingUp, MessageSquare, Calendar, FileCheck } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
+import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -57,9 +58,7 @@ export default function EngagementPage() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="text-muted-foreground">Loading engagement data...</div>
-        </div>
+        <PageLoadingSkeleton />
       </DashboardLayout>
     );
   }

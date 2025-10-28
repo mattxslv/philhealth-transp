@@ -10,6 +10,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { YearSelector } from "@/components/ui/year-selector";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatNumber } from "@/lib/utils";
+import { FacilityCardSkeleton } from "@/components/ui/skeleton";
 import { Building2, Hospital, Users, MapPin, CheckCircle, AlertCircle, Info } from "lucide-react";
 import {
   Chart as ChartJS,
@@ -80,8 +81,16 @@ export default function FacilitiesPage() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="text-muted-foreground">Loading facilities data...</div>
+        <div className="space-y-8">
+          <div className="space-y-4">
+            <div className="h-10 w-64 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            <div className="h-5 w-96 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <FacilityCardSkeleton key={i} />
+            ))}
+          </div>
         </div>
       </DashboardLayout>
     );

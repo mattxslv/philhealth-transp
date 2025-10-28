@@ -8,6 +8,7 @@ import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { ChartCard } from "@/components/ui/chart-card";
 import { YearSelector } from "@/components/ui/year-selector";
 import { formatNumber } from "@/lib/utils";
+import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import { Users, UserCheck, Percent, TrendingUp, Info } from "lucide-react";
 import {
   Chart as ChartJS,
@@ -59,9 +60,7 @@ export default function CoveragePage() {
   if (loading || !data) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="text-muted-foreground">Loading coverage data...</div>
-        </div>
+        <PageLoadingSkeleton />
       </DashboardLayout>
     );
   }

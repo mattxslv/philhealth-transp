@@ -7,7 +7,7 @@ import { PageHeading } from "@/components/ui/page-heading";
 import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
 import { YearSelector } from "@/components/ui/year-selector";
-import { formatCurrency } from "@/lib/utils";
+import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import { DollarSign, TrendingUp, Wallet, PiggyBank, ChevronDown, ChevronUp, AlertCircle } from "lucide-react";
 import {
   Chart as ChartJS,
@@ -85,9 +85,7 @@ export default function FinancialsPage() {
   if (loading || !data) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="text-muted-foreground">Loading financial data...</div>
-        </div>
+        <PageLoadingSkeleton />
       </DashboardLayout>
     );
   }
