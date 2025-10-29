@@ -88,16 +88,6 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile menu button for navigation links */}
-        <button
-          onClick={() => setMobileMenuOpen(true)}
-          className="lg:hidden rounded-md p-2 hover:bg-primary/10 transition-colors"
-          aria-label="Open navigation menu"
-          title="Navigation menu"
-        >
-          <Menu className="h-5 w-5" />
-        </button>
-
         {/* Right section - Navigation links (Desktop only) */}
         <div className="hidden lg:flex lg:items-center lg:gap-x-6 lg:flex-1 lg:justify-end">
           {navigation.map((item) => {

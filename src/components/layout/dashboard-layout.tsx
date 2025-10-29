@@ -14,6 +14,16 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { useSidebar } from "@/contexts/sidebar-context";
 import { useState } from "react";
 
+// Top navigation links (will show in sidebar on mobile)
+const topNavigation = [
+  { name: "About Us", href: "https://www.philhealth.gov.ph/about_us/", external: true },
+  { name: "Members", href: "https://www.philhealth.gov.ph/members/", external: true },
+  { name: "Partners", href: "https://www.philhealth.gov.ph/partners/", external: true },
+  { name: "Online Services", href: "https://www.philhealth.gov.ph/services/", external: true },
+  { name: "Downloads", href: "https://www.philhealth.gov.ph/downloads/", external: true },
+  { name: "Transparency", href: "/", external: false },
+];
+
 const navigationGroups = [
   {
     label: "Financial Reports",
@@ -195,6 +205,47 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             >
               Home
             </Link>
+
+            {/* Top navigation links - Mobile only */}
+            <div className="lg:hidden mb-4 pb-4 border-b border-border">
+              <div className="text-xs font-semibold text-muted-foreground mb-2 px-3">PhilHealth Portal</div>
+              <div className="space-y-1">
+                {topNavigation.map((item) => {
+                  const isActive = !item.external && pathname === item.href;
+                  
+                  if (item.external) {
+                    return (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-primary transition-all duration-200"
+                        onClick={handleLinkClick}
+                      >
+                        {item.name}
+                      </a>
+                    );
+                  }
+                  
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={cn(
+                        "block rounded-lg px-3 py-2 text-sm transition-all duration-200",
+                        isActive
+                          ? "text-primary font-medium"
+                          : "text-muted-foreground hover:text-primary"
+                      )}
+                      onClick={handleLinkClick}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
 
             <div className="space-y-2">
               {navigationGroups.map((group) => (
