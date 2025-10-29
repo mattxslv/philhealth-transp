@@ -182,7 +182,7 @@ export default function AnnualReportsPage() {
             <p className="font-semibold mb-2">About Annual Reports</p>
             <p className="text-blue-800 dark:text-blue-200">
               All annual reports are official documents audited by the Commission on Audit (COA). 
-              They contain comprehensive information about PhilHealth's financial performance, 
+              They contain comprehensive information about PhilHealth&apos;s financial performance, 
               governance structure, membership statistics, and operational achievements for each fiscal year.
             </p>
           </div>

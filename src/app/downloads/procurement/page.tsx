@@ -216,7 +216,7 @@ export default function ProcurementPage() {
           <div className="text-sm text-blue-900 dark:text-blue-100">
             <p className="font-semibold mb-2">About Procurement Documents</p>
             <p className="text-blue-800 dark:text-blue-200">
-              All procurement documents are official files from PhilHealth's Procurement Department. 
+              All procurement documents are official files from PhilHealth&apos;s Procurement Department. 
               These include Annual Procurement Plans (APP), amendments, bid invitations, and contract awards. 
               All documents are maintained in compliance with transparency and accountability requirements 
               as mandated by the Government Procurement Reform Act.

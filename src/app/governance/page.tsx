@@ -269,7 +269,7 @@ export default function GovernancePage() {
           </h3>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             Transparency in governance is essential for public trust and accountability. This page highlights areas where additional disclosure would enhance 
-            public understanding of PhilHealth's governance practices, decision-making processes, and use of public funds.
+            public understanding of PhilHealth&apos;s governance practices, decision-making processes, and use of public funds.
           </p>
           <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded">
             <p className="text-sm text-blue-800 dark:text-blue-200">

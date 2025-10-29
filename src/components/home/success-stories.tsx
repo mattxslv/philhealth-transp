@@ -91,7 +91,7 @@ export function SuccessStories() {
 
               {/* Quote */}
               <blockquote className="text-lg sm:text-xl lg:text-2xl text-center text-foreground leading-relaxed italic">
-                "{story.quote}"
+                &ldquo;{story.quote}&rdquo;
               </blockquote>
 
               {/* Author Info */}

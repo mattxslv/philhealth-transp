@@ -286,7 +286,7 @@ export default function FinancialsPage() {
         <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-sm border border-gray-200 dark:border-gray-700">
           <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Financial Overview {selectedYear}</h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
-            PhilHealth's financial performance demonstrates our commitment to providing comprehensive healthcare coverage 
+            PhilHealth&apos;s financial performance demonstrates our commitment to providing comprehensive healthcare coverage 
             to all Filipinos while maintaining fiscal responsibility and sustainability.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
@@ -654,7 +654,7 @@ export default function FinancialsPage() {
                 <span className="font-bold text-primary">
                   {((netIncome / totalRevenue) * 100).toFixed(1)}%
                 </span>{' '}
-                reflects PhilHealth's commitment to fiscal responsibility while maximizing member benefits.
+                reflects PhilHealth&apos;s commitment to fiscal responsibility while maximizing member benefits.
               </p>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4">

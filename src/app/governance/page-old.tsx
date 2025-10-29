@@ -400,7 +400,7 @@ export default function GovernancePage() {
                 <span className="text-emerald-500">Q:</span> How often does the PhilHealth Board meet?
               </h3>
               <p className="text-gray-600 dark:text-gray-400 pl-6">
-                A: The PhilHealth Board holds regular meetings as mandated by the corporation's charter. In 2007,
+                A: The PhilHealth Board holds regular meetings as mandated by the corporation&apos;s charter. In 2007,
                 there were {formatNumber(data.corporateGovernance.totalBoardMeetings)} board meetings to discuss policy, 
                 operations, and strategic initiatives.
               </p>
@@ -408,7 +408,7 @@ export default function GovernancePage() {
             
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="font-semibold text-gray-900 dark:text-foreground mb-2 flex items-center gap-2">
-                <span className="text-emerald-500">Q:</span> Where can I access PhilHealth's official documents?
+                <span className="text-emerald-500">Q:</span> Where can I access PhilHealth&apos;s official documents?
               </h3>
               <p className="text-gray-600 dark:text-gray-400 pl-6">
                 A: PhilHealth publishes various documents including annual reports, financial statements, circulars, 

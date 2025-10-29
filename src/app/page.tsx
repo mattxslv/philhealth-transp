@@ -164,7 +164,7 @@ export default function Home() {
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Use verified data for research, policy advocacy, or personal understanding 
-                  of PhilHealth's performance and impact on Philippine healthcare.
+                  of PhilHealth&apos;s performance and impact on Philippine healthcare.
                 </p>
               </div>
             </div>
@@ -194,7 +194,7 @@ export default function Home() {
                   <h3 className="text-lg font-bold text-gray-900">Official Source</h3>
                 </div>
                 <p className="text-gray-600">
-                  Data sourced directly from PhilHealth's authenticated databases and annual reports
+                  Data sourced directly from PhilHealth&apos;s authenticated databases and annual reports
                 </p>
               </div>
 

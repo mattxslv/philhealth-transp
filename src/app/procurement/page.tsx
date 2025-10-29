@@ -217,7 +217,7 @@ export default function ProcurementPage() {
             <div className="text-sm text-purple-900 dark:text-purple-100">
               <p className="font-semibold mb-2">About Procurement Documents</p>
               <p className="text-purple-800 dark:text-purple-200">
-                These documents contain amendments to PhilHealth's Annual Procurement Plan for 2024. 
+                These documents contain amendments to PhilHealth&apos;s Annual Procurement Plan for 2024. 
                 All procurement activities are conducted in accordance with the Government Procurement Policy Board (GPPB) 
                 rules and regulations, ensuring transparency and competitive bidding processes.
               </p>
