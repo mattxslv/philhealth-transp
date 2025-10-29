@@ -130,11 +130,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {/* Hamburger button - only shows when sidebar is closed */}
+      {/* Hamburger button - only shows on desktop when sidebar is closed */}
       {!sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="fixed top-4 left-4 z-[60] flex items-center justify-center h-10 w-10 rounded-lg hover:bg-primary/20 transition-all duration-300 mr-4"
+          className="hidden lg:flex fixed top-4 left-4 z-[60] items-center justify-center h-10 w-10 rounded-lg hover:bg-primary/20 transition-all duration-300 mr-4"
           aria-label="Open sidebar"
         >
           <Menu className="h-5 w-5" />

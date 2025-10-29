@@ -38,7 +38,7 @@ export function Navbar() {
       >
         {/* Left section - Logo and hamburger */}
         <div className="flex items-center gap-12 lg:flex-1">
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger - only show on mobile */}
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden rounded-md p-2 hover:bg-primary/10 transition-colors"
@@ -76,13 +76,13 @@ export function Navbar() {
             <Image
               src="/images/philhealth logo.png"
               alt="PhilHealth Logo"
-              width={48}
-              height={48}
+              width={40}
+              height={40}
               className="object-contain"
             />
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-foreground">PhilHealth</span>
-              <span className="text-sm text-muted-foreground">Transparency Portal</span>
+              <span className="text-base font-bold text-foreground">PhilHealth</span>
+              <span className="text-xs text-muted-foreground">Transparency Portal</span>
             </div>
           </Link>
         </div>
@@ -119,10 +119,8 @@ export function Navbar() {
               </Link>
             );
           })}
-        </div>
-        
-        {/* Mobile - only search and theme */}
-        <div className="flex lg:hidden gap-3">
+          
+          {/* Desktop only - Search and Theme toggle */}
           <GlobalSearch />
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
