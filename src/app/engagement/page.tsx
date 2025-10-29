@@ -173,13 +173,13 @@ export default function EngagementPage() {
           </h3>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             Effective public engagement requires transparent communication about complaints handling, policy changes, contact channels, and performance tracking. 
-            This page highlights areas where additional disclosure would enhance member satisfaction, trust, and PhilHealth's responsiveness to public needs.
+            This page highlights areas where additional disclosure would enhance member satisfaction, trust, and PhilHealth&apos;s responsiveness to public needs.
           </p>
           <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded">
             <p className="text-sm text-blue-800 dark:text-blue-200">
               <strong>Note:</strong> The absence of public engagement data does not necessarily indicate poor service. However, comprehensive disclosure of 
               complaint statistics, policy update timelines, accessible contact information, and performance metrics would align with international best practices 
-              in public service transparency and strengthen member confidence in PhilHealth's commitment to continuous improvement.
+              in public service transparency and strengthen member confidence in PhilHealth&apos;s commitment to continuous improvement.
             </p>
           </div>
         </div>
