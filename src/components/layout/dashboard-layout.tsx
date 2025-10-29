@@ -38,7 +38,7 @@ const navigationGroups = [
     ]
   },
   {
-    label: "Downloads",
+    label: "Documents",
     items: [
       { name: "Annual Reports", href: "/downloads/annual-reports" },
       { name: "Statistics & Charts", href: "/downloads/statistics" },
@@ -152,7 +152,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 z-50 h-screen w-64 transform bg-gradient-to-b from-card to-card/95 border-r border-border transition-transform duration-300 ease-in-out",
+          "fixed top-0 left-0 z-50 h-screen w-64 transform bg-background border-r border-border transition-transform duration-300 ease-in-out",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >

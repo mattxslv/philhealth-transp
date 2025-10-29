@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Label } from 'recharts';
 import { motion } from 'framer-motion';
 import { InfoIcon } from 'lucide-react';
+import { downloadCSV, downloadXLS } from '@/lib/export';
 
 type FundCategory = 'contributions' | 'allocations' | 'expenses';
 
@@ -103,6 +104,75 @@ export function FundsChart() {
   const allocationsTotal = allocationsData.reduce((sum, item) => sum + item.value, 0);
   const expensesTotal = expensesData.reduce((sum, item) => sum + item.value, 0);
 
+  // Download handlers
+  const handleDownloadCSV = () => {
+    let data = [];
+    let filename = '';
+    
+    switch (activeCategory) {
+      case 'contributions':
+        data = contributionsData.map(item => ({
+          Category: item.name,
+          'Amount (Billions)': item.value,
+          'Percentage': `${item.percentage}%`
+        }));
+        filename = 'philhealth-contributions-2007';
+        break;
+      case 'allocations':
+        data = allocationsData.map(item => ({
+          Category: item.name,
+          'Amount (Billions)': item.value,
+          'Percentage': `${item.percentage}%`
+        }));
+        filename = 'philhealth-allocations-2007';
+        break;
+      case 'expenses':
+        data = expensesData.map(item => ({
+          Category: item.name,
+          'Amount (Billions)': item.value,
+          'Percentage': `${item.percentage}%`
+        }));
+        filename = 'philhealth-expenses-2007';
+        break;
+    }
+    
+    downloadCSV(data, filename);
+  };
+
+  const handleDownloadXLS = () => {
+    let data = [];
+    let filename = '';
+    
+    switch (activeCategory) {
+      case 'contributions':
+        data = contributionsData.map(item => ({
+          Category: item.name,
+          'Amount (Billions)': item.value,
+          'Percentage': `${item.percentage}%`
+        }));
+        filename = 'philhealth-contributions-2007';
+        break;
+      case 'allocations':
+        data = allocationsData.map(item => ({
+          Category: item.name,
+          'Amount (Billions)': item.value,
+          'Percentage': `${item.percentage}%`
+        }));
+        filename = 'philhealth-allocations-2007';
+        break;
+      case 'expenses':
+        data = expensesData.map(item => ({
+          Category: item.name,
+          'Amount (Billions)': item.value,
+          'Percentage': `${item.percentage}%`
+        }));
+        filename = 'philhealth-expenses-2007';
+        break;
+    }
+    
+    downloadXLS(data, filename);
+  };
+
   return (
     <motion.div 
       className="w-full mx-auto"
@@ -115,7 +185,7 @@ export function FundsChart() {
           Incoming and Outgoing Funds
         </h2>
         <p className="text-gray-600 dark:text-gray-400 text-lg">
-          2024 Financial Overview
+          2007 Financial Overview
         </p>
       </div>
 
@@ -213,10 +283,16 @@ export function FundsChart() {
               <div className="space-y-4">
                 <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">PLAY WITH THE DATA</p>
                 <div className="flex gap-4">
-                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  <button 
+                    onClick={handleDownloadCSV}
+                    className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  >
                     Download CSV
                   </button>
-                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  <button 
+                    onClick={handleDownloadXLS}
+                    className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  >
                     Download XLS
                   </button>
                 </div>
@@ -226,16 +302,16 @@ export function FundsChart() {
         )}
 
         {activeCategory === 'allocations' && (
-          <div className="flex flex-col lg:flex-row items-start gap-8">
-            {/* List Section */}
-            <div className="w-full lg:w-1/2">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Left side - Two column list */}
+            <div className="w-full lg:w-2/3">
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Allocations</p>
                 <p className="text-4xl font-bold text-[#009a3d]">₱{allocationsTotal.toFixed(1)}B</p>
                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">SORTED BY ALLOCATION AMOUNT</p>
               </div>
 
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
                 {allocationsData.map((item, index) => (
                   <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
                     <div className="flex items-start justify-between mb-2">
@@ -261,27 +337,27 @@ export function FundsChart() {
               </div>
             </div>
 
-            {/* About Section */}
-            <div className="w-full lg:w-1/2 space-y-8">
+            {/* Right side - About section */}
+            <div className="w-full lg:w-1/3 space-y-8">
               <h3 className="text-4xl font-bold text-gray-900 dark:text-white">About Allocations</h3>
               <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
                 Fund allocations represent the planned distribution of collected contributions across various healthcare benefit programs and services offered by PhilHealth.
               </p>
               
               <div className="space-y-4">
-                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">DO YOU WANT TO LEARN MORE?</p>
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-sm font-semibold">DO YOU WANT TO LEARN MORE?</p>
                 <a href="/financials" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                   Visit Financial Overview
                 </a>
               </div>
 
               <div className="space-y-4">
-                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">PLAY WITH THE DATA</p>
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-sm font-semibold">PLAY WITH THE DATA</p>
                 <div className="flex gap-4">
-                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  <button onClick={handleDownloadCSV} className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     Download CSV
                   </button>
-                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  <button onClick={handleDownloadXLS} className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     Download XLS
                   </button>
                 </div>
@@ -291,16 +367,16 @@ export function FundsChart() {
         )}
 
         {activeCategory === 'expenses' && (
-          <div className="flex flex-col lg:flex-row items-start gap-8">
-            {/* List Section */}
-            <div className="w-full lg:w-1/2">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Left side - Two column list */}
+            <div className="w-full lg:w-2/3">
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Expenses</p>
                 <p className="text-4xl font-bold text-[#009a3d]">₱{expensesTotal.toFixed(1)}B</p>
                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">SORTED BY EXPENSE AMOUNT</p>
               </div>
 
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
                 {expensesData.map((item, index) => (
                   <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
                     <div className="flex items-start justify-between mb-2">
@@ -326,27 +402,27 @@ export function FundsChart() {
               </div>
             </div>
 
-            {/* About Section */}
-            <div className="w-full lg:w-1/2 space-y-8">
+            {/* Right side - About section */}
+            <div className="w-full lg:w-1/3 space-y-8">
               <h3 className="text-4xl font-bold text-gray-900 dark:text-white">About Expenses</h3>
               <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
                 Operating expenses include all costs incurred in running PhilHealth's operations, from healthcare claims payments to administrative costs and system infrastructure.
               </p>
               
               <div className="space-y-4">
-                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">DO YOU WANT TO LEARN MORE?</p>
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-sm font-semibold">DO YOU WANT TO LEARN MORE?</p>
                 <a href="/financials" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                   Visit Financial Overview
                 </a>
               </div>
 
               <div className="space-y-4">
-                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">PLAY WITH THE DATA</p>
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-sm font-semibold">PLAY WITH THE DATA</p>
                 <div className="flex gap-4">
-                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  <button onClick={handleDownloadCSV} className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     Download CSV
                   </button>
-                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  <button onClick={handleDownloadXLS} className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     Download XLS
                   </button>
                 </div>

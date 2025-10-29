@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdated": "2025-01-15",
-    "source": "PhilHealth Annual Reports (2022-2024)",
+    "lastUpdated": "2025-10-29",
+    "source": "PhilHealth Annual Reports (2007, 2022-2024)",
     "description": "Authentic financial data from PhilHealth's audited financial statements",
     "currency": "PHP",
-    "yearsAvailable": [2022, 2023, 2024]
+    "yearsAvailable": [2007, 2022, 2023, 2024]
   },
   "annualReports": [
     {
@@ -440,6 +440,120 @@
         }
       },
       "notes": "Post-pandemic recovery year with normalized claim patterns"
+    },
+    {
+      "year": 2007,
+      "revenue": 29138157771,
+      "expenditures": 18450891889,
+      "netIncome": 8299810283,
+      "totalAssets": 17222690817,
+      "totalLiabilities": 1035596750,
+      "fundBalance": 16187094067,
+      "beneficiaries": 64470000,
+      "totalMembers": 15850000,
+      "coverageRate": 73,
+      "claimsPaid": 18450891889,
+      "reserveFund": 16187094067,
+      "premiumContributions": 23726746649,
+      "interestIncome": 5387451143,
+      "breakdown": {
+        "revenueBySource": [
+          {
+            "source": "NHIP Premium Contributions",
+            "amount": 23726746649,
+            "percentage": 81.4
+          },
+          {
+            "source": "Interest Income", 
+            "amount": 5387451143,
+            "percentage": 18.5
+          },
+          {
+            "source": "Accreditation Fees",
+            "amount": 18507775,
+            "percentage": 0.1
+          },
+          {
+            "source": "Other Income",
+            "amount": 5654596,
+            "percentage": 0.0
+          }
+        ],
+        "benefitPaymentsBySector": [
+          {
+            "sector": "Private Sector",
+            "amount": 7739751249,
+            "percentage": 42.0
+          },
+          {
+            "sector": "Government Sector", 
+            "amount": 3824262437,
+            "percentage": 20.7
+          },
+          {
+            "sector": "Indigent Program",
+            "amount": 3115868664,
+            "percentage": 16.9
+          },
+          {
+            "sector": "Individually Paying Member",
+            "amount": 2148120968,
+            "percentage": 11.6
+          },
+          {
+            "sector": "Non-paying Member",
+            "amount": 936310333,
+            "percentage": 5.1
+          },
+          {
+            "sector": "Overseas Foreign Worker",
+            "amount": 686578238,
+            "percentage": 3.7
+          }
+        ]
+      },
+      "membership": {
+        "totalMembers": 15850000,
+        "totalBeneficiaries": 64470000,
+        "bySector": [
+          {
+            "sector": "Private-Employed",
+            "members": 7000000,
+            "beneficiaries": 24860000
+          },
+          {
+            "sector": "Sponsored Program",
+            "members": 2720000,
+            "beneficiaries": 13640000
+          },
+          {
+            "sector": "Individually-Paying",
+            "members": 2430000,
+            "beneficiaries": 11070000
+          },
+          {
+            "sector": "Government-Employed",
+            "members": 1780000,
+            "beneficiaries": 7420000
+          },
+          {
+            "sector": "Overseas Workers",
+            "members": 1590000,
+            "beneficiaries": 6910000
+          },
+          {
+            "sector": "Non-Paying",
+            "members": 340000,
+            "beneficiaries": 570000
+          }
+        ]
+      },
+      "cashFlow": {
+        "operatingActivities": 5443655321,
+        "investingActivities": 687184746,
+        "cashEquivalentsEnd": 14679049552
+      },
+      "notes": "First year to achieve over 70% population coverage with 73% coverage rate"
     }
   ],
   "monthlyRevenue": [

@@ -64,13 +64,13 @@ export default function FacilitiesPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const [selectedYear, setSelectedYear] = useState<number>(2007);
 
   const loadData = () => {
     setLoading(true);
     setError(null);
     
-    axios.get("/data/facilities-2023.json")
+    axios.get("/data/facilities-2007.json")
       .then(res => {
         console.log("Facilities data loaded:", res.data);
         if (!res.data) {
@@ -242,7 +242,7 @@ export default function FacilitiesPage() {
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
-          availableYears={[2023]}
+          availableYears={[2007]}
           onYearChange={setSelectedYear}
           hasDetailedBreakdown={false}
         />
@@ -294,6 +294,68 @@ export default function FacilitiesPage() {
             </div>
           </ChartCard>
         </div>
+
+        {/* Other Accredited Facilities */}
+        {data.otherFacilities && data.otherFacilities.length > 0 && (
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-4">Other Accredited Facilities</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+              Beyond hospitals, PhilHealth accredits various healthcare providers and professionals
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {data.otherFacilities.map((facility: any, index: number) => (
+                <div key={index} className="p-4 bg-gradient-to-br from-blue-50 to-white dark:from-blue-900/20 dark:to-gray-800 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">{facility.type}</h3>
+                    <Hospital className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <p className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-1">
+                    {formatNumber(facility.count)}
+                  </p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Accredited</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Regional Distribution */}
+        {data.regionalDistribution && (
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-4">Regional Distribution</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+              Hospital facilities across major regions of the Philippines
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {data.regionalDistribution.byRegion && data.regionalDistribution.byRegion.map((region: any, index: number) => (
+                <div key={index} className="p-5 bg-gradient-to-br from-green-50 to-white dark:from-green-900/20 dark:to-gray-800 rounded-lg border border-green-200 dark:border-green-800">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">{region.region}</h3>
+                    <MapPin className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                        {formatNumber(region.total)}
+                      </p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Total Hospitals ({region.percentage}%)</p>
+                    </div>
+                    <div className="flex gap-4 text-xs">
+                      <div>
+                        <p className="font-semibold text-gray-700 dark:text-gray-300">{formatNumber(region.private)}</p>
+                        <p className="text-gray-500 dark:text-gray-400">Private</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-700 dark:text-gray-300">{formatNumber(region.government)}</p>
+                        <p className="text-gray-500 dark:text-gray-400">Government</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div className="bg-gradient-to-br from-white to-green-50 p-6 rounded-lg shadow-md border border-green-100">

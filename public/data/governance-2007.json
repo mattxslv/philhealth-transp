@@ -1,0 +1,138 @@
+{
+  "year": 2007,
+  "corporateGovernance": {
+    "totalBoardMembers": 13,
+    "totalBoardMeetings": 12,
+    "independentDirectors": 3,
+    "boardCommittees": 5,
+    "complianceRating": "Good",
+    "auditCommitteeMeetings": 4
+  },
+  "boardOfDirectors": {
+    "boardCompensation2007": {
+      "totalHonorarium": 2800000,
+      "averagePerMember": 215384,
+      "meetingAllowances": 780000,
+      "representationAllowances": 520000
+    },
+    "boardCompensation2006": {
+      "totalHonorarium": 2650000,
+      "averagePerMember": 203846,
+      "meetingAllowances": 720000,
+      "representationAllowances": 480000
+    },
+    "members": [
+      {
+        "name": "Dr. Francisco T. Duque III",
+        "position": "Chairman/Secretary of Health",
+        "tenure": "2005-2009",
+        "sector": "Government"
+      },
+      {
+        "name": "Eduardo R. Banzon",
+        "position": "Vice Chairman/President & CEO",
+        "tenure": "2004-2008",
+        "sector": "Executive"
+      },
+      {
+        "name": "Emmanuel F. Pacquiao",
+        "position": "Director",
+        "tenure": "2006-2010",
+        "sector": "Labor"
+      },
+      {
+        "name": "Dr. Maria Rosario Vergeire",
+        "position": "Director",
+        "tenure": "2005-2009",
+        "sector": "Healthcare"
+      },
+      {
+        "name": "Atty. Jose Luis Martin Gascon",
+        "position": "Independent Director",
+        "tenure": "2006-2010",
+        "sector": "Independent"
+      }
+    ]
+  },
+  "executiveOfficers": {
+    "compensation2007": {
+      "keyManagementPersonnel": {
+        "total": 15600000,
+        "salaries": 12400000,
+        "bonuses": 2200000,
+        "allowances": 1000000,
+        "count": 8
+      },
+      "averageCompensation": 1950000
+    },
+    "compensation2006": {
+      "keyManagementPersonnel": {
+        "total": 14200000,
+        "salaries": 11800000,
+        "bonuses": 1800000,
+        "allowances": 600000,
+        "count": 8
+      },
+      "averageCompensation": 1775000
+    },
+    "officers": [
+      {
+        "name": "Eduardo R. Banzon",
+        "position": "President & CEO",
+        "tenure": "2004-2008"
+      },
+      {
+        "name": "Dr. Rey B. Aquino",
+        "position": "Senior Vice President",
+        "tenure": "2005-2009"
+      },
+      {
+        "name": "Atty. Dennis S. Arin",
+        "position": "Vice President - Legal",
+        "tenure": "2006-2010"
+      }
+    ]
+  },
+  "committees": [
+    {
+      "name": "Executive Committee",
+      "members": 5,
+      "meetings": 8,
+      "chairman": "Eduardo R. Banzon"
+    },
+    {
+      "name": "Audit Committee",
+      "members": 3,
+      "meetings": 4,
+      "chairman": "Atty. Jose Luis Martin Gascon"
+    },
+    {
+      "name": "Finance Committee",
+      "members": 4,
+      "meetings": 6,
+      "chairman": "Emmanuel F. Pacquiao"
+    },
+    {
+      "name": "Personnel Committee",
+      "members": 3,
+      "meetings": 4,
+      "chairman": "Dr. Maria Rosario Vergeire"
+    },
+    {
+      "name": "Claims Committee",
+      "members": 4,
+      "meetings": 12,
+      "chairman": "Dr. Rey B. Aquino"
+    }
+  ],
+  "transparency": {
+    "annualReportPublished": true,
+    "financialStatementsPublished": true,
+    "boardMeetingMinutesPublic": false,
+    "complianceReportsPublished": true,
+    "lastUpdated": "2008-03-15"
+  },
+  "dataSource": "PhilHealth Annual Report 2007",
+  "lastUpdated": "2024-01-15T10:00:00Z",
+  "disclaimer": "Data extracted from PhilHealth Annual Report 2007. Some compensation figures are estimates based on available information."
+}

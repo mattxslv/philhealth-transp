@@ -92,7 +92,7 @@ export default function ClaimsPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const [selectedYear, setSelectedYear] = useState<number>(2007);
   const [previousYearData, setPreviousYearData] = useState<any>(null);
 
   const loadData = () => {
@@ -454,7 +454,7 @@ export default function ClaimsPage() {
 
   const sampleClaimsData = [
     {
-      claimId: "[Future] PH-2023-001234",
+      claimId: "[Future] PH-2007-001234",
       memberName: "Sample Patient A",
       facilityName: "Sample Hospital - NCR",
       claimType: "Inpatient",
@@ -462,7 +462,7 @@ export default function ClaimsPage() {
       status: "Approved",
     },
     {
-      claimId: "[Future] PH-2023-001235",
+      claimId: "[Future] PH-2007-001235",
       memberName: "Sample Patient B",
       facilityName: "Sample Clinic - Region III",
       claimType: "Outpatient",
@@ -470,7 +470,7 @@ export default function ClaimsPage() {
       status: "Approved",
     },
     {
-      claimId: "[Future] PH-2023-001236",
+      claimId: "[Future] PH-2007-001236",
       memberName: "Sample Patient C",
       facilityName: "Sample Hospital - Region IV-A",
       claimType: "Inpatient",
@@ -506,7 +506,7 @@ export default function ClaimsPage() {
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
-          availableYears={[2023]}
+          availableYears={[2007]}
           onYearChange={setSelectedYear}
           hasDetailedBreakdown={false}
         />

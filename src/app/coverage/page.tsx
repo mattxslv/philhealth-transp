@@ -47,7 +47,7 @@ export default function CoveragePage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const [selectedYear, setSelectedYear] = useState<number>(2007);
   const [previousYearData, setPreviousYearData] = useState<any>(null);
 
   const loadData = () => {
@@ -249,7 +249,7 @@ export default function CoveragePage() {
     { year: "2020", members: 95000000 },
     { year: "2021", members: 98500000 },
     { year: "2022", members: 101200000 },
-    { year: "2023", members: 106200000 },
+    { year: "2007", members: 64500000 },
     { year: "2024", members: 109500000 },
   ];
 
@@ -331,7 +331,7 @@ export default function CoveragePage() {
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
-          availableYears={[2023]}
+          availableYears={[2007]}
           onYearChange={setSelectedYear}
           hasDetailedBreakdown={false}
         />
@@ -458,65 +458,119 @@ export default function CoveragePage() {
           </div>
         </ChartCard>
 
-        {/* FUTURE ENHANCEMENT SECTION */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-6">
-          <div className="flex items-start gap-3 mb-4">
-            <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">Future Enhancement: Regional & Historical Data</h3>
-              <p className="text-sm text-blue-800 mb-4">
-                The sections below show templates for regional distribution and historical growth trends when detailed data becomes available.
-              </p>
+        {/* Regional Coverage Distribution */}
+        {data?.regionalCoverage && (
+          <ChartCard
+            title="Regional Coverage Distribution"
+            description="Membership and beneficiaries across major regions of the Philippines"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              {data.regionalCoverage.byRegion.map((region: any, index: number) => (
+                <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                  <h4 className="text-lg font-semibold mb-3 text-gray-900">{region.region}</h4>
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-sm text-gray-600">Members</p>
+                      <p className="text-xl font-bold text-emerald-600">{formatNumber(region.members)}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Beneficiaries</p>
+                      <p className="text-xl font-bold text-blue-600">{formatNumber(region.beneficiaries)}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Coverage Rate</p>
+                      <p className="text-xl font-bold text-purple-600">{region.coverageRate}%</p>
+                    </div>
+                    <div className="pt-2 border-t border-gray-200">
+                      <p className="text-xs text-gray-500">{region.percentage}% of total</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
+          </ChartCard>
+        )}
 
-          {/* Regional Distribution */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Regional Distribution (Template)</h4>
-            <div className="h-[300px]">
-              <Bar data={barData} options={barOptions} />
+        {/* Demographic Breakdown by Employment Status */}
+        {data?.demographicBreakdown?.byEmploymentStatus && (
+          <ChartCard
+            title="Membership by Employment Status"
+            description="Distribution of members and beneficiaries across employment categories"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {data.demographicBreakdown.byEmploymentStatus.map((item: any, index: number) => {
+                const colors = [
+                  { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
+                  { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
+                  { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
+                  { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
+                  { bg: 'bg-pink-50', text: 'text-pink-700', border: 'border-pink-200' },
+                ];
+                const color = colors[index % colors.length];
+                
+                return (
+                  <div key={index} className={`${color.bg} border ${color.border} rounded-lg p-5 hover:shadow-md transition-shadow`}>
+                    <h4 className={`text-md font-semibold mb-3 ${color.text}`}>{item.status}</h4>
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-sm text-gray-600">Members</p>
+                        <p className="text-lg font-bold text-gray-900">{formatNumber(item.members)}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Beneficiaries</p>
+                        <p className="text-lg font-bold text-gray-900">{formatNumber(item.beneficiaries)}</p>
+                      </div>
+                      <div className="pt-2 border-t border-gray-300">
+                        <p className={`text-sm font-semibold ${color.text}`}>{item.percentage}% of total</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * Bar chart template showing top 5 regions by membership
-            </p>
-          </div>
+          </ChartCard>
+        )}
 
-          {/* Historical Trends */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200 mb-6">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Historical Growth (Template)</h4>
-            <div className="h-[300px]">
-              <Line data={lineData} options={lineOptions} />
-            </div>
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * Line chart template showing membership growth over years
-            </p>
-          </div>
+        {/* Coverage Analysis - Milestones and Challenges */}
+        {data?.coverageAnalysis && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Milestones */}
+            {data.coverageAnalysis.milestones && (
+              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-emerald-900 mb-4 flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5" />
+                  2007 Milestones
+                </h3>
+                <div className="space-y-3">
+                  {data.coverageAnalysis.milestones.map((milestone: any, index: number) => (
+                    <div key={index} className="bg-white rounded-lg p-4 border border-emerald-200">
+                      <p className="text-sm font-semibold text-emerald-700 mb-1">{milestone.value}</p>
+                      <p className="text-xs text-gray-600">{milestone.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-          {/* Sample Enrollment Patterns */}
-          <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Enrollment Patterns (Template)</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                <p className="text-sm text-gray-600 mb-2">New Enrollments</p>
-                <p className="text-2xl font-bold text-green-600">2.5M</p>
-                <p className="text-xs text-gray-500 mt-1"> 12% from last year</p>
+            {/* Challenges */}
+            {data.coverageAnalysis.challenges && (
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-amber-900 mb-4 flex items-center gap-2">
+                  <Info className="w-5 h-5" />
+                  Challenges & Areas for Improvement
+                </h3>
+                <div className="space-y-3">
+                  {data.coverageAnalysis.challenges.map((challenge: any, index: number) => (
+                    <div key={index} className="bg-white rounded-lg p-4 border border-amber-200">
+                      <p className="text-sm font-semibold text-amber-700 mb-1">{challenge.area}</p>
+                      <p className="text-xs text-gray-600">{challenge.description}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <p className="text-sm text-gray-600 mb-2">Renewals</p>
-                <p className="text-2xl font-bold text-blue-600">94.3M</p>
-                <p className="text-xs text-gray-500 mt-1">96% retention rate</p>
-              </div>
-              <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-                <p className="text-sm text-gray-600 mb-2">Active Members</p>
-                <p className="text-2xl font-bold text-purple-600">103.8M</p>
-                <p className="text-xs text-gray-500 mt-1">98% of total</p>
-              </div>
-            </div>
-            <p className="text-xs text-gray-500 mt-3 italic">
-              * Template showing enrollment statistics and trends
-            </p>
+            )}
           </div>
-        </div>
+        )}
 
         {/* FAQ Section */}
         <FAQSection faqs={coverageFAQs} />

@@ -1,0 +1,195 @@
+{
+  "year": 2007,
+  "lastUpdated": "2025-10-29",
+  "source": "PhilHealth Annual Report 2007 & Statistics and Charts 2007",
+  "summary": {
+    "totalMembers": 15850000,
+    "totalBeneficiaries": 64470000,
+    "coverageRate": 73,
+    "populationCovered": 73000000,
+    "projectedPopulation": 88000000
+  },
+  "membershipTrends": [
+    {
+      "year": 2007,
+      "totalMembers": 15850000,
+      "totalBeneficiaries": 64470000,
+      "coverageRate": 73
+    }
+  ],
+  "membershipBySector": [
+    {
+      "sector": "Private-Employed",
+      "members": 7000000,
+      "beneficiaries": 24860000,
+      "percentage": 38.6,
+      "color": "#009a3d"
+    },
+    {
+      "sector": "Sponsored Program",
+      "members": 2720000,
+      "beneficiaries": 13640000,
+      "percentage": 21.2,
+      "color": "#3b82f6"
+    },
+    {
+      "sector": "Individually-Paying",
+      "members": 2430000,
+      "beneficiaries": 11070000,
+      "percentage": 17.2,
+      "color": "#f59e0b"
+    },
+    {
+      "sector": "Government-Employed",
+      "members": 1780000,
+      "beneficiaries": 7420000,
+      "percentage": 11.5,
+      "color": "#ef4444"
+    },
+    {
+      "sector": "Overseas Workers Program",
+      "members": 1590000,
+      "beneficiaries": 6910000,
+      "percentage": 10.7,
+      "color": "#8b5cf6"
+    },
+    {
+      "sector": "Non-Paying Program",
+      "members": 340000,
+      "beneficiaries": 570000,
+      "percentage": 0.9,
+      "color": "#ec4899"
+    }
+  ],
+  "demographicBreakdown": {
+    "byEmploymentStatus": [
+      {
+        "status": "Employed (Private + Government)",
+        "members": 8780000,
+        "beneficiaries": 32280000,
+        "percentage": 50.1
+      },
+      {
+        "status": "Sponsored/Indigent",
+        "members": 2720000,
+        "beneficiaries": 13640000,
+        "percentage": 21.2
+      },
+      {
+        "status": "Self-Paying",
+        "members": 2430000,
+        "beneficiaries": 11070000,
+        "percentage": 17.2
+      },
+      {
+        "status": "Overseas Workers",
+        "members": 1590000,
+        "beneficiaries": 6910000,
+        "percentage": 10.7
+      },
+      {
+        "status": "Non-Paying",
+        "members": 340000,
+        "beneficiaries": 570000,
+        "percentage": 0.9
+      }
+    ]
+  },
+  "regionalCoverage": {
+    "totalRegions": 17,
+    "byRegion": [
+      {
+        "region": "NCR",
+        "members": 2500000,
+        "beneficiaries": 9500000,
+        "coverageRate": 85,
+        "percentage": 14.7
+      },
+      {
+        "region": "LUZON",
+        "members": 8500000,
+        "beneficiaries": 34000000,
+        "coverageRate": 75,
+        "percentage": 52.8
+      },
+      {
+        "region": "VISAYAS",
+        "members": 2300000,
+        "beneficiaries": 9200000,
+        "coverageRate": 68,
+        "percentage": 14.3
+      },
+      {
+        "region": "MINDANAO",
+        "members": 2550000,
+        "beneficiaries": 11770000,
+        "coverageRate": 70,
+        "percentage": 18.3
+      }
+    ]
+  },
+  "coverageAnalysis": {
+    "milestones": [
+      {
+        "description": "First year to achieve over 70% population coverage",
+        "value": "73% coverage rate"
+      },
+      {
+        "description": "Private-employed sector dominates membership",
+        "value": "44% of total members"
+      },
+      {
+        "description": "Active sponsored program implementation",
+        "value": "13.6M beneficiaries covered"
+      }
+    ],
+    "challenges": [
+      {
+        "area": "Rural Coverage",
+        "description": "Lower coverage rates in rural areas compared to urban centers"
+      },
+      {
+        "area": "Informal Sector",
+        "description": "Limited coverage for informal workers and self-employed"
+      },
+      {
+        "area": "Geographic Disparity",
+        "description": "Uneven coverage distribution across regions"
+      }
+    ]
+  },
+  "kpis": [
+    {
+      "title": "Total Membership",
+      "value": 15850000,
+      "formatted": "15.85M",
+      "description": "Active PhilHealth members",
+      "trend": "stable",
+      "icon": "users"
+    },
+    {
+      "title": "Total Beneficiaries",
+      "value": 64470000,
+      "formatted": "64.47M",
+      "description": "Including dependents covered",
+      "trend": "up",
+      "icon": "user-check"
+    },
+    {
+      "title": "Coverage Rate",
+      "value": 73,
+      "formatted": "73%",
+      "description": "Of total population",
+      "trend": "up",
+      "icon": "percent"
+    },
+    {
+      "title": "Average Family Size",
+      "value": 4.07,
+      "formatted": "4.07",
+      "description": "Beneficiaries per member",
+      "trend": "stable",
+      "icon": "users"
+    }
+  ]
+}

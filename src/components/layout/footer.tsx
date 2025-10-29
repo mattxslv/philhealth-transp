@@ -10,7 +10,7 @@ export function Footer() {
   const { sidebarOpen } = useSidebar();
   
   return (
-    <footer className="bg-muted/50 dark:bg-muted/20 text-foreground">
+    <footer className="bg-[#fafaf8] text-foreground">
       <div className={cn(
         "px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-8 sm:py-10 lg:py-12 transition-all duration-300",
         sidebarOpen ? "lg:ml-56" : "lg:ml-16"

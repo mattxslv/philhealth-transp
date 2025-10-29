@@ -12,17 +12,17 @@ export function KPISection() {
     // Fetch actual financial data
     axios.get("/data/financials.json")
       .then(res => {
-        // Get 2024 data
-        const report2024 = res.data.annualReports.find((r: any) => r.year === 2024);
-        setData(report2024);
+        // Get 2007 data
+        const report2007 = res.data.annualReports.find((r: any) => r.year === 2007);
+        setData(report2007);
       })
       .catch(err => {
         console.error("Error loading KPI data:", err);
       });
   }, []);
 
-  const totalCollected = data?.revenue || 239573300339; // 2024 revenue
-  const totalSpent = data?.claimsPaid || 128890795944; // 2024 claims paid
+  const totalCollected = data?.revenue || 29138157771; // 2007 revenue
+  const totalSpent = data?.claimsPaid || 18450891889; // 2007 claims paid
   const utilizationRate = ((totalSpent / totalCollected) * 100).toFixed(1);
 
   return (
@@ -39,7 +39,7 @@ export function KPISection() {
             Fund Performance Overview
           </h2>
           <p className="text-lg text-muted-foreground">
-            Transparency in action - 2024 Financial Year
+            Transparency in action - 2007 Financial Year
           </p>
         </motion.div>
 
@@ -55,7 +55,7 @@ export function KPISection() {
             {/* Total Collected */}
             <div className="space-y-3">
               <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                Total Funds Collected in 2024
+                Total Funds Collected in 2007
               </p>
               <p className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary break-words">
                 {formatCurrency(totalCollected)}
@@ -68,7 +68,7 @@ export function KPISection() {
             {/* Total Spent */}
             <div className="space-y-3 text-left md:text-right">
               <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                Total Funds Utilized in 2024
+                Total Funds Utilized in 2007
               </p>
               <p className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground break-words">
                 {formatCurrency(totalSpent)}

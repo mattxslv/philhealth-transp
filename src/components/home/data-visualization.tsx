@@ -107,7 +107,7 @@ export function DataVisualization() {
 
   // Growth Trends Data
   const growthData = {
-    labels: ["2020", "2021", "2022", "2023", "2024"],
+    labels: ["2003", "2004", "2005", "2006", "2007"],
     datasets: [
       {
         label: "Total Members",

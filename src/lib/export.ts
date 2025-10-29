@@ -51,6 +51,63 @@ export function downloadCSV(data: any[], filename: string, headers?: string[]) {
 }
 
 /**
+ * Convert array of objects to Excel XML format
+ */
+export function convertToExcelXML(data: any[], headers?: string[]): string {
+  if (!data || data.length === 0) {
+    return "";
+  }
+
+  const csvHeaders = headers || Object.keys(data[0]);
+  
+  let xml = `<?xml version="1.0"?>\n`;
+  xml += `<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n`;
+  xml += `<Worksheet ss:Name="Sheet1">\n`;
+  xml += `<Table>\n`;
+
+  // Header row
+  xml += `<Row>\n`;
+  csvHeaders.forEach(header => {
+    xml += `<Cell><Data ss:Type="String">${header}</Data></Cell>\n`;
+  });
+  xml += `</Row>\n`;
+
+  // Data rows
+  data.forEach(row => {
+    xml += `<Row>\n`;
+    csvHeaders.forEach(header => {
+      const value = row[header];
+      const dataType = typeof value === 'number' ? 'Number' : 'String';
+      xml += `<Cell><Data ss:Type="${dataType}">${value ?? ''}</Data></Cell>\n`;
+    });
+    xml += `</Row>\n`;
+  });
+
+  xml += `</Table>\n`;
+  xml += `</Worksheet>\n`;
+  xml += `</Workbook>`;
+
+  return xml;
+}
+
+/**
+ * Download data as Excel XLS file
+ */
+export function downloadXLS(data: any[], filename: string, headers?: string[]) {
+  const xml = convertToExcelXML(data, headers);
+  const blob = new Blob([xml], { type: "application/vnd.ms-excel" });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+
+  link.setAttribute("href", url);
+  link.setAttribute("download", `${filename}.xls`);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+/**
  * Download data as JSON file
  */
 export function downloadJSON(data: any, filename: string) {

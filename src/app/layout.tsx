@@ -62,7 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} overflow-x-hidden`}>
+      <body className={`${inter.className} overflow-x-hidden bg-white`}>
         <SkipToContent />
         <ErrorBoundary>
           <ThemeProvider
@@ -74,7 +74,7 @@ export default function RootLayout({
             <ToastProvider>
               <SidebarProvider>
                 <Navbar />
-                <main id="main-content" className="min-h-screen pt-16">{children}</main>
+                <main id="main-content" className="min-h-screen pt-16 bg-white">{children}</main>
                 <Footer />
                 <ChatbotWidget />
               </SidebarProvider>

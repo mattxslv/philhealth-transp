@@ -1,0 +1,368 @@
+{
+  "year": 2007,
+  "lastUpdated": "2025-10-29",
+  "source": "PhilHealth Annual Report 2007",
+  "summary": {
+    "totalRevenue": 29138157771,
+    "totalExpenses": 18450891889,
+    "netIncome": 8299810283,
+    "totalAssets": 17222690817,
+    "totalLiabilities": 1035596750,
+    "retainedEarnings": 16187094067
+  },
+  "revenue": {
+    "total": 29138157771,
+    "breakdown": [
+      {
+        "source": "NHIP Premium Contributions",
+        "amount": 23726746649,
+        "percentage": 81.4
+      },
+      {
+        "source": "Interest Income",
+        "amount": 5387451143,
+        "percentage": 18.5
+      },
+      {
+        "source": "Accreditation Fees",
+        "amount": 18507775,
+        "percentage": 0.1
+      },
+      {
+        "source": "Other Income",
+        "amount": 5654596,
+        "percentage": 0.0
+      },
+      {
+        "source": "Gain on Disposal of Assets",
+        "amount": 31900,
+        "percentage": 0.0
+      }
+    ]
+  },
+  "expenses": {
+    "total": 18450891889,
+    "benefitPayments": {
+      "total": 18450891889,
+      "bySector": [
+        {
+          "sector": "Private Sector",
+          "amount": 7739751249,
+          "percentage": 42.0
+        },
+        {
+          "sector": "Government Sector",
+          "amount": 3824262437,
+          "percentage": 20.7
+        },
+        {
+          "sector": "Indigent Program",
+          "amount": 3115868664,
+          "percentage": 16.9
+        },
+        {
+          "sector": "Individually Paying Member",
+          "amount": 2148120968,
+          "percentage": 11.6
+        },
+        {
+          "sector": "Non-paying Member",
+          "amount": 936310333,
+          "percentage": 5.1
+        },
+        {
+          "sector": "Overseas Foreign Worker",
+          "amount": 686578238,
+          "percentage": 3.7
+        }
+      ]
+    },
+    "operationalExpenses": {
+      "personalServices": {
+        "total": 1188987906,
+        "breakdown": [
+          {
+            "category": "Other Compensation",
+            "amount": 603155671
+          },
+          {
+            "category": "Salaries and Wages",
+            "amount": 514369354
+          },
+          {
+            "category": "Personnel Benefit Contribution",
+            "amount": 57201388
+          },
+          {
+            "category": "Other Personnel Benefit",
+            "amount": 14261493
+          }
+        ]
+      },
+      "mooe": [
+        {
+          "category": "Remuneration Expenses",
+          "amount": 405073050
+        },
+        {
+          "category": "Rents",
+          "amount": 122629474
+        },
+        {
+          "category": "Supplies and Materials",
+          "amount": 80791872
+        },
+        {
+          "category": "Communication Services",
+          "amount": 77609143
+        },
+        {
+          "category": "Contract/Research Services",
+          "amount": 68332070
+        },
+        {
+          "category": "Depreciation Expense",
+          "amount": 66593108
+        },
+        {
+          "category": "Security Services",
+          "amount": 65080401
+        },
+        {
+          "category": "Water Illumination and Power Services",
+          "amount": 61481462
+        },
+        {
+          "category": "Other Services",
+          "amount": 56425184
+        },
+        {
+          "category": "Travelling Expenses",
+          "amount": 36994045
+        },
+        {
+          "category": "Janitorial Services",
+          "amount": 29609307
+        },
+        {
+          "category": "Auditing Services",
+          "amount": 15296857
+        }
+      ]
+    }
+  },
+  "cashFlow": {
+    "operatingActivities": {
+      "netCash": 5443655321,
+      "details": [
+        {
+          "item": "Premium Contributions",
+          "amount": 21352838416
+        },
+        {
+          "item": "Subsidy from National Government",
+          "amount": 3623600000
+        },
+        {
+          "item": "Subsidy from LGUs and Sponsors",
+          "amount": 896559418
+        },
+        {
+          "item": "Benefit Payments",
+          "amount": -18446686623
+        },
+        {
+          "item": "MOOE/Personal Services/Supplies",
+          "amount": -2324816851
+        }
+      ]
+    },
+    "investingActivities": {
+      "netCash": 687184746,
+      "details": [
+        {
+          "item": "Interest Received on Investments",
+          "amount": 5630972817
+        },
+        {
+          "item": "Short-term Investments (Net)",
+          "amount": 13771299545
+        },
+        {
+          "item": "Matured Bonds (Net)",
+          "amount": -18650337179
+        }
+      ]
+    },
+    "cashEquivalentsEndYear": 14679049552
+  },
+  "receivables": {
+    "total": 1858641265,
+    "breakdown": [
+      {
+        "type": "Accrued Interest Receivable – Investment",
+        "amount": 1643214664
+      },
+      {
+        "type": "Due from Other Funds – OWWA",
+        "amount": 94894105
+      },
+      {
+        "type": "Due from LGUs",
+        "amount": 43724562
+      },
+      {
+        "type": "Due from Collecting Bank – NHIP Premiums",
+        "amount": 38432162
+      },
+      {
+        "type": "Due from GOCCs",
+        "amount": 30301933
+      },
+      {
+        "type": "Other receivables",
+        "amount": 8189464
+      }
+    ],
+    "longTermPCSO": {
+      "totalBalance": 685000000,
+      "currentReceivable": 30000000,
+      "longTermBalance": 655000000
+    }
+  },
+  "membership": {
+    "totalMembers": 15850000,
+    "totalBeneficiaries": 64470000,
+    "coverageRate": 73,
+    "populationCovered": 73,
+    "bySector": [
+      {
+        "sector": "Private-Employed",
+        "members": 7000000,
+        "beneficiaries": 24860000,
+        "percentage": 44.2
+      },
+      {
+        "sector": "Sponsored Program (Active)",
+        "members": 2720000,
+        "beneficiaries": 13640000,
+        "percentage": 17.2
+      },
+      {
+        "sector": "Individually-Paying",
+        "members": 2430000,
+        "beneficiaries": 11070000,
+        "percentage": 15.3
+      },
+      {
+        "sector": "Government-Employed",
+        "members": 1780000,
+        "beneficiaries": 7420000,
+        "percentage": 11.2
+      },
+      {
+        "sector": "Overseas Workers Program",
+        "members": 1590000,
+        "beneficiaries": 6910000,
+        "percentage": 10.0
+      },
+      {
+        "sector": "Non-Paying Program",
+        "members": 340000,
+        "beneficiaries": 570000,
+        "percentage": 2.1
+      }
+    ]
+  },
+  "facilities": {
+    "totalHospitals": 1554,
+    "hospitalsByType": [
+      {
+        "type": "Private",
+        "count": 952,
+        "percentage": 61
+      },
+      {
+        "type": "Government",
+        "count": 602,
+        "percentage": 39
+      }
+    ],
+    "hospitalsByLevel": [
+      {
+        "level": "Primary",
+        "count": 614,
+        "percentage": 40
+      },
+      {
+        "level": "Secondary",
+        "count": 626,
+        "percentage": 40
+      },
+      {
+        "level": "Tertiary",
+        "count": 314,
+        "percentage": 20
+      }
+    ],
+    "otherFacilities": [
+      {
+        "type": "Healthcare Professionals",
+        "count": 21019
+      },
+      {
+        "type": "Rural Health Units",
+        "count": 1252
+      },
+      {
+        "type": "TB-DOTS Centers",
+        "count": 474
+      },
+      {
+        "type": "Maternity Care Clinics",
+        "count": 267
+      },
+      {
+        "type": "Authorized Hospitals",
+        "count": 88
+      },
+      {
+        "type": "Free-standing Dialysis Clinics",
+        "count": 30
+      }
+    ]
+  },
+  "regionalDistribution": {
+    "totalHospitals": 1554,
+    "byRegion": [
+      {
+        "region": "LUZON",
+        "private": 450,
+        "government": 273,
+        "total": 723,
+        "percentage": 46.5
+      },
+      {
+        "region": "MINDANAO",
+        "private": 283,
+        "government": 132,
+        "total": 415,
+        "percentage": 26.7
+      },
+      {
+        "region": "VISAYAS",
+        "private": 88,
+        "government": 146,
+        "total": 234,
+        "percentage": 15.1
+      },
+      {
+        "region": "NCR/Rizal",
+        "private": 131,
+        "government": 51,
+        "total": 182,
+        "percentage": 11.7
+      }
+    ]
+  }
+}

@@ -59,7 +59,7 @@ const procurementColumns: ColumnDef<any>[] = [
 export default function ProcurementPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const [selectedYear, setSelectedYear] = useState<number>(2007);
 
   useEffect(() => {
     axios.get("/data/procurement.json")
@@ -151,7 +151,7 @@ export default function ProcurementPage() {
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
-          availableYears={[2023]}
+          availableYears={[2007]}
           onYearChange={setSelectedYear}
           hasDetailedBreakdown={false}
         />
@@ -163,7 +163,7 @@ export default function ProcurementPage() {
             <div>
               <h3 className="text-lg font-semibold text-yellow-900 mb-2">Data Not Available</h3>
               <p className="text-sm text-yellow-800 mb-4">
-                {data?.message || "Detailed procurement contract data is not available in the PhilHealth 2023 Annual Report."}
+                {data?.message || "Detailed procurement contract data is not available in the PhilHealth 2007 Annual Report."}
               </p>
               <div className="text-sm text-yellow-700">
                 <p className="font-semibold mb-2">For procurement information, please:</p>
@@ -191,7 +191,7 @@ export default function ProcurementPage() {
               (Philippine Government Electronic Procurement System) and the PhilHealth official website.
             </p>
             <p className="text-sm text-gray-500 mt-4">
-              <strong>Note:</strong> The PhilHealth 2023 Annual Report focuses on financial statements, claims analytics, 
+              <strong>Note:</strong> The PhilHealth 2007 Annual Report focuses on financial statements, claims analytics, 
               membership coverage, and governance structure. Detailed procurement contract information is maintained 
               separately through the official procurement channels.
             </p>

@@ -1,0 +1,347 @@
+{
+  "year": 2007,
+  "lastUpdated": "2025-10-29",
+  "source": "PhilHealth Annual Report 2007 & Statistics and Charts 2007",
+  "summary": {
+    "totalHospitals": 1554,
+    "totalProfessionals": 21019,
+    "totalRHUs": 1252,
+    "accreditationRate": 90
+  },
+  "hospitalsByType": [
+    {
+      "type": "Private",
+      "count": 952,
+      "percentage": 61,
+      "color": "#009a3d"
+    },
+    {
+      "type": "Government",
+      "count": 602,
+      "percentage": 39,
+      "color": "#3b82f6"
+    }
+  ],
+  "hospitalsByLevel": [
+    {
+      "level": "Primary",
+      "count": 614,
+      "percentage": 39.5,
+      "color": "#f59e0b"
+    },
+    {
+      "level": "Secondary", 
+      "count": 626,
+      "percentage": 40.3,
+      "color": "#ef4444"
+    },
+    {
+      "level": "Tertiary",
+      "count": 314,
+      "percentage": 20.2,
+      "color": "#8b5cf6"
+    }
+  ],
+  "hospitalsByRegion": [
+    {
+      "region": "NCR/Rizal",
+      "private": 131,
+      "government": 51,
+      "total": 182,
+      "percentage": 11.7,
+      "primary": 24,
+      "secondary": 80,
+      "tertiary": 78
+    },
+    {
+      "region": "NCR-Las Piñas",
+      "private": 40,
+      "government": 12,
+      "total": 52,
+      "percentage": 3.3,
+      "primary": 4,
+      "secondary": 27,
+      "tertiary": 21
+    },
+    {
+      "region": "NCR-Manila",
+      "private": 32,
+      "government": 16,
+      "total": 48,
+      "percentage": 3.1,
+      "primary": 4,
+      "secondary": 17,
+      "tertiary": 27
+    },
+    {
+      "region": "NCR-QC",
+      "private": 59,
+      "government": 23,
+      "total": 82,
+      "percentage": 5.3,
+      "primary": 16,
+      "secondary": 36,
+      "tertiary": 30
+    },
+    {
+      "region": "CAR",
+      "private": 16,
+      "government": 36,
+      "total": 52,
+      "percentage": 3.3,
+      "primary": 32,
+      "secondary": 15,
+      "tertiary": 5
+    },
+    {
+      "region": "Region I",
+      "private": 72,
+      "government": 38,
+      "total": 110,
+      "percentage": 7.1,
+      "primary": 45,
+      "secondary": 44,
+      "tertiary": 21
+    },
+    {
+      "region": "Region II",
+      "private": 32,
+      "government": 31,
+      "total": 63,
+      "percentage": 4.1,
+      "primary": 26,
+      "secondary": 30,
+      "tertiary": 7
+    },
+    {
+      "region": "Region III",
+      "private": 120,
+      "government": 51,
+      "total": 171,
+      "percentage": 11.0,
+      "primary": 26,
+      "secondary": 112,
+      "tertiary": 33
+    },
+    {
+      "region": "Region IV-A",
+      "private": 81,
+      "government": 37,
+      "total": 118,
+      "percentage": 7.6,
+      "primary": 26,
+      "secondary": 64,
+      "tertiary": 28
+    },
+    {
+      "region": "Region IV-B",
+      "private": 70,
+      "government": 45,
+      "total": 115,
+      "percentage": 7.4,
+      "primary": 50,
+      "secondary": 49,
+      "tertiary": 16
+    },
+    {
+      "region": "Region V",
+      "private": 59,
+      "government": 35,
+      "total": 94,
+      "percentage": 6.0,
+      "primary": 55,
+      "secondary": 22,
+      "tertiary": 17
+    },
+    {
+      "region": "Region VI",
+      "private": 23,
+      "government": 55,
+      "total": 78,
+      "percentage": 5.0,
+      "primary": 26,
+      "secondary": 34,
+      "tertiary": 18
+    },
+    {
+      "region": "Region VII",
+      "private": 43,
+      "government": 51,
+      "total": 94,
+      "percentage": 6.0,
+      "primary": 43,
+      "secondary": 30,
+      "tertiary": 21
+    },
+    {
+      "region": "Region VIII",
+      "private": 22,
+      "government": 40,
+      "total": 62,
+      "percentage": 4.0,
+      "primary": 30,
+      "secondary": 25,
+      "tertiary": 7
+    },
+    {
+      "region": "Region IX",
+      "private": 40,
+      "government": 25,
+      "total": 65,
+      "percentage": 4.2,
+      "primary": 34,
+      "secondary": 24,
+      "tertiary": 7
+    },
+    {
+      "region": "Region X",
+      "private": 73,
+      "government": 36,
+      "total": 109,
+      "percentage": 7.0,
+      "primary": 52,
+      "secondary": 38,
+      "tertiary": 19
+    },
+    {
+      "region": "Region XI",
+      "private": 82,
+      "government": 17,
+      "total": 99,
+      "percentage": 6.4,
+      "primary": 64,
+      "secondary": 18,
+      "tertiary": 17
+    },
+    {
+      "region": "Region XII",
+      "private": 73,
+      "government": 25,
+      "total": 98,
+      "percentage": 6.3,
+      "primary": 55,
+      "secondary": 30,
+      "tertiary": 13
+    },
+    {
+      "region": "CARAGA",
+      "private": 15,
+      "government": 29,
+      "total": 44,
+      "percentage": 2.8,
+      "primary": 26,
+      "secondary": 11,
+      "tertiary": 7
+    }
+  ],
+  "otherFacilities": [
+    {
+      "type": "Healthcare Professionals",
+      "count": 21019,
+      "description": "Accredited healthcare professionals",
+      "icon": "user-md"
+    },
+    {
+      "type": "Rural Health Units",
+      "count": 1252,
+      "description": "Primary care facilities in rural areas",
+      "icon": "hospital"
+    },
+    {
+      "type": "TB-DOTS Centers",
+      "count": 474,
+      "description": "Tuberculosis treatment centers",
+      "icon": "stethoscope"
+    },
+    {
+      "type": "Maternity Care Clinics",
+      "count": 267,
+      "description": "Specialized maternal health facilities",
+      "icon": "baby"
+    },
+    {
+      "type": "Authorized Hospitals",
+      "count": 88,
+      "description": "Specially authorized hospital facilities",
+      "icon": "building-2"
+    },
+    {
+      "type": "Free-standing Dialysis Clinics",
+      "count": 30,
+      "description": "Specialized kidney treatment centers",
+      "icon": "activity"
+    }
+  ],
+  "facilityAnalysis": {
+    "keyInsights": [
+      {
+        "title": "Private Sector Dominance",
+        "description": "61% of accredited hospitals are private facilities",
+        "value": "952 private hospitals"
+      },
+      {
+        "title": "Balanced Care Levels",
+        "description": "Equal distribution between primary and secondary care",
+        "value": "40% each for primary and secondary"
+      },
+      {
+        "title": "High Accreditation Rate",
+        "description": "9 out of 10 DOH-licensed hospitals are PhilHealth accredited",
+        "value": "90% accreditation rate"
+      },
+      {
+        "title": "Geographic Coverage",
+        "description": "Facilities distributed across all Philippine regions",
+        "value": "17 regions covered"
+      }
+    ],
+    "challenges": [
+      {
+        "area": "Tertiary Care Access",
+        "description": "Only 20% of hospitals provide tertiary care services"
+      },
+      {
+        "area": "Rural Coverage",
+        "description": "Limited specialized facilities in remote areas"
+      },
+      {
+        "area": "Public-Private Balance",
+        "description": "Need for more government facilities in underserved areas"
+      }
+    ]
+  },
+  "kpis": [
+    {
+      "title": "Total Hospitals",
+      "value": 1554,
+      "formatted": "1,554",
+      "description": "Accredited hospitals nationwide",
+      "trend": "up",
+      "icon": "building-2"
+    },
+    {
+      "title": "Healthcare Professionals",
+      "value": 21019,
+      "formatted": "21,019",
+      "description": "Accredited medical professionals",
+      "trend": "up",
+      "icon": "user-md"
+    },
+    {
+      "title": "Rural Health Units",
+      "value": 1252,
+      "formatted": "1,252",
+      "description": "Primary care facilities",
+      "trend": "stable",
+      "icon": "hospital"
+    },
+    {
+      "title": "Accreditation Rate",
+      "value": 90,
+      "formatted": "90%",
+      "description": "Of DOH-licensed hospitals",
+      "trend": "up",
+      "icon": "check-circle"
+    }
+  ]
+}

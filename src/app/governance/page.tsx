@@ -15,13 +15,13 @@ export default function GovernancePage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const [selectedYear, setSelectedYear] = useState<number>(2007);
 
   const loadData = () => {
     setLoading(true);
     setError(null);
     
-    axios.get("/data/governance-2023.json")
+    axios.get("/data/governance-2007.json")
       .then(res => {
         if (!res.data) {
           setError({ type: "notfound", message: "Governance data is not available at this time." });
@@ -99,7 +99,7 @@ export default function GovernancePage() {
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
-          availableYears={[2023]}
+          availableYears={[2007]}
           onYearChange={setSelectedYear}
           hasDetailedBreakdown={false}
         />
@@ -132,7 +132,7 @@ export default function GovernancePage() {
           {/* Executive Compensation */}
           <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
             <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Executive Compensation</p>
-              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatCurrency(data.boardOfDirectors.boardCompensation2023.totalHonorarium)}</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatCurrency(data.boardOfDirectors.boardCompensation2007.totalHonorarium)}</p>
               <p className="text-sm text-muted-foreground dark:text-muted-foreground">Board Total {selectedYear}</p>
             </div>
           </div>
@@ -188,9 +188,9 @@ export default function GovernancePage() {
               <h5 className="text-md font-semibold mb-3 text-gray-700 dark:text-muted-foreground">Preview: How Minutes Will Be Displayed</h5>
               <div className="space-y-2">
                 {[
-                  { date: "December 15, 2023", title: "Regular Board Meeting #12", resolutions: 8, attendance: "13/13" },
-                  { date: "November 20, 2023", title: "Regular Board Meeting #11", resolutions: 10, attendance: "12/13" },
-                  { date: "October 10, 2023", title: "Special Board Meeting", resolutions: 5, attendance: "13/13" },
+                  { date: "December 15, 2007", title: "Regular Board Meeting #12", resolutions: 8, attendance: "13/13" },
+                  { date: "November 20, 2007", title: "Regular Board Meeting #11", resolutions: 10, attendance: "12/13" },
+                  { date: "October 10, 2007", title: "Special Board Meeting", resolutions: 5, attendance: "13/13" },
                 ].map((meeting, index) => (
                   <div key={index} className="flex justify-between items-center p-3 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                     <div className="flex items-center gap-3">
@@ -267,12 +267,12 @@ export default function GovernancePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl bg-card border border-border">
                   <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">{selectedYear}</p>
-                  <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{formatCurrency(data.boardOfDirectors.boardCompensation2023.totalHonorarium)}</p>
+                  <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{formatCurrency(data.boardOfDirectors.boardCompensation2007.totalHonorarium)}</p>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{data.corporateGovernance.totalBoardMembers} board members</p>
                 </div>
                 <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
-                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">2022</p>
-                  <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{formatCurrency(data.boardOfDirectors.boardCompensation2022.totalHonorarium)}</p>
+                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">2006</p>
+                  <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{formatCurrency(data.boardOfDirectors.boardCompensation2006.totalHonorarium)}</p>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Previous year comparison</p>
                 </div>
               </div>
@@ -284,12 +284,12 @@ export default function GovernancePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl bg-card border border-border">
                   <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">{selectedYear}</p>
-                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{formatCurrency(data.executiveOfficers.compensation2023.keyManagementPersonnel.total)}</p>
+                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{formatCurrency(data.executiveOfficers.compensation2007.keyManagementPersonnel.total)}</p>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Total compensation</p>
                 </div>
                 <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
-                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">2022</p>
-                  <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{formatCurrency(data.executiveOfficers.compensation2022.keyManagementPersonnel.total)}</p>
+                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">2006</p>
+                  <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{formatCurrency(data.executiveOfficers.compensation2006.keyManagementPersonnel.total)}</p>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Previous year comparison</p>
                 </div>
               </div>
@@ -400,7 +400,7 @@ export default function GovernancePage() {
                 <span className="text-emerald-500">Q:</span> How often does the PhilHealth Board meet?
               </h3>
               <p className="text-gray-600 dark:text-gray-400 pl-6">
-                A: The PhilHealth Board holds regular meetings as mandated by the corporation's charter. In 2023, 
+                A: The PhilHealth Board holds regular meetings as mandated by the corporation's charter. In 2007,
                 there were {formatNumber(data.corporateGovernance.totalBoardMeetings)} board meetings to discuss policy, 
                 operations, and strategic initiatives.
               </p>
