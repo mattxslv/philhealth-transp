@@ -1,19 +1,40 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface SidebarContextType {
   sidebarCollapsed: boolean;
   setSidebarCollapsed: (collapsed: boolean) => void;
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
+  expandedGroups: string[];
+  setExpandedGroups: (groups: string[]) => void;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Start with sidebar open on desktop, closed on mobile
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
+
+  useEffect(() => {
+    // On mount, set sidebar state based on screen size
+    const checkScreenSize = () => {
+      if (window.innerWidth >= 1024) {
+        // Desktop - start open
+        setSidebarOpen(true);
+      } else {
+        // Mobile - start closed
+        setSidebarOpen(false);
+      }
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   return (
     <SidebarContext.Provider
@@ -22,6 +43,8 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
         setSidebarCollapsed,
         sidebarOpen,
         setSidebarOpen,
+        expandedGroups,
+        setExpandedGroups,
       }}
     >
       {children}

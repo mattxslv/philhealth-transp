@@ -1,9 +1,7 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
-import { Download, BarChart3, Calendar, HardDrive, ExternalLink } from 'lucide-react';
-import { PageHeading } from '@/components/ui/page-heading';
-import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import { Download, BarChart3, X } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 interface StatisticsFile {
@@ -19,6 +17,8 @@ interface StatisticsFile {
 export default function StatisticsChartsPage() {
   const [statistics, setStatistics] = useState<StatisticsFile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
+  const [selectedTitle, setSelectedTitle] = useState<string>('');
 
   useEffect(() => {
     async function loadStatistics() {
@@ -52,12 +52,28 @@ export default function StatisticsChartsPage() {
     loadStatistics();
   }, []);
 
+  const openPdfModal = (url: string, title: string) => {
+    setSelectedPdf(url);
+    setSelectedTitle(title);
+  };
+
+  const closePdfModal = () => {
+    setSelectedPdf(null);
+    setSelectedTitle('');
+  };
+
   return (
     <DashboardLayout>
-      <Breadcrumbs />
+      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+        <span>Home</span>
+        <span>/</span>
+        <span>Downloads</span>
+        <span>/</span>
+        <span className="text-foreground font-medium">Statistics and Charts</span>
+      </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-4">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
@@ -73,25 +89,11 @@ export default function StatisticsChartsPage() {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-              <Calendar className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+              <BarChart3 className="h-6 w-6 text-purple-600 dark:text-purple-400" />
             </div>
             <div>
               <p className="text-sm text-gray-600 dark:text-gray-400">Date Range</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">2007 - 2024</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
-              <HardDrive className="h-6 w-6 text-green-600 dark:text-green-400" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Size</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                {(statistics.reduce((sum, r) => sum + r.size_bytes, 0) / (1024 * 1024)).toFixed(2)} MB
-              </p>
             </div>
           </div>
         </div>
@@ -114,12 +116,6 @@ export default function StatisticsChartsPage() {
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Report Name
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    File Size
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Last Updated
                   </th>
                   <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Actions
@@ -149,39 +145,22 @@ export default function StatisticsChartsPage() {
                         PhilHealth SNC Report
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900 dark:text-white">
-                        {stat.sizeMB} MB
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(stat.updated_time).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric'
-                        })}
-                      </div>
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center">
                       <div className="flex items-center justify-center gap-2">
+                        <button
+                          onClick={() => openPdfModal(stat.download_url, stat.displayName)}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <BarChart3 className="h-4 w-4" />
+                          View
+                        </button>
                         <a
                           href={stat.download_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          download
                           className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
                         >
                           <Download className="h-4 w-4" />
                           Download
-                        </a>
-                        <a
-                          href={stat.download_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
-                        >
-                          <ExternalLink className="h-4 w-4" />
-                          View
                         </a>
                       </div>
                     </td>
@@ -214,6 +193,44 @@ export default function StatisticsChartsPage() {
         <p>Storage: Google Cloud Storage (philhealth_transparency)</p>
         <p className="mt-2">Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
       </div>
+
+      {/* PDF Viewer Modal */}
+      {selectedPdf && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={closePdfModal}
+        >
+          <div 
+            className="relative w-full h-full max-w-7xl max-h-[90vh] bg-white dark:bg-gray-800 rounded-lg shadow-2xl flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                {selectedTitle}
+              </h3>
+              <button
+                onClick={closePdfModal}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+              </button>
+            </div>
+
+            {/* PDF Viewer */}
+            <div className="flex-1 overflow-hidden">
+              <iframe
+                src={selectedPdf}
+                className="w-full h-full border-0"
+                title={selectedTitle}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 }
+
+

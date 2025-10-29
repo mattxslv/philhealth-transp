@@ -1,0 +1,259 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NCR",
+        "region": "National Capital Region",
+        "members": "4.2M",
+        "facilities": 892,
+        "coverage": "87%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[120.9, 14.4], [121.15, 14.4], [121.15, 14.8], [120.9, 14.8], [120.9, 14.4]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "CAR",
+        "region": "Cordillera Administrative Region",
+        "members": "0.8M",
+        "facilities": 134,
+        "coverage": "75%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[120.4, 16.2], [121.3, 16.2], [121.3, 17.6], [120.4, 17.6], [120.4, 16.2]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region I",
+        "region": "Ilocos Region",
+        "members": "1.8M",
+        "facilities": 245,
+        "coverage": "82%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[119.9, 15.4], [120.7, 15.4], [120.9, 16.5], [121.1, 18.2], [120.3, 18.5], [119.9, 17.0], [119.9, 15.4]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region II",
+        "region": "Cagayan Valley",
+        "members": "1.2M",
+        "facilities": 178,
+        "coverage": "79%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[121.2, 16.3], [122.0, 16.0], [122.3, 17.0], [122.0, 18.6], [121.2, 18.5], [121.2, 16.3]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region III",
+        "region": "Central Luzon",
+        "members": "3.1M",
+        "facilities": 456,
+        "coverage": "85%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[120.3, 14.6], [120.5, 15.8], [121.2, 16.0], [121.5, 15.6], [121.2, 14.5], [120.3, 14.6]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region IV-A",
+        "region": "CALABARZON",
+        "members": "4.5M",
+        "facilities": 623,
+        "coverage": "88%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[120.7, 13.7], [121.6, 13.5], [122.0, 14.0], [122.1, 14.6], [121.0, 14.9], [120.7, 14.2], [120.7, 13.7]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region IV-B",
+        "region": "MIMAROPA",
+        "members": "1.1M",
+        "facilities": 167,
+        "coverage": "78%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [[[118.3, 12.3], [119.0, 12.2], [119.3, 10.2], [118.5, 9.8], [118.3, 12.3]]],
+          [[[121.0, 12.5], [121.9, 11.8], [122.3, 12.3], [122.5, 13.5], [121.5, 13.6], [121.0, 12.5]]]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region V",
+        "region": "Bicol Region",
+        "members": "2.3M",
+        "facilities": 312,
+        "coverage": "81%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[122.5, 12.7], [123.2, 12.5], [124.0, 13.0], [124.3, 13.6], [123.8, 14.1], [122.7, 13.8], [122.5, 12.7]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region VI",
+        "region": "Western Visayas",
+        "members": "2.8M",
+        "facilities": 398,
+        "coverage": "83%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [[[121.9, 11.5], [122.6, 11.3], [122.8, 11.7], [122.5, 12.0], [121.9, 11.9], [121.9, 11.5]]],
+          [[[122.3, 10.2], [123.2, 10.0], [123.4, 10.8], [122.8, 11.0], [122.3, 10.2]]]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region VII",
+        "region": "Central Visayas",
+        "members": "3.2M",
+        "facilities": 445,
+        "coverage": "86%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [[[123.2, 9.5], [123.9, 9.4], [124.1, 10.2], [123.5, 10.5], [123.2, 9.5]]],
+          [[[123.7, 10.2], [124.4, 10.0], [124.6, 10.8], [124.0, 11.0], [123.7, 10.2]]],
+          [[[123.3, 11.0], [123.8, 10.8], [124.2, 11.3], [123.8, 11.5], [123.3, 11.0]]]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region VIII",
+        "region": "Eastern Visayas",
+        "members": "1.9M",
+        "facilities": 267,
+        "coverage": "80%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [[[124.4, 11.0], [125.0, 10.8], [125.4, 11.5], [125.0, 12.0], [124.4, 12.2], [124.4, 11.0]]],
+          [[[124.8, 9.9], [125.5, 9.7], [125.7, 10.4], [125.2, 10.6], [124.8, 9.9]]]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region IX",
+        "region": "Zamboanga Peninsula",
+        "members": "1.5M",
+        "facilities": 223,
+        "coverage": "77%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[121.8, 6.9], [122.3, 6.8], [123.0, 7.5], [123.2, 8.5], [122.5, 8.7], [122.0, 8.3], [121.8, 6.9]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region X",
+        "region": "Northern Mindanao",
+        "members": "1.8M",
+        "facilities": 289,
+        "coverage": "81%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[123.7, 7.8], [124.9, 7.6], [125.2, 8.5], [125.5, 9.0], [124.5, 9.2], [123.7, 8.8], [123.7, 7.8]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Caraga",
+        "region": "Caraga Region",
+        "members": "1.1M",
+        "facilities": 167,
+        "coverage": "78%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[125.4, 8.3], [126.2, 8.0], [126.5, 9.0], [126.3, 9.8], [125.6, 10.0], [125.4, 8.3]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region XI",
+        "region": "Davao Region",
+        "members": "2.1M",
+        "facilities": 334,
+        "coverage": "84%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[124.7, 5.5], [125.7, 5.4], [126.3, 6.2], [126.5, 7.3], [125.5, 7.8], [124.8, 7.0], [124.7, 5.5]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Region XII",
+        "region": "SOCCSKSARGEN",
+        "members": "1.3M",
+        "facilities": 198,
+        "coverage": "76%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[124.0, 5.9], [125.2, 5.8], [125.5, 6.8], [124.8, 7.2], [124.0, 6.7], [124.0, 5.9]]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BARMM",
+        "region": "Bangsamoro Autonomous Region",
+        "members": "1.2M",
+        "facilities": 156,
+        "coverage": "72%"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [[[119.9, 5.5], [121.2, 5.3], [122.2, 6.0], [122.5, 7.2], [121.5, 7.5], [120.5, 6.8], [119.9, 5.5]]],
+          [[[124.2, 6.5], [124.9, 6.3], [125.3, 7.0], [124.8, 7.3], [124.2, 6.5]]]
+        ]
+      }
+    }
+  ]
+}

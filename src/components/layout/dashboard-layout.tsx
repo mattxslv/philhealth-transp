@@ -4,69 +4,143 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
-  Home,
-  DollarSign,
-  Activity,
-  ShieldCheck,
-  MessageSquare,
   Menu,
   X,
-  ChevronLeft,
+  ChevronDown,
   ChevronRight,
-  FileText,
-  Building2,
-  ShoppingCart,
-  Download,
-  BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { useSidebar } from "@/contexts/sidebar-context";
+import { useState } from "react";
 
 const navigationGroups = [
   {
-    label: "Overview",
-    items: [
-      { name: "Home", href: "/", icon: Home },
-    ]
-  },
-  {
     label: "Financial Reports",
     items: [
-      { name: "Financial Information", href: "/financials", icon: DollarSign },
-      { name: "Procurement", href: "/procurement", icon: ShoppingCart },
+      { name: "Financial Information", href: "/financials" },
+      { name: "Procurement", href: "/procurement" },
     ]
   },
   {
     label: "Operational Data",
     items: [
-      { name: "Claims", href: "/claims", icon: FileText },
-      { name: "Coverage", href: "/coverage", icon: Activity },
-      { name: "Facilities", href: "/facilities", icon: Building2 },
+      { name: "Claims", href: "/claims" },
+      { name: "Coverage", href: "/coverage" },
+      { name: "Facilities", href: "/facilities" },
     ]
   },
   {
     label: "Governance",
     items: [
-      { name: "Governance & Accountability", href: "/governance", icon: ShieldCheck },
-      { name: "Public Engagement", href: "/engagement", icon: MessageSquare },
+      { name: "Governance & Accountability", href: "/governance" },
+      { name: "Public Engagement", href: "/engagement" },
     ]
   },
   {
     label: "Downloads",
     items: [
-      { name: "Annual Reports", href: "/downloads/annual-reports", icon: Download },
-      { name: "Statistics & Charts", href: "/downloads/statistics", icon: BarChart3 },
+      { name: "Annual Reports", href: "/downloads/annual-reports" },
+      { name: "Statistics & Charts", href: "/downloads/statistics" },
     ]
   },
 ];
 
+// Navigation group component to isolate state
+function NavigationGroup({ 
+  group, 
+  pathname, 
+  handleLinkClick,
+  isExpanded,
+  toggleExpanded
+}: { 
+  group: typeof navigationGroups[0], 
+  pathname: string, 
+  handleLinkClick: (e: React.MouseEvent) => void,
+  isExpanded: boolean,
+  toggleExpanded: () => void
+}) {
+  return (
+    <div className="space-y-1">
+      {/* Group header - clickable */}
+      <button
+        onClick={toggleExpanded}
+        className="group/button flex items-center justify-between w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 text-muted-foreground"
+        type="button"
+      >
+        <span>{group.label}</span>
+        <span className="opacity-0 group-hover/button:opacity-100 transition-opacity duration-200">
+          {isExpanded ? (
+            <ChevronDown className="h-4 w-4" />
+          ) : (
+            <ChevronRight className="h-4 w-4" />
+          )}
+        </span>
+      </button>
+
+      {/* Group items - show when expanded */}
+      {isExpanded && (
+        <div 
+          className="ml-3 space-y-1 border-l-2 border-border pl-3"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {group.items.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "block rounded-lg px-3 py-2 text-sm transition-all duration-200",
+                  isActive
+                    ? "text-primary font-medium"
+                    : "text-muted-foreground hover:text-primary"
+                )}
+                onClick={handleLinkClick}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { sidebarCollapsed, setSidebarCollapsed, sidebarOpen, setSidebarOpen } = useSidebar();
+  const { sidebarCollapsed, setSidebarCollapsed, sidebarOpen, setSidebarOpen, expandedGroups, setExpandedGroups } = useSidebar();
+
+  const toggleGroup = (label: string) => {
+    setExpandedGroups(
+      expandedGroups.includes(label)
+        ? expandedGroups.filter(g => g !== label)
+        : [...expandedGroups, label]
+    );
+  };
+
+  // Close sidebar only on mobile when clicking a link
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (window.innerWidth < 1024) {
+      setSidebarOpen(false);
+    }
+  };
 
   return (
     <>
+      {/* Hamburger button - only shows when sidebar is closed */}
+      {!sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="fixed top-4 left-4 z-[60] flex items-center justify-center h-10 w-10 rounded-lg hover:bg-primary/20 transition-all duration-300 mr-4"
+          aria-label="Open sidebar"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      )}
+
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -78,113 +152,95 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 z-50 h-screen transform bg-gradient-to-b from-card to-card/95 border-r border-border transition-all duration-300 ease-in-out",
-          sidebarCollapsed ? "w-16" : "w-56",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          "fixed top-0 left-0 z-50 h-screen w-64 transform bg-gradient-to-b from-card to-card/95 border-r border-border transition-transform duration-300 ease-in-out",
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex h-full flex-col overflow-y-auto">
-          {/* Logo in Sidebar */}
-          <div className="px-2 h-16 flex items-center justify-between gap-1 border-b border-border/50">
-            {!sidebarCollapsed ? (
-              <Link href="/" className="flex items-center gap-2 flex-1 min-w-0">
-                <Image
-                  src="/images/philhealth logo.png"
-                  alt="PhilHealth Logo"
-                  width={32}
-                  height={32}
-                  className="object-contain flex-shrink-0"
-                />
-                <div className="flex flex-col overflow-hidden">
-                  <span className="text-sm font-bold truncate">PhilHealth</span>
-                  <span className="text-xs text-muted-foreground truncate">Transparency</span>
-                </div>
-              </Link>
-            ) : (
-              <Link href="/" className="flex items-center justify-center w-full">
-                <Image
-                  src="/images/philhealth logo.png"
-                  alt="PhilHealth Logo"
-                  width={32}
-                  height={32}
-                  className="object-contain"
-                />
-              </Link>
-            )}
+          {/* Top section with Logo and Hamburger */}
+          <div className="px-3 py-3 flex items-center justify-between">
+            {/* PhilHealth Logo - Only logo, no text */}
+            <Link href="/" className="flex items-center" onClick={handleLinkClick}>
+              <Image
+                src="/images/philhealth logo.png"
+                alt="PhilHealth Logo"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
+            </Link>
             
-            {/* Collapse/Expand toggle button - desktop only */}
-            <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className={cn(
-                "hidden lg:flex items-center justify-center h-8 w-8 rounded hover:bg-primary/10 transition-colors flex-shrink-0",
-                sidebarCollapsed && "mx-auto"
-              )}
-              aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            >
-              {sidebarCollapsed ? (
-                <ChevronRight className="h-4 w-4" />
-              ) : (
-                <ChevronLeft className="h-4 w-4" />
-              )}
-            </button>
-          </div>
-
-          {/* Mobile close button */}
-          <div className="flex items-center justify-between p-4 lg:hidden">
-            <span className="text-lg font-semibold">Menu</span>
+            {/* Hamburger button */}
             <button
               onClick={() => setSidebarOpen(false)}
-              className="rounded-md p-2 hover:bg-accent"
+              className="rounded-md p-2 hover:bg-primary/20 transition-colors"
               aria-label="Close sidebar"
             >
-              <X className="h-5 w-5" />
+              <Menu className="h-5 w-5" />
             </button>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-3 py-4" role="navigation" aria-label="Dashboard navigation">
-            <div className="space-y-6">
-              {navigationGroups.map((group, groupIndex) => (
-                <div key={group.label}>
-                  {!sidebarCollapsed && (
-                    <div className="px-3 mb-2">
-                      <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                        {group.label}
-                      </h3>
-                    </div>
-                  )}
-                  {groupIndex > 0 && sidebarCollapsed && (
-                    <div className="my-3 border-t border-border/50" />
-                  )}
-                  <div className="space-y-1">
-                    {group.items.map((item) => {
-                      const isActive = pathname === item.href;
-                      return (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          className={cn(
-                            "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                            isActive
-                              ? "bg-primary text-primary-foreground shadow-sm"
-                              : "text-muted-foreground hover:bg-primary/10 hover:text-primary",
-                            sidebarCollapsed && "justify-center px-2"
-                          )}
-                          onClick={() => setSidebarOpen(false)}
-                          title={sidebarCollapsed ? item.name : undefined}
-                        >
-                          <item.icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
-                          {!sidebarCollapsed && (
-                            <span className="break-words whitespace-normal leading-tight">{item.name}</span>
-                          )}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
+          <nav className="px-3 pb-2" role="navigation" aria-label="Dashboard navigation">
+            {/* Home link */}
+            <Link
+              href="/"
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 mb-2 text-sm font-medium transition-all duration-200",
+                pathname === "/"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-primary"
+              )}
+              onClick={handleLinkClick}
+            >
+              Home
+            </Link>
+
+            <div className="space-y-2">
+              {navigationGroups.map((group) => (
+                <NavigationGroup
+                  key={group.label}
+                  group={group}
+                  pathname={pathname}
+                  handleLinkClick={handleLinkClick}
+                  isExpanded={expandedGroups.includes(group.label)}
+                  toggleExpanded={() => toggleGroup(group.label)}
+                />
               ))}
             </div>
           </nav>
+
+          {/* Spacer to push partnership section down */}
+          <div className="flex-1"></div>
+
+          {/* Partnership Section */}
+          <div className="px-4 py-6">
+            <div className="text-sm text-muted-foreground mb-4 font-medium text-center">In partnership with</div>
+            <div className="flex items-center justify-center gap-6">
+              <Image
+                src="/images/DICT-Logo-icon_only.png"
+                alt="DICT Logo"
+                width={60}
+                height={60}
+                className="object-contain"
+              />
+              <Image
+                src="/images/bagong-pilipinas-logo.png"
+                alt="Bagong Pilipinas Logo"
+                width={60}
+                height={60}
+                className="object-contain"
+              />
+            </div>
+          </div>
+
+          {/* Last Updated - Bottom of Sidebar */}
+          <div className="px-4 py-3 border-t border-border/50">
+            <div className="rounded-lg bg-muted/50 px-3 py-2">
+              <p className="text-xs font-medium text-muted-foreground mb-1">Last Updated</p>
+              <p className="text-xs text-foreground font-semibold">December 31, 2023</p>
+            </div>
+          </div>
         </div>
       </aside>
 
@@ -192,11 +248,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       <div 
         className={cn(
           "flex-1 transition-all duration-300 pt-[20px]",
-          sidebarCollapsed ? "lg:ml-16" : "lg:ml-56"
+          sidebarOpen ? "lg:ml-64" : "lg:ml-0"
         )}
       >
         {/* Page content */}
-        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">{children}</div>
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 pb-4 sm:pb-6 lg:pb-8">{children}</div>
       </div>
     </>
   );

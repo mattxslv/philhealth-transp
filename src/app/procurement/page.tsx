@@ -6,6 +6,7 @@ import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
 import { DataTable } from "@/components/ui/data-table";
 import { YearSelector } from "@/components/ui/year-selector";
+import { ExportButton } from "@/components/ui/export-button";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { AlertCircle, Info, FileText, Calendar, DollarSign, Building, CheckCircle, Clock } from "lucide-react";
@@ -133,6 +134,20 @@ export default function ProcurementPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Header with Export */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Procurement & Contracts</h1>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              Procurement activities, awarded contracts, and vendor information
+            </p>
+          </div>
+          <ExportButton
+            data={data || sampleProcurementData}
+            filename={`philhealth-procurement-${selectedYear}`}
+          />
+        </div>
+
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
@@ -198,21 +213,21 @@ export default function ProcurementPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {/* Government Contracts */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📄 Government Contracts Database</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Government Contracts Database</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Complete listing of all procurement contracts with detailed information and downloadable documents.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Contract titles and descriptions</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Award dates and contract durations</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Bidding documents and results</span>
                 </li>
               </ul>
@@ -220,21 +235,21 @@ export default function ProcurementPage() {
 
             {/* Contractor Information */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">🏢 Contractor/Vendor Information</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Contractor/Vendor Information</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Details about winning bidders and accredited suppliers providing goods and services to PhilHealth.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Company names and registration details</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Contract award history</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Performance ratings and compliance</span>
                 </li>
               </ul>
@@ -242,21 +257,21 @@ export default function ProcurementPage() {
 
             {/* Contract Amounts */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">💰 Contract Amounts & Dates</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Contract Amounts & Dates</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Financial details including contract values, payment schedules, and important milestone dates.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Original and amended contract amounts</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Payment disbursement records</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Start, end, and extension dates</span>
                 </li>
               </ul>
@@ -264,21 +279,21 @@ export default function ProcurementPage() {
 
             {/* Procurement by Category */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📊 Procurement by Category</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Procurement by Category</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Breakdown of procurement activities organized by category for better oversight and analysis.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>IT services, medical equipment, construction</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Total spending per category</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Year-over-year category trends</span>
                 </li>
               </ul>
@@ -303,9 +318,48 @@ export default function ProcurementPage() {
 
           <div className="mt-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-300 dark:border-blue-700">
             <p className="text-xs text-blue-800 dark:text-blue-200 italic">
-              💡 <strong>Note:</strong> Detailed procurement data is managed by the PhilHealth Procurement Department and is subject to government
+              ?? <strong>Note:</strong> Detailed procurement data is managed by the PhilHealth Procurement Department and is subject to government
               procurement transparency requirements. We are working to integrate this data for public access in compliance with transparency laws.
             </p>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-emerald-500">Q:</span> How does PhilHealth ensure transparency in procurement?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 pl-6">
+                A: PhilHealth follows the Government Procurement Reform Act and publishes procurement opportunities, 
+                bid results, and awarded contracts. All procurement processes undergo rigorous evaluation and are subject 
+                to audit by the Commission on Audit (COA).
+              </p>
+            </div>
+            
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-emerald-500">Q:</span> Can I access detailed information about specific contracts?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 pl-6">
+                A: Yes, detailed contract information is available through the PhilHealth Transparency Seal and 
+                can be requested via the Freedom of Information (FOI) program. This includes contract amounts, 
+                vendors, timelines, and project status.
+              </p>
+            </div>
+            
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-emerald-500">Q:</span> How can vendors participate in PhilHealth procurement?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 pl-6">
+                A: Interested vendors should monitor the PhilHealth procurement announcements and Philippine Government 
+                Electronic Procurement System (PhilGEPS). Vendors must meet eligibility requirements and submit complete 
+                documentation according to the bidding guidelines.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -323,3 +377,5 @@ export default function ProcurementPage() {
     </DashboardLayout>
   );
 }
+
+

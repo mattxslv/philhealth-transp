@@ -31,7 +31,7 @@ export function YearSelector({
           id="year-select"
           value={selectedYear}
           onChange={(e) => onYearChange(Number(e.target.value))}
-          className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:border-emerald-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-gray-900 dark:text-gray-100 font-medium"
+          className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-gray-900 dark:text-gray-100 font-medium"
         >
           {availableYears.map((year: number) => (
             <option key={year} value={year}>
@@ -41,13 +41,13 @@ export function YearSelector({
         </select>
         {hasDetailedBreakdown && (
           <>
-            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+            <span className="text-xs text-primary dark:text-primary font-medium">
               ✓ Detailed breakdown available
             </span>
             {onToggleAll && expandedCards && (
               <button
                 onClick={onToggleAll}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#009a3d] to-[#06b04d] hover:from-[#008234] hover:to-[#059669] text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm"
               >
                 {allExpanded ? (
                   <>

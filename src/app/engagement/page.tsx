@@ -5,9 +5,11 @@ import axios from "axios";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
 import { YearSelector } from "@/components/ui/year-selector";
+import { ExportButton } from "@/components/ui/export-button";
 import { AlertCircle, Info, TrendingUp, MessageSquare, Calendar, FileCheck } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 import { PageLoadingSkeleton } from "@/components/ui/skeleton";
+import { ErrorMessage } from "@/components/ui/error-message";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -41,24 +43,57 @@ const COLORS = ["#009a3d", "#ef4444", "#f59e0b", "#3b82f6"];
 export default function EngagementPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(2023);
 
-  useEffect(() => {
+  const loadData = () => {
+    setLoading(true);
+    setError(null);
+    
     axios.get("/data/engagement.json")
       .then(res => {
+        if (!res.data) {
+          setError({ type: "notfound", message: "Engagement data is not available at this time." });
+          setLoading(false);
+          return;
+        }
         setData(res.data);
         setLoading(false);
       })
       .catch(err => {
         console.error("Error loading engagement data:", err);
+        if (err.code === "ERR_NETWORK" || err.message?.includes("Network")) {
+          setError({ type: "network", message: "Unable to load engagement data. Please check your connection." });
+        } else if (err.response?.status === 404) {
+          setError({ type: "notfound", message: "Engagement data file was not found." });
+        } else {
+          setError({ type: "generic", message: "An unexpected error occurred while loading engagement data." });
+        }
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   if (loading) {
     return (
       <DashboardLayout>
         <PageLoadingSkeleton />
+      </DashboardLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <DashboardLayout>
+        <ErrorMessage
+          type={error.type}
+          message={error.message}
+          onRetry={loadData}
+          showHomeButton={true}
+        />
       </DashboardLayout>
     );
   }
@@ -150,6 +185,20 @@ export default function EngagementPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Header with Export */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Public Engagement</h1>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              Stakeholder consultations, public feedback, and community outreach initiatives
+            </p>
+          </div>
+          <ExportButton
+            data={data}
+            filename={`philhealth-engagement-${selectedYear}`}
+          />
+        </div>
+
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
@@ -223,21 +272,21 @@ export default function EngagementPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {/* Complaint Statistics */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📊 Complaint and Resolution Statistics</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200"> Complaint and Resolution Statistics</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Track how member grievances are handled, including complaint types, volumes, and resolution outcomes.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Total complaints by category and severity</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Resolution rates and outcomes</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Average resolution time by complaint type</span>
                 </li>
               </ul>
@@ -245,21 +294,21 @@ export default function EngagementPage() {
 
             {/* Policy Updates */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📢 Policy Updates and Circulars</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Policy Updates and Circulars</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Stay informed about new regulations, policy changes, and official circulars affecting PhilHealth members.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Recent policy updates and effective dates</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Official circulars and memoranda</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Impact summaries for members</span>
                 </li>
               </ul>
@@ -267,21 +316,21 @@ export default function EngagementPage() {
 
             {/* Contact Channels */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📞 Contact Information and Channels</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Contact Information and Channels</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Clear and accessible contact channels for inquiries, feedback, and support requests.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Hotline numbers and email addresses</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Regional office contact details</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Social media and chat support</span>
                 </li>
               </ul>
@@ -289,21 +338,21 @@ export default function EngagementPage() {
 
             {/* Feedback System */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">💬 Feedback System</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Feedback System</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Interactive feedback portal for members to share experiences, suggestions, and concerns.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Online feedback submission forms</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Satisfaction surveys and ratings</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Real-time tracking of submitted feedback</span>
                 </li>
               </ul>
@@ -311,21 +360,21 @@ export default function EngagementPage() {
 
             {/* Performance Metrics */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700 md:col-span-2">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">🎯 Performance Metrics Against Targets</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Performance Metrics Against Targets</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Measurable goals and actual performance data to track PhilHealth's service quality and efficiency.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Service level agreements (SLAs) and achievement rates</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Target vs actual performance dashboards</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Key performance indicators (KPIs) by department and region</span>
                 </li>
               </ul>
@@ -357,9 +406,46 @@ export default function EngagementPage() {
 
           <div className="mt-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-300 dark:border-blue-700">
             <p className="text-xs text-blue-800 dark:text-blue-200 italic">
-              💡 <strong>Note:</strong> Public engagement data including complaint statistics and resolution metrics require integration with
+              ?? <strong>Note:</strong> Public engagement data including complaint statistics and resolution metrics require integration with
               PhilHealth's Member Services and Grievance Management systems. We are working to make this information publicly accessible for transparency.
             </p>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-emerald-500">Q:</span> How can I file a complaint or provide feedback to PhilHealth?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 pl-6">
+                A: You can file complaints through PhilHealth's official hotline, email, website contact form, or by visiting 
+                your local PhilHealth office. All complaints are documented and addressed according to established procedures.
+              </p>
+            </div>
+            
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-emerald-500">Q:</span> How does PhilHealth engage with stakeholders?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 pl-6">
+                A: PhilHealth conducts regular consultations with various stakeholder groups including members, healthcare providers, 
+                employers, civil society organizations, and government agencies. These consultations help shape policies and improve services.
+              </p>
+            </div>
+            
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-emerald-500">Q:</span> What is the average resolution time for complaints?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 pl-6">
+                A: Resolution times vary depending on complaint complexity. Simple inquiries are typically addressed within 
+                5-7 working days, while more complex cases may require additional investigation. PhilHealth is committed to 
+                timely and fair resolution of all concerns.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -377,3 +463,5 @@ export default function EngagementPage() {
     </DashboardLayout>
   );
 }
+
+

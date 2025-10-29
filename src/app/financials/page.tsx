@@ -6,10 +6,14 @@ import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeading } from "@/components/ui/page-heading";
 import { ChartCard } from "@/components/ui/chart-card";
 import { KPIStatCard } from "@/components/ui/kpi-stat-card";
+import { KPICard } from "@/components/ui/kpi-card";
 import { YearSelector } from "@/components/ui/year-selector";
 import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency } from "@/lib/utils";
-import { DollarSign, TrendingUp, Wallet, PiggyBank, ChevronDown, ChevronUp, AlertCircle } from "lucide-react";
+import { DollarSign, TrendingUp, TrendingDown, Wallet, PiggyBank, ChevronDown, ChevronUp, AlertCircle } from "lucide-react";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { ExportButton } from "@/components/ui/export-button";
+import { FAQSection, financialFAQs } from "@/components/ui/faq";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -42,6 +46,7 @@ export default function FinancialsPage() {
   const [data, setData] = useState<any>(null);
   const [detailedData, setDetailedData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(2023);
   const [expandedCards, setExpandedCards] = useState<{[key: string]: boolean}>({
     assets: false,
@@ -50,20 +55,39 @@ export default function FinancialsPage() {
     netIncome: false
   });
 
-  useEffect(() => {
+  const loadData = () => {
+    setLoading(true);
+    setError(null);
+    
     Promise.all([
       axios.get("/data/financials.json"),
       axios.get("/data/financial-notes-2023.json")
     ])
       .then(([financialsRes, detailedRes]) => {
+        if (!financialsRes.data || !detailedRes.data) {
+          setError({ type: "notfound", message: "Financial data is not available at this time." });
+          setLoading(false);
+          return;
+        }
         setData(financialsRes.data);
         setDetailedData(detailedRes.data);
         setLoading(false);
       })
       .catch(err => {
         console.error("Error loading financials data:", err);
+        if (err.code === "ERR_NETWORK" || err.message?.includes("Network")) {
+          setError({ type: "network", message: "Unable to load financial data. Please check your connection." });
+        } else if (err.response?.status === 404) {
+          setError({ type: "notfound", message: "Financial data files were not found." });
+        } else {
+          setError({ type: "generic", message: "An unexpected error occurred while loading financial data." });
+        }
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   const toggleCard = (cardKey: string) => {
@@ -91,8 +115,40 @@ export default function FinancialsPage() {
     );
   }
 
+  if (error) {
+    return (
+      <DashboardLayout>
+        <ErrorMessage
+          type={error.type}
+          message={error.message}
+          onRetry={loadData}
+          showHomeButton={true}
+        />
+      </DashboardLayout>
+    );
+  }
+
   // Get latest year data (2023)
   const latestData = data.annualReports?.find((report: any) => report.year === selectedYear) || data.annualReports?.[1] || {};
+  
+  // Get previous year data for trend calculation
+  const previousYearData = data.annualReports?.find((report: any) => report.year === selectedYear - 1);
+  
+  // Calculate trends
+  const calculateTrend = (current: number, previous: number | undefined) => {
+    if (!previous || previous === 0) return null;
+    const change = ((current - previous) / previous) * 100;
+    return {
+      value: Math.abs(change),
+      direction: change > 0 ? "up" as const : change < 0 ? "down" as const : "neutral" as const,
+      label: "vs last year"
+    };
+  };
+  
+  const assetsTrend = calculateTrend(latestData.totalAssets || 0, previousYearData?.totalAssets);
+  const revenueTrend = calculateTrend(latestData.totalRevenue || 0, previousYearData?.totalRevenue);
+  const expensesTrend = calculateTrend(latestData.expenditures || 0, previousYearData?.expenditures);
+  const netIncomeTrend = calculateTrend(latestData.netIncome || 0, previousYearData?.netIncome);
   
   // Get detailed breakdown from financial-notes-2023.json (only available for 2023)
   const assetDetails = selectedYear === 2023 ? detailedData?.statementOfFinancialPosition?.asOfDecember31_2023?.assets : null;
@@ -216,6 +272,28 @@ export default function FinancialsPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Header with Export */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold">Financial Information</h1>
+            <p className="text-muted-foreground mt-1">Comprehensive financial data and reports</p>
+          </div>
+          <ExportButton
+            data={data}
+            filename={`philhealth-financials-${selectedYear}`}
+            formatData={(data) => {
+              const yearData = data.annualReports?.find((r: any) => r.year === selectedYear);
+              return [{
+                Year: selectedYear,
+                'Total Assets': yearData?.totalAssets || 0,
+                'Total Revenue': yearData?.revenue || 0,
+                'Total Expenses': yearData?.expenditures || 0,
+                'Net Income': yearData?.netIncome || 0,
+              }];
+            }}
+          />
+        </div>
+
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
@@ -229,41 +307,61 @@ export default function FinancialsPage() {
         {/* KPI Cards with gradient backgrounds and expandable details */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {/* Total Assets Card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 dark:from-emerald-600 dark:to-emerald-800 shadow-xl hover:shadow-2xl transition-all group">
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-all group">
             <div className="p-6">
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
               <div className="relative">
-                <Wallet className="h-10 w-10 text-white/90 mb-4" />
-                <p className="text-white/80 dark:text-white/90 text-sm font-medium mb-1">Total Assets</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">{formatCurrency(latestData.totalAssets || 0)}</p>
-                <p className="text-white/70 dark:text-white/80 text-xs">As of December 31, {selectedYear}</p>
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <p className="text-sm font-medium text-muted-foreground">Total Assets</p>
+                  
+                </div>
+                <p className="text-2xl sm:text-3xl font-bold text-foreground mb-2 break-words">{formatCurrency(latestData.totalAssets || 0)}</p>
+                
+                {/* Trend Indicator */}
+                {assetsTrend && (
+                  <div className="flex items-center gap-1.5 mb-2">
+                    {assetsTrend.direction === "up" ? (
+                      <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    ) : assetsTrend.direction === "down" ? (
+                      <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                    ) : null}
+                    <span className={`text-xs font-semibold ${
+                      assetsTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                      assetsTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                    }`}>
+                      {assetsTrend.direction === "up" ? "+" : assetsTrend.direction === "down" ? "-" : ""}
+                      {assetsTrend.value.toFixed(1)}% {assetsTrend.label}
+                    </span>
+                  </div>
+                )}
+                
+                <p className="text-muted-foreground text-xs">As of December 31, {selectedYear}</p>
               </div>
             </div>
             {expandedCards.assets && assetDetails && (
-              <div className="bg-white/10 backdrop-blur-sm p-5 border-t border-white/20">
+              <div className="bg-muted/50 p-5 border-t border-border">
                 <div className="space-y-4">
                   {/* Current Assets */}
                   <div className="space-y-2">
-                    <div className="flex justify-between items-center pb-2 border-b border-white/10">
-                      <span className="text-white font-semibold text-sm">Current Assets</span>
-                      <span className="font-bold text-white">{formatCurrency(assetDetails.currentAssets?.totalCurrentAssets || 0)}</span>
+                    <div className="flex justify-between items-center pb-2 border-b border-border">
+                      <span className="text-foreground font-semibold text-sm">Current Assets</span>
+                      <span className="font-bold text-foreground">{formatCurrency(assetDetails.currentAssets?.totalCurrentAssets || 0)}</span>
                     </div>
                     <div className="ml-3 space-y-2">
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">💰 Cash & Cash Equivalents</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(assetDetails.currentAssets?.cashAndCashEquivalents || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? Cash & Cash Equivalents</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(assetDetails.currentAssets?.cashAndCashEquivalents || 0)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">📊 Investments (HTM)</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(assetDetails.currentAssets?.investments?.heldToMaturity || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? Investments (HTM)</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(assetDetails.currentAssets?.investments?.heldToMaturity || 0)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">📈 Investments (AFS)</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(assetDetails.currentAssets?.investments?.availableForSale || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? Investments (AFS)</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(assetDetails.currentAssets?.investments?.availableForSale || 0)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">📝 Receivables</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? Receivables</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(
                           (assetDetails.currentAssets?.receivables?.premiumContributions || 0) +
                           (assetDetails.currentAssets?.receivables?.dueFromAgencies || 0) +
                           (assetDetails.currentAssets?.receivables?.accruedInterest || 0) +
@@ -275,22 +373,22 @@ export default function FinancialsPage() {
                   
                   {/* Non-Current Assets */}
                   <div className="space-y-2 pt-2">
-                    <div className="flex justify-between items-center pb-2 border-b border-white/10">
-                      <span className="text-white font-semibold text-sm">Non-Current Assets</span>
-                      <span className="font-bold text-white">{formatCurrency(assetDetails.nonCurrentAssets?.totalNonCurrentAssets || 0)}</span>
+                    <div className="flex justify-between items-center pb-2 border-b border-border">
+                      <span className="text-foreground font-semibold text-sm">Non-Current Assets</span>
+                      <span className="font-bold text-foreground">{formatCurrency(assetDetails.nonCurrentAssets?.totalNonCurrentAssets || 0)}</span>
                     </div>
                     <div className="ml-3 space-y-2">
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">📊 Investments (HTM)</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(assetDetails.nonCurrentAssets?.investments?.heldToMaturity || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? Investments (HTM)</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(assetDetails.nonCurrentAssets?.investments?.heldToMaturity || 0)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">🏢 Property, Plant & Equipment</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(assetDetails.nonCurrentAssets?.propertyPlantEquipment?.net || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? Property, Plant & Equipment</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(assetDetails.nonCurrentAssets?.propertyPlantEquipment?.net || 0)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">💻 Intangible Assets</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(assetDetails.nonCurrentAssets?.intangibleAssets?.net || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? Intangible Assets</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(assetDetails.nonCurrentAssets?.intangibleAssets?.net || 0)}</span>
                       </div>
                     </div>
                   </div>
@@ -300,66 +398,86 @@ export default function FinancialsPage() {
           </div>
 
           {/* Total Revenue Card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-800 shadow-xl hover:shadow-2xl transition-all group">
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-all group">
             <div className="p-6">
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
               <div className="relative">
-                <DollarSign className="h-10 w-10 text-white/90 mb-4" />
-                <p className="text-white/80 dark:text-white/90 text-sm font-medium mb-1">Total Revenue</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">{formatCurrency(latestData.revenue || 0)}</p>
-                <p className="text-white/70 dark:text-white/80 text-xs">For the year {selectedYear}</p>
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <p className="text-sm font-medium text-muted-foreground">Total Revenue</p>
+                  
+                </div>
+                <p className="text-2xl sm:text-3xl font-bold text-foreground mb-2 break-words">{formatCurrency(latestData.revenue || 0)}</p>
+                
+                {/* Trend Indicator */}
+                {revenueTrend && (
+                  <div className="flex items-center gap-1.5 mb-2">
+                    {revenueTrend.direction === "up" ? (
+                      <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    ) : revenueTrend.direction === "down" ? (
+                      <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                    ) : null}
+                    <span className={`text-xs font-semibold ${
+                      revenueTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                      revenueTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                    }`}>
+                      {revenueTrend.direction === "up" ? "+" : revenueTrend.direction === "down" ? "-" : ""}
+                      {revenueTrend.value.toFixed(1)}% {revenueTrend.label}
+                    </span>
+                  </div>
+                )}
+                
+                <p className="text-muted-foreground text-xs">For the year {selectedYear}</p>
               </div>
             </div>
             {expandedCards.revenue && revenueDetails && (
-              <div className="bg-white/10 backdrop-blur-sm p-5 border-t border-white/20">
+              <div className="bg-muted/50 p-5 border-t border-border">
                 <div className="space-y-4">
                   {/* Premium Contributions */}
                   <div className="space-y-2">
-                    <div className="flex justify-between items-center pb-2 border-b border-white/10">
-                      <span className="text-white font-semibold text-sm">Premium Contributions</span>
-                      <span className="font-bold text-white">{formatCurrency(revenueDetails.premiumContributions?.totalPremiumContributions || 0)}</span>
+                    <div className="flex justify-between items-center pb-2 border-b border-border">
+                      <span className="text-foreground font-semibold text-sm">Premium Contributions</span>
+                      <span className="font-bold text-foreground">{formatCurrency(revenueDetails.premiumContributions?.totalPremiumContributions || 0)}</span>
                     </div>
                     
                     {/* Direct Contributors */}
                     <div className="ml-3 space-y-2">
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5">
-                        <span className="text-white/90 text-xs font-medium">👥 Direct Contributors</span>
-                        <span className="text-white font-semibold text-xs">{formatCurrency(revenueDetails.premiumContributions?.directContributors?.total || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted">
+                        <span className="text-foreground text-xs font-medium">?? Direct Contributors</span>
+                        <span className="text-foreground font-semibold text-xs">{formatCurrency(revenueDetails.premiumContributions?.directContributors?.total || 0)}</span>
                       </div>
                       <div className="ml-4 space-y-1.5">
-                        <div className="flex justify-between items-center py-1 px-2 rounded bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-white/70 text-xs">• Employed Private</span>
-                          <span className="text-white/80 text-xs">{formatCurrency(revenueDetails.premiumContributions?.directContributors?.employedPrivateSector || 0)}</span>
+                        <div className="flex justify-between items-center py-1 px-2 rounded bg-muted hover:bg-muted/80 transition-colors">
+                          <span className="text-muted-foreground text-xs"> Employed Private</span>
+                          <span className="text-muted-foreground text-xs">{formatCurrency(revenueDetails.premiumContributions?.directContributors?.employedPrivateSector || 0)}</span>
                         </div>
-                        <div className="flex justify-between items-center py-1 px-2 rounded bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-white/70 text-xs">• Employed Government</span>
-                          <span className="text-white/80 text-xs">{formatCurrency(revenueDetails.premiumContributions?.directContributors?.employedGovernmentSector || 0)}</span>
+                        <div className="flex justify-between items-center py-1 px-2 rounded bg-muted hover:bg-muted/80 transition-colors">
+                          <span className="text-muted-foreground text-xs"> Employed Government</span>
+                          <span className="text-muted-foreground text-xs">{formatCurrency(revenueDetails.premiumContributions?.directContributors?.employedGovernmentSector || 0)}</span>
                         </div>
-                        <div className="flex justify-between items-center py-1 px-2 rounded bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-white/70 text-xs">• Informal Sector</span>
-                          <span className="text-white/80 text-xs">{formatCurrency(revenueDetails.premiumContributions?.directContributors?.informalSector || 0)}</span>
+                        <div className="flex justify-between items-center py-1 px-2 rounded bg-muted hover:bg-muted/80 transition-colors">
+                          <span className="text-muted-foreground text-xs"> Informal Sector</span>
+                          <span className="text-muted-foreground text-xs">{formatCurrency(revenueDetails.premiumContributions?.directContributors?.informalSector || 0)}</span>
                         </div>
                       </div>
                     </div>
                     
                     {/* Indirect Contributors */}
                     <div className="ml-3 space-y-2">
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5">
-                        <span className="text-white/90 text-xs font-medium">🏛️ Indirect Contributors</span>
-                        <span className="text-white font-semibold text-xs">{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.total || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted">
+                        <span className="text-foreground text-xs font-medium">??? Indirect Contributors</span>
+                        <span className="text-foreground font-semibold text-xs">{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.total || 0)}</span>
                       </div>
                       <div className="ml-4 space-y-1.5">
-                        <div className="flex justify-between items-center py-1 px-2 rounded bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-white/70 text-xs">• Indigent Program</span>
-                          <span className="text-white/80 text-xs">{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.indigentProgram || 0)}</span>
+                        <div className="flex justify-between items-center py-1 px-2 rounded bg-muted hover:bg-muted/80 transition-colors">
+                          <span className="text-muted-foreground text-xs"> Indigent Program</span>
+                          <span className="text-muted-foreground text-xs">{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.indigentProgram || 0)}</span>
                         </div>
-                        <div className="flex justify-between items-center py-1 px-2 rounded bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-white/70 text-xs">• Senior Citizens</span>
-                          <span className="text-white/80 text-xs">{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.seniorCitizens || 0)}</span>
+                        <div className="flex justify-between items-center py-1 px-2 rounded bg-muted hover:bg-muted/80 transition-colors">
+                          <span className="text-muted-foreground text-xs"> Senior Citizens</span>
+                          <span className="text-muted-foreground text-xs">{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.seniorCitizens || 0)}</span>
                         </div>
-                        <div className="flex justify-between items-center py-1 px-2 rounded bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-white/70 text-xs">• Sponsored Program</span>
-                          <span className="text-white/80 text-xs">{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.sponsoredProgram || 0)}</span>
+                        <div className="flex justify-between items-center py-1 px-2 rounded bg-muted hover:bg-muted/80 transition-colors">
+                          <span className="text-muted-foreground text-xs"> Sponsored Program</span>
+                          <span className="text-muted-foreground text-xs">{formatCurrency(revenueDetails.premiumContributions?.indirectContributors?.sponsoredProgram || 0)}</span>
                         </div>
                       </div>
                     </div>
@@ -367,13 +485,13 @@ export default function FinancialsPage() {
                   
                   {/* Other Revenue */}
                   <div className="space-y-2 pt-2">
-                    <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                      <span className="text-white/90 text-sm">💹 Investment Income</span>
-                      <span className="font-semibold text-white text-sm">{formatCurrency(revenueDetails.investmentIncome?.total || 0)}</span>
+                    <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                      <span className="text-foreground text-sm">?? Investment Income</span>
+                      <span className="font-semibold text-foreground text-sm">{formatCurrency(revenueDetails.investmentIncome?.total || 0)}</span>
                     </div>
-                    <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                      <span className="text-white/90 text-sm">📋 Other Income</span>
-                      <span className="font-semibold text-white text-sm">{formatCurrency(revenueDetails.otherIncome?.total || 0)}</span>
+                    <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                      <span className="text-foreground text-sm">?? Other Income</span>
+                      <span className="font-semibold text-foreground text-sm">{formatCurrency(revenueDetails.otherIncome?.total || 0)}</span>
                     </div>
                   </div>
                 </div>
@@ -382,71 +500,87 @@ export default function FinancialsPage() {
           </div>
 
           {/* Total Expenses Card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 dark:from-orange-600 dark:to-orange-800 shadow-xl hover:shadow-2xl transition-all group">
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-all group">
             <div className="p-6">
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-              <div className="relative">
-                <TrendingUp className="h-10 w-10 text-white/90 mb-4" />
-                <p className="text-white/80 dark:text-white/90 text-sm font-medium mb-1">Total Expenses</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">{formatCurrency(latestData.expenditures || 0)}</p>
-                <p className="text-white/70 dark:text-white/80 text-xs">For the year {selectedYear}</p>
+              <div className="relative"><p className="text-muted-foreground dark:text-foreground text-sm font-medium mb-2">Total Expenses</p>
+                <p className="text-2xl sm:text-3xl font-bold text-foreground mb-2 break-words">{formatCurrency(latestData.expenditures || 0)}</p>
+                
+                {/* Trend Indicator */}
+                {expensesTrend && (
+                  <div className="flex items-center gap-1.5 mb-2">
+                    {expensesTrend.direction === "up" ? (
+                      <TrendingUp className="h-4 w-4 text-red-600 dark:text-red-400" />
+                    ) : expensesTrend.direction === "down" ? (
+                      <TrendingDown className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    ) : null}
+                    <span className={`text-xs font-semibold ${
+                      expensesTrend.direction === "up" ? "text-red-600 dark:text-red-400" : 
+                      expensesTrend.direction === "down" ? "text-green-600 dark:text-green-400" : "text-muted-foreground"
+                    }`}>
+                      {expensesTrend.direction === "up" ? "+" : expensesTrend.direction === "down" ? "-" : ""}
+                      {expensesTrend.value.toFixed(1)}% {expensesTrend.label}
+                    </span>
+                  </div>
+                )}
+                
+                <p className="text-muted-foreground dark:text-muted-foreground text-xs">For the year {selectedYear}</p>
               </div>
             </div>
             {expandedCards.expenses && expenseDetails && (
-              <div className="bg-white/10 backdrop-blur-sm p-5 border-t border-white/20">
+              <div className="bg-muted/50 p-5 border-t border-border">
                 <div className="space-y-4">
                   {/* Benefit Expense */}
                   <div className="space-y-2">
-                    <div className="flex justify-between items-center pb-2 border-b border-white/10">
-                      <span className="text-white font-semibold text-sm">Benefit Expense</span>
-                      <span className="font-bold text-white">{formatCurrency(expenseDetails.benefitExpense?.netBenefitExpense || 0)}</span>
+                    <div className="flex justify-between items-center pb-2 border-b border-border">
+                      <span className="text-foreground font-semibold text-sm">Benefit Expense</span>
+                      <span className="font-bold text-foreground">{formatCurrency(expenseDetails.benefitExpense?.netBenefitExpense || 0)}</span>
                     </div>
                     <div className="ml-3 space-y-2">
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">💊 Before IBNP Adjustment</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(expenseDetails.benefitExpense?.beforeIBNPAdjustment || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? Before IBNP Adjustment</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(expenseDetails.benefitExpense?.beforeIBNPAdjustment || 0)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/80 text-xs">📊 IBNP Adjustment</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(expenseDetails.benefitExpense?.ibnpAdjustment || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-muted-foreground text-xs">?? IBNP Adjustment</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(expenseDetails.benefitExpense?.ibnpAdjustment || 0)}</span>
                       </div>
                     </div>
                   </div>
                   
                   {/* Operating Expenses */}
                   <div className="space-y-2 pt-2">
-                    <div className="flex justify-between items-center pb-2 border-b border-white/10">
-                      <span className="text-white font-semibold text-sm">Operating Expenses</span>
-                      <span className="font-bold text-white">{formatCurrency(expenseDetails.operatingExpenses?.totalOperatingExpenses || 0)}</span>
+                    <div className="flex justify-between items-center pb-2 border-b border-border">
+                      <span className="text-foreground font-semibold text-sm">Operating Expenses</span>
+                      <span className="font-bold text-foreground">{formatCurrency(expenseDetails.operatingExpenses?.totalOperatingExpenses || 0)}</span>
                     </div>
                     
                     {/* Personnel Services */}
                     <div className="ml-3 space-y-2">
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5">
-                        <span className="text-white/90 text-xs font-medium">👨‍💼 Personnel Services</span>
-                        <span className="text-white font-semibold text-xs">{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.total || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted">
+                        <span className="text-foreground text-xs font-medium">????? Personnel Services</span>
+                        <span className="text-foreground font-semibold text-xs">{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.total || 0)}</span>
                       </div>
                       <div className="ml-4 space-y-1.5">
-                        <div className="flex justify-between items-center py-1 px-2 rounded bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-white/70 text-xs">• Salaries & Wages</span>
-                          <span className="text-white/80 text-xs">{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.salariesAndWages || 0)}</span>
+                        <div className="flex justify-between items-center py-1 px-2 rounded bg-muted hover:bg-muted/80 transition-colors">
+                          <span className="text-muted-foreground text-xs"> Salaries & Wages</span>
+                          <span className="text-muted-foreground text-xs">{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.salariesAndWages || 0)}</span>
                         </div>
-                        <div className="flex justify-between items-center py-1 px-2 rounded bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-white/70 text-xs">• Bonuses & Allowances</span>
-                          <span className="text-white/80 text-xs">{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.bonusesAndAllowances || 0)}</span>
+                        <div className="flex justify-between items-center py-1 px-2 rounded bg-muted hover:bg-muted/80 transition-colors">
+                          <span className="text-muted-foreground text-xs"> Bonuses & Allowances</span>
+                          <span className="text-muted-foreground text-xs">{formatCurrency(expenseDetails.operatingExpenses?.personnelServices?.bonusesAndAllowances || 0)}</span>
                         </div>
                       </div>
                     </div>
                     
                     {/* Other Operating Expenses */}
                     <div className="ml-3 space-y-2">
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/90 text-xs">🔧 Maintenance & Operations</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(expenseDetails.operatingExpenses?.maintenanceAndOperatingExpenses?.total || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-foreground text-xs">?? Maintenance & Operations</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(expenseDetails.operatingExpenses?.maintenanceAndOperatingExpenses?.total || 0)}</span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-white/90 text-xs">📉 Depreciation & Amortization</span>
-                        <span className="text-white/90 text-xs font-medium">{formatCurrency(expenseDetails.operatingExpenses?.depreciationAndAmortization || 0)}</span>
+                      <div className="flex justify-between items-center py-1.5 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                        <span className="text-foreground text-xs">?? Depreciation & Amortization</span>
+                        <span className="text-foreground text-xs font-medium">{formatCurrency(expenseDetails.operatingExpenses?.depreciationAndAmortization || 0)}</span>
                       </div>
                     </div>
                   </div>
@@ -456,35 +590,51 @@ export default function FinancialsPage() {
           </div>
 
           {/* Net Income Card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-800 shadow-xl hover:shadow-2xl transition-all group">
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-all group">
             <div className="p-6">
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-              <div className="relative">
-                <PiggyBank className="h-10 w-10 text-white/90 mb-4" />
-                <p className="text-white/80 dark:text-white/90 text-sm font-medium mb-1">Net Income</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white mb-2 break-words">{formatCurrency(latestData.netIncome || 0)}</p>
-                <p className="text-white/70 dark:text-white/80 text-xs">For the year {selectedYear}</p>
+              <div className="relative"><p className="text-muted-foreground dark:text-foreground text-sm font-medium mb-2">Net Income</p>
+                <p className="text-2xl sm:text-3xl font-bold text-foreground mb-2 break-words">{formatCurrency(latestData.netIncome || 0)}</p>
+                
+                {/* Trend Indicator */}
+                {netIncomeTrend && (
+                  <div className="flex items-center gap-1.5 mb-2">
+                    {netIncomeTrend.direction === "up" ? (
+                      <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    ) : netIncomeTrend.direction === "down" ? (
+                      <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                    ) : null}
+                    <span className={`text-xs font-semibold ${
+                      netIncomeTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                      netIncomeTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                    }`}>
+                      {netIncomeTrend.direction === "up" ? "+" : netIncomeTrend.direction === "down" ? "-" : ""}
+                      {netIncomeTrend.value.toFixed(1)}% {netIncomeTrend.label}
+                    </span>
+                  </div>
+                )}
+                
+                <p className="text-muted-foreground dark:text-muted-foreground text-xs">For the year {selectedYear}</p>
               </div>
             </div>
             {expandedCards.netIncome && (
-              <div className="bg-white/10 backdrop-blur-sm p-5 border-t border-white/20">
+              <div className="bg-muted/50 p-5 border-t border-border">
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-white/5">
-                    <span className="text-white/90 text-sm">💰 Total Revenue</span>
-                    <span className="font-semibold text-white">{formatCurrency(latestData.revenue || 0)}</span>
+                  <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-muted">
+                    <span className="text-foreground text-sm">?? Total Revenue</span>
+                    <span className="font-semibold text-foreground">{formatCurrency(latestData.revenue || 0)}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-white/5">
-                    <span className="text-white/90 text-sm">💸 Total Expenses</span>
-                    <span className="font-semibold text-white">({formatCurrency(latestData.expenditures || 0)})</span>
+                  <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-muted">
+                    <span className="text-foreground text-sm">?? Total Expenses</span>
+                    <span className="font-semibold text-foreground">({formatCurrency(latestData.expenditures || 0)})</span>
                   </div>
                   <div className="flex justify-between items-center py-3 px-3 rounded-lg bg-white/20 border-t-2 border-white/30">
-                    <span className="text-white font-bold text-base">📊 Net Income</span>
-                    <span className="text-white font-bold text-base">{formatCurrency(latestData.netIncome || 0)}</span>
+                    <span className="text-foreground font-bold text-base">?? Net Income</span>
+                    <span className="text-foreground font-bold text-base">{formatCurrency(latestData.netIncome || 0)}</span>
                   </div>
-                  <div className="mt-3 pt-3 border-t border-white/10">
-                    <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                      <span className="text-white/80 text-xs">📈 Net Income Margin</span>
-                      <span className="font-bold text-white text-sm">{((latestData.netIncome / latestData.revenue) * 100).toFixed(1)}%</span>
+                  <div className="mt-3 pt-3 border-t border-border">
+                    <div className="flex justify-between items-center py-2 px-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                      <span className="text-muted-foreground text-xs">?? Net Income Margin</span>
+                      <span className="font-bold text-foreground text-sm">{((latestData.netIncome / latestData.revenue) * 100).toFixed(1)}%</span>
                     </div>
                   </div>
                 </div>
@@ -497,7 +647,7 @@ export default function FinancialsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Revenue by Source</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-2">Revenue by Source</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Breakdown of revenue sources for {selectedYear}</p>
             </div>
             <div className="h-[400px]">
@@ -505,45 +655,45 @@ export default function FinancialsPage() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-2xl p-6 shadow-lg border-2 border-dashed border-orange-300 dark:border-orange-700">
+          <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
             <div className="flex items-start gap-3 mb-4">
               <AlertCircle className="w-8 h-8 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Administrative Costs Breakdown</h3>
-                <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-2">Administrative Costs Breakdown</h3>
+                <p className="text-sm text-gray-700 dark:text-muted-foreground mb-3">
                   <strong>Future Enhancement:</strong> Detailed breakdown of administrative and operating expenses
                 </p>
               </div>
             </div>
             
-            <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-5 border border-orange-200 dark:border-orange-700">
-              <h4 className="text-md font-semibold mb-3 text-gray-800 dark:text-gray-200">📊 Planned Visualizations</h4>
+            <div className="bg-muted0 dark:bg-gray-800/50 rounded-lg p-5 border border-orange-200 dark:border-orange-700">
+              <h4 className="text-md font-semibold mb-3 text-gray-800 dark:text-gray-200">?? Planned Visualizations</h4>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                 <li className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span className="text-orange-500 mt-0.5"></span>
                   <span>Personnel costs breakdown (salaries, benefits, bonuses)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span className="text-orange-500 mt-0.5"></span>
                   <span>Maintenance and operating expenses by category</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span className="text-orange-500 mt-0.5"></span>
                   <span>IT and systems infrastructure costs</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span className="text-orange-500 mt-0.5"></span>
                   <span>Facilities and office expenses</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5">•</span>
+                  <span className="text-orange-500 mt-0.5"></span>
                   <span>Administrative efficiency ratios</span>
                 </li>
               </ul>
               
               <div className="mt-4 pt-4 border-t border-orange-200 dark:border-orange-700">
                 <p className="text-xs text-gray-600 dark:text-gray-400 italic">
-                  💡 <strong>Note:</strong> This data requires more granular breakdown of operating expenses from the annual report's notes to financial statements. Currently, only high-level operating expenses totals are available.
+                  ?? <strong>Note:</strong> This data requires more granular breakdown of operating expenses from the annual report's notes to financial statements. Currently, only high-level operating expenses totals are available.
                 </p>
               </div>
             </div>
@@ -552,7 +702,7 @@ export default function FinancialsPage() {
 
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
           <div className="mb-6">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Revenue vs Expenses Trend</h3>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-2">Revenue vs Expenses Trend</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">Historical comparison of revenue and expenses</p>
           </div>
           <div className="h-[350px]">
@@ -561,14 +711,14 @@ export default function FinancialsPage() {
         </div>
         {/* Additional Stats Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-2xl shadow-md border border-blue-200 dark:border-blue-700 hover:shadow-lg transition-all">
+          <div className="relative overflow-hidden border border-border bg-card p-6 rounded-lg shadow-sm hover:shadow-lg transition-all">
             <div className="absolute top-0 right-0 w-24 h-24 bg-blue-400/10 rounded-full -mr-12 -mt-12"></div>
             <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Coverage Rate</h3>
             <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">{latestData.coverageRate || 100}%</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Population coverage</p>
           </div>
 
-          <div className="relative overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-6 rounded-2xl shadow-md border border-purple-200 dark:border-purple-700 hover:shadow-lg transition-all">
+          <div className="relative overflow-hidden border border-border bg-card p-6 rounded-lg shadow-sm hover:shadow-lg transition-all">
             <div className="absolute top-0 right-0 w-24 h-24 bg-purple-400/10 rounded-full -mr-12 -mt-12"></div>
             <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Total Beneficiaries</h3>
             <p className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">{((latestData.totalBeneficiaries || latestData.beneficiaries || 0) / 1000000).toFixed(1)}M</p>
@@ -578,7 +728,7 @@ export default function FinancialsPage() {
           <div className="relative overflow-hidden bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 p-6 rounded-2xl shadow-md border border-red-200 dark:border-red-700 hover:shadow-lg transition-all">
             <div className="absolute top-0 right-0 w-24 h-24 bg-red-400/10 rounded-full -mr-12 -mt-12"></div>
             <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Claims Paid</h3>
-            <p className="text-4xl font-bold text-red-600 dark:text-red-400 mb-2">₱{((latestData.claimsPaid || 0) / 1000000000).toFixed(1)}B</p>
+            <p className="text-4xl font-bold text-red-600 dark:text-red-400 mb-2">?{((latestData.claimsPaid || 0) / 1000000000).toFixed(1)}B</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Total disbursed</p>
           </div>
         </div>
@@ -598,21 +748,21 @@ export default function FinancialsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Quarterly Reports */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📊 Quarterly Financial Reports</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Quarterly Financial Reports</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Quarterly breakdowns of revenue, expenditures, and financial position to provide more frequent updates throughout the year.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Q1, Q2, Q3, Q4 financial statements</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Quarter-over-quarter comparisons</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Seasonal trend analysis</span>
                 </li>
               </ul>
@@ -620,21 +770,21 @@ export default function FinancialsPage() {
 
             {/* Audit Reports */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">🔍 Detailed Audit Reports</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Detailed Audit Reports</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Comprehensive audit findings from the Commission on Audit (COA) with recommendations and management responses.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>COA audit opinions and findings</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Management corrective action plans</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Status of audit recommendations</span>
                 </li>
               </ul>
@@ -642,21 +792,21 @@ export default function FinancialsPage() {
 
             {/* Investment Portfolio */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">💼 Investment Portfolio Performance</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Investment Portfolio Performance</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Detailed breakdown of where PhilHealth funds are invested and their investment returns.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Investment by asset class (bonds, securities, etc.)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Return on investment (ROI) and yields</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Risk assessment and portfolio strategy</span>
                 </li>
               </ul>
@@ -664,21 +814,21 @@ export default function FinancialsPage() {
 
             {/* Administrative Costs */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">📋 Administrative Costs Breakdown</h4>
+              <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">?? Administrative Costs Breakdown</h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Granular details on operational expenses as a percentage of total budget, by department and function.
               </p>
               <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1 ml-4">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Personnel costs vs operational costs</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Department-by-department expense allocation</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
+                  <span className="text-blue-500 mt-0.5"></span>
                   <span>Administrative efficiency ratios</span>
                 </li>
               </ul>
@@ -687,11 +837,14 @@ export default function FinancialsPage() {
 
           <div className="mt-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 border border-blue-300 dark:border-blue-700">
             <p className="text-xs text-blue-800 dark:text-blue-200 italic">
-              💡 <strong>Note:</strong> These enhancements require detailed financial data that may be available in internal reports but not yet
+              ?? <strong>Note:</strong> These enhancements require detailed financial data that may be available in internal reports but not yet
               published in the annual reports. We are working to make this information accessible for greater transparency.
             </p>
           </div>
         </div>
+
+        {/* FAQ Section */}
+        <FAQSection faqs={financialFAQs} />
 
         {/* Data Source Footer */}
         <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-l-4 border-emerald-500 dark:border-emerald-400 p-6 rounded-lg shadow-sm">
@@ -707,3 +860,12 @@ export default function FinancialsPage() {
     </DashboardLayout>
   );
 }
+
+
+
+
+
+
+
+
+

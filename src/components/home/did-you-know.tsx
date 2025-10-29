@@ -8,25 +8,25 @@ const facts = [
     icon: Users,
     fact: "PhilHealth covers 52.4M Filipinos",
     context: "That's like filling the entire Metro Manila 4 times over!",
-    color: "text-blue-600 dark:text-blue-400"
+    color: "text-[#009a3d] dark:text-[#06b04d]"
   },
   {
     icon: TrendingUp,
     fact: "127.5 billion pesos in benefits paid this year",
     context: "Enough to build 127,500 classrooms or 2,550 hospitals!",
-    color: "text-green-600 dark:text-green-400"
+    color: "text-[#06b04d] dark:text-[#10b981]"
   },
   {
     icon: Building2,
     fact: "2.3M families helped every month",
     context: "Imagine filling up 46 Araneta Coliseums with grateful families!",
-    color: "text-purple-600 dark:text-purple-400"
+    color: "text-[#009a3d] dark:text-[#06b04d]"
   },
   {
     icon: Lightbulb,
     fact: "Claims approved in just 12 days on average",
     context: "Much faster than traditional government permit processing!",
-    color: "text-orange-600 dark:text-orange-400"
+    color: "text-amber-600 dark:text-amber-400"
   },
   {
     icon: Users,

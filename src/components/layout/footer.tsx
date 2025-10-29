@@ -7,15 +7,26 @@ import { useSidebar } from "@/contexts/sidebar-context";
 import { cn } from "@/lib/utils";
 
 export function Footer() {
-  const { sidebarCollapsed } = useSidebar();
+  const { sidebarOpen } = useSidebar();
   
   return (
-    <footer className={cn(
-      "bg-muted/50 dark:bg-muted/20 text-foreground transition-all duration-300",
-      sidebarCollapsed ? "lg:ml-16" : "lg:ml-56"
-    )}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="bg-muted/50 dark:bg-muted/20 text-foreground">
+      <div className={cn(
+        "px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-8 sm:py-10 lg:py-12 transition-all duration-300",
+        sidebarOpen ? "lg:ml-56" : "lg:ml-16"
+      )}>
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          {/* PhilHealth Logo */}
+          <div className="flex items-center justify-start lg:col-span-1">
+            <Image
+              src="/images/philhealth logo.png"
+              alt="PhilHealth Logo"
+              width={120}
+              height={120}
+              className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 object-contain"
+            />
+          </div>
+
           {/* About */}
           <div>
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">About PhilHealth</h3>

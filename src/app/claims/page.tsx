@@ -11,7 +11,10 @@ import { YearSelector } from "@/components/ui/year-selector";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { PageLoadingSkeleton } from "@/components/ui/skeleton";
-import { TrendingUp, DollarSign, Clock, Info, CheckCircle } from "lucide-react";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { ExportButton } from "@/components/ui/export-button";
+import { FAQSection, claimsFAQs } from "@/components/ui/faq";
+import { TrendingUp, TrendingDown, DollarSign, Clock, Info, CheckCircle } from "lucide-react";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -88,18 +91,44 @@ const sampleClaimsColumns: ColumnDef<any>[] = [
 export default function ClaimsPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const [previousYearData, setPreviousYearData] = useState<any>(null);
 
-  useEffect(() => {
-    axios.get("/data/claims.json")
-      .then(res => {
-        setData(res.data);
+  const loadData = () => {
+    setLoading(true);
+    setError(null);
+    
+    // Load both current and previous year data for trend calculation
+    Promise.all([
+      axios.get("/data/claims.json"),
+      axios.get("/data/claims-2022.json").catch(() => null) // Gracefully handle if 2022 doesn't exist
+    ])
+      .then(([currentRes, previousRes]) => {
+        if (!currentRes.data) {
+          setError({ type: "notfound", message: "Claims data is not available at this time." });
+          setLoading(false);
+          return;
+        }
+        setData(currentRes.data);
+        setPreviousYearData(previousRes?.data || null);
         setLoading(false);
       })
       .catch(err => {
         console.error("Error loading claims data:", err);
+        if (err.code === "ERR_NETWORK" || err.message?.includes("Network")) {
+          setError({ type: "network", message: "Unable to load claims data. Please check your connection." });
+        } else if (err.response?.status === 404) {
+          setError({ type: "notfound", message: "Claims data file was not found." });
+        } else {
+          setError({ type: "generic", message: "An unexpected error occurred while loading claims data." });
+        }
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   if (loading || !data) {
@@ -109,6 +138,48 @@ export default function ClaimsPage() {
       </DashboardLayout>
     );
   }
+
+  if (error) {
+    return (
+      <DashboardLayout>
+        <ErrorMessage
+          type={error.type}
+          message={error.message}
+          onRetry={loadData}
+          showHomeButton={true}
+        />
+      </DashboardLayout>
+    );
+  }
+
+  // Calculate trends for KPI cards
+  const calculateTrend = (current: number, previous: number | undefined) => {
+    if (!previous || previous === 0) return null;
+    const change = ((current - previous) / previous) * 100;
+    return {
+      value: Math.abs(change),
+      direction: change > 0 ? "up" as const : change < 0 ? "down" as const : "neutral" as const,
+      label: "vs last year"
+    };
+  };
+
+  const claimsTrend = calculateTrend(
+    data.overview.totalClaims,
+    previousYearData?.overview?.totalClaims
+  );
+  const amountTrend = calculateTrend(
+    data.overview.totalAmountPaid,
+    previousYearData?.overview?.totalAmountPaid
+  );
+  const processingTrend = calculateTrend(
+    data.overview.averageProcessingDays,
+    previousYearData?.overview?.averageProcessingDays
+  );
+  const approvalRate = (data.overview.approvedClaims / data.overview.totalClaims) * 100;
+  const previousApprovalRate = previousYearData?.overview 
+    ? (previousYearData.overview.approvedClaims / previousYearData.overview.totalClaims) * 100
+    : undefined;
+  const approvalTrend = calculateTrend(approvalRate, previousApprovalRate);
 
   // Membership data for charts
   const membershipLabels = [
@@ -192,7 +263,7 @@ export default function ClaimsPage() {
         callbacks: {
           label: (context: any) => {
             return [
-              `Amount: ₱${context.parsed.toFixed(2)}B`,
+              `Amount: ?${context.parsed.toFixed(2)}B`,
               `Claims: ${formatNumber(membershipCounts[context.dataIndex])}`
             ];
           }
@@ -411,6 +482,27 @@ export default function ClaimsPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Header with Export */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold">Claims Analytics</h1>
+            <p className="text-muted-foreground mt-1">Comprehensive claims data and insights</p>
+          </div>
+          <ExportButton
+            data={data}
+            filename={`philhealth-claims-${selectedYear}`}
+            formatData={(data) => {
+              return [{
+                'Total Claims': data.overview.totalClaims,
+                'Total Amount': data.overview.totalAmount,
+                'Average Claim': data.overview.averageClaim,
+                'Approved Claims': data.overview.approvedClaims,
+                'Approval Rate': ((data.overview.approvedClaims / data.overview.totalClaims) * 100).toFixed(2) + '%',
+              }];
+            }}
+          />
+        </div>
+
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
@@ -422,46 +514,110 @@ export default function ClaimsPage() {
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {/* Total Claims */}
-          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 dark:from-emerald-600 dark:to-emerald-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-            <div className="relative">
-              <TrendingUp className="h-8 w-8 mb-4 opacity-90" />
-              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Total Claims</p>
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
+            <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Total Claims</p>
               <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.overview.totalClaims)}</p>
-              <p className="text-sm text-white/70 dark:text-white/80">Claims processed in {selectedYear}</p>
+              
+              {/* Trend Indicator */}
+              {claimsTrend && (
+                <div className="flex items-center gap-1.5 mb-2">
+                  {claimsTrend.direction === "up" ? (
+                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  ) : claimsTrend.direction === "down" ? (
+                    <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                  ) : null}
+                  <span className={`text-xs font-semibold ${
+                    claimsTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                    claimsTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                  }`}>
+                    {claimsTrend.direction === "up" ? "+" : claimsTrend.direction === "down" ? "-" : ""}
+                    {claimsTrend.value.toFixed(1)}% {claimsTrend.label}
+                  </span>
+                </div>
+              )}
+              
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Claims processed in {selectedYear}</p>
             </div>
           </div>
 
           {/* Total Amount Paid */}
-          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-            <div className="relative">
-              <DollarSign className="h-8 w-8 mb-4 opacity-90" />
-              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Total Amount Paid</p>
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
+            <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Total Amount Paid</p>
               <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatCurrency(data.overview.totalAmountPaid)}</p>
-              <p className="text-sm text-white/70 dark:text-white/80">Benefits disbursed</p>
+              
+              {/* Trend Indicator */}
+              {amountTrend && (
+                <div className="flex items-center gap-1.5 mb-2">
+                  {amountTrend.direction === "up" ? (
+                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  ) : amountTrend.direction === "down" ? (
+                    <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                  ) : null}
+                  <span className={`text-xs font-semibold ${
+                    amountTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                    amountTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                  }`}>
+                    {amountTrend.direction === "up" ? "+" : amountTrend.direction === "down" ? "-" : ""}
+                    {amountTrend.value.toFixed(1)}% {amountTrend.label}
+                  </span>
+                </div>
+              )}
+              
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Benefits disbursed</p>
             </div>
           </div>
 
           {/* Avg Processing Time */}
-          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 dark:from-orange-600 dark:to-orange-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-            <div className="relative">
-              <Clock className="h-8 w-8 mb-4 opacity-90" />
-              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Avg Processing Time</p>
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
+            <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Avg Processing Time</p>
               <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{data.overview.averageProcessingDays} days</p>
-              <p className="text-sm text-white/70 dark:text-white/80">Turnaround time</p>
+              
+              {/* Trend Indicator - Lower is better for processing time */}
+              {processingTrend && (
+                <div className="flex items-center gap-1.5 mb-2">
+                  {processingTrend.direction === "up" ? (
+                    <TrendingUp className="h-4 w-4 text-red-600 dark:text-red-400" />
+                  ) : processingTrend.direction === "down" ? (
+                    <TrendingDown className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  ) : null}
+                  <span className={`text-xs font-semibold ${
+                    processingTrend.direction === "up" ? "text-red-600 dark:text-red-400" : 
+                    processingTrend.direction === "down" ? "text-green-600 dark:text-green-400" : "text-muted-foreground"
+                  }`}>
+                    {processingTrend.direction === "up" ? "+" : processingTrend.direction === "down" ? "-" : ""}
+                    {processingTrend.value.toFixed(1)}% {processingTrend.label}
+                  </span>
+                </div>
+              )}
+              
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Turnaround time</p>
             </div>
           </div>
 
           {/* Approval Rate */}
-          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-            <div className="relative">
-              <CheckCircle className="h-8 w-8 mb-4 opacity-90" />
-              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Approval Rate</p>
-              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">95%</p>
-              <p className="text-sm text-white/70 dark:text-white/80">Successfully processed</p>
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
+            <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Approval Rate</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{approvalRate.toFixed(1)}%</p>
+              
+              {/* Trend Indicator */}
+              {approvalTrend && (
+                <div className="flex items-center gap-1.5 mb-2">
+                  {approvalTrend.direction === "up" ? (
+                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  ) : approvalTrend.direction === "down" ? (
+                    <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                  ) : null}
+                  <span className={`text-xs font-semibold ${
+                    approvalTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                    approvalTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                  }`}>
+                    {approvalTrend.direction === "up" ? "+" : approvalTrend.direction === "down" ? "-" : ""}
+                    {approvalTrend.value.toFixed(1)}% {approvalTrend.label}
+                  </span>
+                </div>
+              )}
+              
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Successfully processed</p>
             </div>
           </div>
         </div>
@@ -605,6 +761,9 @@ export default function ClaimsPage() {
           </div>
         </div>
 
+        {/* FAQ Section */}
+        <FAQSection faqs={claimsFAQs} />
+
         {/* Data Source */}
         <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-l-4 border-emerald-500 dark:border-emerald-400 p-6 rounded-lg shadow-sm">
           <div className="flex items-center gap-2">
@@ -619,3 +778,13 @@ export default function ClaimsPage() {
     </DashboardLayout>
   );
 }
+
+
+
+
+
+
+
+
+
+

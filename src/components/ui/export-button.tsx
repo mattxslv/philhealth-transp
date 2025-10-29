@@ -122,7 +122,7 @@ export function ExportButton({ data, filename, formatData, headers }: ExportButt
                 onClick={handleExportJSON}
                 className="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
               >
-                <FileJson className="w-4 h-4 text-blue-600" />
+                <FileJson className="w-4 h-4 text-[#009a3d]" />
                 <div>
                   <p className="text-sm font-medium text-gray-900 dark:text-white">
                     Export as JSON

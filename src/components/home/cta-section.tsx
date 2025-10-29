@@ -10,53 +10,53 @@ const features = [
     description: "See how we spend the funds. Every peso, accounted for!",
     icon: FileText,
     href: "/financials",
-    gradient: "from-emerald-500 to-teal-600",
+    gradient: "from-[#009a3d] to-[#06b04d]",
   },
   {
     name: "Claims Analytics",
     description: "Real-time data on approval rates and processing times. Nothing hidden!",
     icon: Activity,
     href: "/claims",
-    gradient: "from-blue-500 to-cyan-600",
+    gradient: "from-[#06b04d] to-[#10b981]",
   },
   {
     name: "Accredited Facilities",
     description: "Find hospitals near you. 6,000+ facilities nationwide!",
     icon: Building2,
     href: "/facilities",
-    gradient: "from-purple-500 to-pink-600",
+    gradient: "from-[#009a3d] to-[#059669]",
   },
   {
     name: "Procurement Records",
     description: "What we bought, how much, from whom. Full transparency in bidding!",
     icon: FileCheck,
     href: "/procurement",
-    gradient: "from-orange-500 to-red-600",
+    gradient: "from-amber-500 to-yellow-600",
   },
   {
     name: "Coverage Statistics",
     description: "How many members do we have? See enrollment trends and membership data.",
     icon: Users,
     href: "/coverage",
-    gradient: "from-indigo-500 to-blue-600",
+    gradient: "from-[#06b04d] to-[#009a3d]",
   },
   {
     name: "Governance",
     description: "Board resolutions, minutes, policies—everything is here for you.",
     icon: ShieldCheck,
     href: "/governance",
-    gradient: "from-violet-500 to-purple-600",
+    gradient: "from-[#10b981] to-[#06b04d]",
   },
 ];
 
 export function CTASection() {
   return (
-    <section className="relative py-20 overflow-hidden px-4 sm:px-6 lg:px-8">
+    <section className="relative py-20 overflow-hidden px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
       
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-10 mx-auto w-full">
         <motion.div
-          className="mx-auto max-w-2xl text-center mb-16"
+          className="mx-auto max-w-3xl text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -108,7 +108,7 @@ export function CTASection() {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-600 group-hover:to-teal-600 dark:group-hover:from-white dark:group-hover:to-gray-300 transition-all duration-500">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#009a3d] group-hover:to-[#06b04d] dark:group-hover:from-white dark:group-hover:to-gray-300 transition-all duration-500">
                     {feature.name}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">

@@ -34,9 +34,9 @@ const updates = [
 
 export function PolicyUpdates() {
   return (
-    <section className="py-16 bg-background">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center mb-12">
+    <section className="py-16 bg-transparent">
+      <div className="mx-auto w-full">
+        <div className="mx-auto max-w-3xl text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             What's New?
           </h2>
@@ -45,7 +45,7 @@ export function PolicyUpdates() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {updates.map((update) => (
             <article
               key={update.id}

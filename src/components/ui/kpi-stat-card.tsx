@@ -1,4 +1,4 @@
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface KPIStatCardProps {
@@ -52,15 +52,22 @@ export function KPIStatCard({
       </div>
       
       {trend && (
-        <p
+        <div
           className={cn(
-            "mt-3 text-sm font-medium",
+            "mt-3 flex items-center gap-1 text-sm font-medium",
             trend.isPositive ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
           )}
         >
-          {trend.isPositive ? "+" : ""}
-          {trend.value}% from last period
-        </p>
+          {trend.isPositive ? (
+            <TrendingUp className="h-4 w-4" />
+          ) : (
+            <TrendingDown className="h-4 w-4" />
+          )}
+          <span>
+            {trend.isPositive ? "+" : ""}
+            {trend.value}% from last period
+          </span>
+        </div>
       )}
     </div>
   );

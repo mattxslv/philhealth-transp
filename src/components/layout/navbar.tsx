@@ -24,20 +24,20 @@ export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { sidebarCollapsed, setSidebarOpen } = useSidebar();
+  const { sidebarOpen, setSidebarOpen } = useSidebar();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-background border-b border-border shadow-sm">
       <nav 
         className={cn(
-          "flex items-center justify-between p-4 transition-all duration-300",
+          "flex items-center p-4 transition-all duration-300",
           "lg:px-8",
-          sidebarCollapsed ? "lg:ml-16" : "lg:ml-56"
+          sidebarOpen ? "lg:ml-64" : "lg:ml-0"
         )}
         aria-label="Global"
       >
-        {/* Left section - Mobile hamburger only */}
-        <div className="flex items-center gap-3">
+        {/* Left section - Logo and hamburger */}
+        <div className="flex items-center gap-12 lg:flex-1">
           {/* Mobile hamburger */}
           <button
             onClick={() => setSidebarOpen(true)}
@@ -46,10 +46,63 @@ export function Navbar() {
           >
             <Menu className="h-5 w-5" />
           </button>
+          
+          {/* Desktop: Text only when sidebar is open, Logo + Text when sidebar is closed */}
+          {sidebarOpen ? (
+            // Text only when sidebar is open
+            <div className="hidden lg:flex flex-col">
+              <span className="text-lg font-bold text-foreground">PhilHealth</span>
+              <span className="text-sm text-muted-foreground">Transparency Portal</span>
+            </div>
+          ) : (
+            // Logo + Text when sidebar is closed - with extra left margin
+            <Link href="/" className="hidden lg:flex items-center gap-3 ml-16">
+              <Image
+                src="/images/philhealth logo.png"
+                alt="PhilHealth Logo"
+                width={48}
+                height={48}
+                className="object-contain"
+              />
+              <div className="flex flex-col">
+                <span className="text-lg font-bold text-foreground">PhilHealth</span>
+                <span className="text-sm text-muted-foreground">Transparency Portal</span>
+              </div>
+            </Link>
+          )}
+          
+          {/* Mobile: Logo + Text always */}
+          <Link href="/" className="flex lg:hidden items-center gap-3">
+            <Image
+              src="/images/philhealth logo.png"
+              alt="PhilHealth Logo"
+              width={48}
+              height={48}
+              className="object-contain"
+            />
+            <div className="flex flex-col">
+              <span className="text-lg font-bold text-foreground">PhilHealth</span>
+              <span className="text-sm text-muted-foreground">Transparency Portal</span>
+            </div>
+          </Link>
         </div>
 
-        {/* Centered navigation - Desktop only */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:gap-x-6">
+        {/* Center section - Search and dark mode toggle (Desktop only) */}
+        <div className="hidden lg:flex lg:items-center lg:gap-4 lg:flex-shrink-0">
+          <GlobalSearch />
+          
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
+            aria-label="Toggle theme"
+          >
+            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          </button>
+        </div>
+
+        {/* Right section - Navigation links (Desktop only) */}
+        <div className="hidden lg:flex lg:items-center lg:gap-x-6 lg:flex-1 lg:justify-end">
           {navigation.map((item) => {
             const isActive = !item.external && pathname === item.href;
             
@@ -82,57 +135,17 @@ export function Navbar() {
           })}
         </div>
         
-        {/* Right section - Partnership logos, search and theme toggle */}
-        <div className="flex items-center gap-3 lg:gap-4">
-          {/* Mobile - only search and theme */}
-          <div className="flex lg:hidden gap-3">
-            <GlobalSearch />
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
-              aria-label="Toggle theme"
-            >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            </button>
-          </div>
-
-          {/* Desktop - full right section */}
-          <div className="hidden lg:flex lg:items-center lg:gap-4">
-            <span className="text-xs text-muted-foreground whitespace-nowrap">
-              Last updated: December 31, 2023
-            </span>
-            
-            <GlobalSearch />
-            
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
-              aria-label="Toggle theme"
-            >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            </button>
-
-            {/* Partnership section - right of theme button */}
-            <div className="flex items-center gap-3 pl-4 border-l border-border">
-              <div className="text-xs text-muted-foreground">In partnership with</div>
-              <Image
-                src="/images/DICT-Logo-icon_only.png"
-                alt="DICT Logo"
-                width={32}
-                height={32}
-                className="object-contain"
-              />
-              <Image
-                src="/images/bagong-pilipinas-logo.png"
-                alt="Bagong Pilipinas Logo"
-                width={32}
-                height={32}
-                className="object-contain"
-              />
-            </div>
-          </div>
+        {/* Mobile - only search and theme */}
+        <div className="flex lg:hidden gap-3">
+          <GlobalSearch />
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
+            aria-label="Toggle theme"
+          >
+            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          </button>
         </div>
       </nav>
       

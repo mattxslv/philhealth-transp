@@ -9,7 +9,10 @@ import { ChartCard } from "@/components/ui/chart-card";
 import { YearSelector } from "@/components/ui/year-selector";
 import { formatNumber } from "@/lib/utils";
 import { PageLoadingSkeleton } from "@/components/ui/skeleton";
-import { Users, UserCheck, Percent, TrendingUp, Info } from "lucide-react";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { ExportButton } from "@/components/ui/export-button";
+import { FAQSection, coverageFAQs } from "@/components/ui/faq";
+import { Users, UserCheck, Percent, TrendingUp, TrendingDown, DollarSign, CheckCircle, Info } from "lucide-react";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -43,18 +46,44 @@ const COLORS = ["#009a3d", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"
 export default function CoveragePage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const [previousYearData, setPreviousYearData] = useState<any>(null);
 
-  useEffect(() => {
-    axios.get("/data/coverage.json")
-      .then(res => {
-        setData(res.data);
+  const loadData = () => {
+    setLoading(true);
+    setError(null);
+    
+    // Load both current and previous year data
+    Promise.all([
+      axios.get("/data/coverage.json"),
+      axios.get("/data/coverage-2022.json").catch(() => null)
+    ])
+      .then(([currentRes, previousRes]) => {
+        if (!currentRes.data) {
+          setError({ type: "notfound", message: "Coverage data is not available at this time." });
+          setLoading(false);
+          return;
+        }
+        setData(currentRes.data);
+        setPreviousYearData(previousRes?.data || null);
         setLoading(false);
       })
       .catch(err => {
         console.error("Error loading coverage data:", err);
+        if (err.code === "ERR_NETWORK" || err.message?.includes("Network")) {
+          setError({ type: "network", message: "Unable to load coverage data. Please check your connection." });
+        } else if (err.response?.status === 404) {
+          setError({ type: "notfound", message: "Coverage data file was not found." });
+        } else {
+          setError({ type: "generic", message: "An unexpected error occurred while loading coverage data." });
+        }
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   if (loading || !data) {
@@ -64,6 +93,46 @@ export default function CoveragePage() {
       </DashboardLayout>
     );
   }
+
+  if (error) {
+    return (
+      <DashboardLayout>
+        <ErrorMessage
+          type={error.type}
+          message={error.message}
+          onRetry={loadData}
+          showHomeButton={true}
+        />
+      </DashboardLayout>
+    );
+  }
+
+  // Calculate trends
+  const calculateTrend = (current: number, previous: number | undefined) => {
+    if (!previous || previous === 0) return null;
+    const change = ((current - previous) / previous) * 100;
+    return {
+      value: Math.abs(change),
+      direction: change > 0 ? "up" as const : change < 0 ? "down" as const : "neutral" as const,
+      label: "vs last year"
+    };
+  };
+
+  const membersTrend = calculateTrend(
+    data.totalMembers,
+    previousYearData?.totalMembers
+  );
+  const directTrend = calculateTrend(
+    data.membershipByCategory.directContributors.total,
+    previousYearData?.membershipByCategory?.directContributors?.total
+  );
+  const indirectTrend = calculateTrend(
+    data.membershipByCategory.indirectContributors.total,
+    previousYearData?.membershipByCategory?.indirectContributors?.total
+  );
+  const coverageRate = (data.totalMembers / 114000000) * 100; // Based on PH population
+  const previousCoverageRate = previousYearData ? (previousYearData.totalMembers / 114000000) * 100 : undefined;
+  const coverageTrend = calculateTrend(coverageRate, previousCoverageRate);
 
   const membershipLabels = [
     "Employed Private",
@@ -238,6 +307,27 @@ export default function CoveragePage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
+        {/* Header with Export */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold">Coverage Statistics</h1>
+            <p className="text-muted-foreground mt-1">Membership and coverage data across all categories</p>
+          </div>
+          <ExportButton
+            data={data}
+            filename={`philhealth-coverage-${selectedYear}`}
+            formatData={(data) => {
+              return [{
+                'Total Members': data.overview.totalBeneficiaries,
+                'Direct Contributors': data.membershipByCategory.directContributors.total,
+                'Indirect Contributors': data.membershipByCategory.indirectContributors.total,
+                'Coverage Rate': data.overview.coverageRate + '%',
+                'Total Dependents': data.overview.totalDependents,
+              }];
+            }}
+          />
+        </div>
+
         {/* Year Selector */}
         <YearSelector
           selectedYear={selectedYear}
@@ -249,46 +339,111 @@ export default function CoveragePage() {
         {/* KPI Cards */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {/* Total Membership */}
-          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 dark:from-emerald-600 dark:to-emerald-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
             <div className="relative">
-              <Users className="h-8 w-8 mb-4 opacity-90" />
-              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Total Membership</p>
+              <p className="text-sm font-medium text-muted-foreground mb-2">Total Membership</p>
               <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.overview.totalBeneficiaries)}</p>
-              <p className="text-sm text-white/70 dark:text-white/80">Registered members & dependents</p>
+              
+              {/* Trend Indicator */}
+              {membersTrend && (
+                <div className="flex items-center gap-1.5 mb-2">
+                  {membersTrend.direction === "up" ? (
+                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  ) : membersTrend.direction === "down" ? (
+                    <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                  ) : null}
+                  <span className={`text-xs font-semibold ${
+                    membersTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                    membersTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                  }`}>
+                    {membersTrend.direction === "up" ? "+" : membersTrend.direction === "down" ? "-" : ""}
+                    {membersTrend.value.toFixed(1)}% {membersTrend.label}
+                  </span>
+                </div>
+              )}
+              
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Registered members & dependents</p>
             </div>
           </div>
 
           {/* Direct Contributors */}
-          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 dark:from-blue-600 dark:to-blue-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-            <div className="relative">
-              <UserCheck className="h-8 w-8 mb-4 opacity-90" />
-              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Direct Contributors</p>
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
+            <div className="relative">`n              <p className="text-sm font-medium text-muted-foreground mb-2">Direct Contributors</p>
               <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.membershipByCategory.directContributors.total)}</p>
-              <p className="text-sm text-white/70 dark:text-white/80">Employed & self-earning</p>
+              
+              {/* Trend Indicator */}
+              {directTrend && (
+                <div className="flex items-center gap-1.5 mb-2">
+                  {directTrend.direction === "up" ? (
+                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  ) : directTrend.direction === "down" ? (
+                    <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                  ) : null}
+                  <span className={`text-xs font-semibold ${
+                    directTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                    directTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                  }`}>
+                    {directTrend.direction === "up" ? "+" : directTrend.direction === "down" ? "-" : ""}
+                    {directTrend.value.toFixed(1)}% {directTrend.label}
+                  </span>
+                </div>
+              )}
+              
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Employed & paying members</p>
             </div>
           </div>
 
           {/* Indirect Contributors */}
-          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 dark:from-orange-600 dark:to-orange-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-            <div className="relative">
-              <Users className="h-8 w-8 mb-4 opacity-90" />
-              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Indirect Contributors</p>
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
+            <div className="relative">`n              <p className="text-sm font-medium text-muted-foreground mb-2">Indirect Contributors</p>
               <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.membershipByCategory.indirectContributors.total)}</p>
-              <p className="text-sm text-white/70 dark:text-white/80">Sponsored & indigents</p>
+              
+              {/* Trend Indicator */}
+              {indirectTrend && (
+                <div className="flex items-center gap-1.5 mb-2">
+                  {indirectTrend.direction === "up" ? (
+                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  ) : indirectTrend.direction === "down" ? (
+                    <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                  ) : null}
+                  <span className={`text-xs font-semibold ${
+                    indirectTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                    indirectTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                  }`}>
+                    {indirectTrend.direction === "up" ? "+" : indirectTrend.direction === "down" ? "-" : ""}
+                    {indirectTrend.value.toFixed(1)}% {indirectTrend.label}
+                  </span>
+                </div>
+              )}
+              
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Sponsored & indigents</p>
             </div>
           </div>
 
           {/* Coverage Rate */}
-          <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-800 p-6 text-white shadow-lg transition-all hover:shadow-xl group">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 dark:bg-white/5 transition-transform group-hover:scale-110"></div>
-            <div className="relative">
-              <Percent className="h-8 w-8 mb-4 opacity-90" />
-              <p className="text-sm font-medium text-white/80 dark:text-white/90 mb-1">Coverage Rate</p>
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
+            <div className="relative">`n              <p className="text-sm font-medium text-muted-foreground mb-2">Coverage Rate</p>
               <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">100%</p>
-              <p className="text-sm text-white/70 dark:text-white/80">Universal health coverage</p>
+              
+              {/* Trend Indicator */}
+              {coverageTrend && (
+                <div className="flex items-center gap-1.5 mb-2">
+                  {coverageTrend.direction === "up" ? (
+                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  ) : coverageTrend.direction === "down" ? (
+                    <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                  ) : null}
+                  <span className={`text-xs font-semibold ${
+                    coverageTrend.direction === "up" ? "text-green-600 dark:text-green-400" : 
+                    coverageTrend.direction === "down" ? "text-red-600 dark:text-red-400" : "text-muted-foreground"
+                  }`}>
+                    {coverageTrend.direction === "up" ? "+" : coverageTrend.direction === "down" ? "-" : ""}
+                    {coverageTrend.value.toFixed(1)}% {coverageTrend.label}
+                  </span>
+                </div>
+              )}
+              
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Universal health coverage</p>
             </div>
           </div>
         </div>
@@ -342,17 +497,17 @@ export default function CoveragePage() {
             <h4 className="text-md font-semibold mb-3 text-gray-700">Sample Enrollment Patterns (Template)</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                <p className="text-sm text-gray-600 mb-1">New Enrollments</p>
+                <p className="text-sm text-gray-600 mb-2">New Enrollments</p>
                 <p className="text-2xl font-bold text-green-600">2.5M</p>
                 <p className="text-xs text-gray-500 mt-1"> 12% from last year</p>
               </div>
               <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <p className="text-sm text-gray-600 mb-1">Renewals</p>
+                <p className="text-sm text-gray-600 mb-2">Renewals</p>
                 <p className="text-2xl font-bold text-blue-600">94.3M</p>
                 <p className="text-xs text-gray-500 mt-1">96% retention rate</p>
               </div>
               <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-                <p className="text-sm text-gray-600 mb-1">Active Members</p>
+                <p className="text-sm text-gray-600 mb-2">Active Members</p>
                 <p className="text-2xl font-bold text-purple-600">103.8M</p>
                 <p className="text-xs text-gray-500 mt-1">98% of total</p>
               </div>
@@ -362,6 +517,9 @@ export default function CoveragePage() {
             </p>
           </div>
         </div>
+
+        {/* FAQ Section */}
+        <FAQSection faqs={coverageFAQs} />
 
         {/* Data Source */}
         <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-l-4 border-emerald-500 dark:border-emerald-400 p-6 rounded-lg shadow-sm">
@@ -377,3 +535,12 @@ export default function CoveragePage() {
     </DashboardLayout>
   );
 }
+
+
+
+
+
+
+
+
+
