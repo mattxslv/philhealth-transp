@@ -1,0 +1,112 @@
+{
+  "year": 2008,
+  "theme": "Raising the Bar",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2008.pdf",
+  "fileSize": "2.94 MB",
+  "coverage": {
+    "totalBeneficiaries": "68.67 million",
+    "coverageRate": "76%",
+    "totalPopulation": "90.41 million",
+    "universalCoverageGoal": "85% by 2010"
+  },
+  "financialHighlights": {
+    "premiumCollections": {
+      "amount": "P25.64 billion",
+      "growth": "4%",
+      "previous": "P24.7 billion (2007)"
+    },
+    "benefitPayments": {
+      "amount": "P18.15 billion",
+      "growth": "4%",
+      "previous": "P17.45 billion (2007)",
+      "context": "More than doubled in eight years (P6.76 billion in 2000)"
+    },
+    "investmentPortfolio": {
+      "amount": "P85.19 billion",
+      "growth": "16%",
+      "previous": "P73.26 billion (2007)"
+    }
+  },
+  "membership": {
+    "totalPrincipalMembers": "16.46 million",
+    "breakdown": {
+      "private": {
+        "percentage": "34%",
+        "collections": "P15.75 billion (61% of total)"
+      },
+      "sponsored": {
+        "percentage": "24%",
+        "collections": "P2.70 billion (11% of total)"
+      },
+      "voluntary": {
+        "percentage": "18%",
+        "collections": "P1.23 billion (5% of total)"
+      },
+      "overseas": {
+        "percentage": "12%",
+        "collections": "P713.14 million (3% of total)"
+      },
+      "government": {
+        "percentage": "11%",
+        "collections": "P5.24 billion (20% of total)"
+      },
+      "lifetime": {
+        "percentage": "1%"
+      }
+    }
+  },
+  "topIllnesses": [
+    {
+      "name": "Pneumonia",
+      "amount": "P1.07 billion",
+      "cases": "220,075"
+    },
+    {
+      "name": "Senile Cataract",
+      "amount": "P767 million"
+    },
+    {
+      "name": "Diarrhea",
+      "amount": "P576.31 million"
+    }
+  ],
+  "benefitDistribution": {
+    "private": "41%",
+    "government": "20%",
+    "indigent": "15%",
+    "individuallyPaying": "14%",
+    "overseas": "14%",
+    "lifetime": "7%"
+  },
+  "newServices": [
+    "4th Normal Spontaneous Delivery",
+    "Newborn Care Package",
+    "Outpatient Malaria Package",
+    "Voluntary Surgical Contraception"
+  ],
+  "milestones": [
+    "Launched 'Leaping Fourward towards Financial Protection' program (2008-2010)",
+    "Fully implemented Over-the-Counter Collection System (OTCCS)",
+    "Added Citibank and BPI as new collection partners",
+    "Decentralized accreditation procedures",
+    "Implemented 3-in-1 accreditation scheme"
+  ],
+  "accreditation": {
+    "hospitals": {
+      "total": "1,531",
+      "increase": "3%"
+    },
+    "professionals": {
+      "total": "21,143",
+      "specialists": "51%",
+      "generalPractitioners": "47%",
+      "dentists": "1%",
+      "midwives": "1%"
+    },
+    "collectingAgencies": "45"
+  },
+  "keyPersonnel": {
+    "chairman": "Hon. Francisco T. Duque III, M.D., MSc. (Secretary of Health)",
+    "presidentCEO": "Hon. Rey B. Aquino, M.D."
+  }
+}

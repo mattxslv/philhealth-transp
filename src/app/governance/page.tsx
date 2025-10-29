@@ -1,41 +1,40 @@
-﻿import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: "Governance Documents",
-  description: "PhilHealth governance documents including policies, circulars, board resolutions, and regulatory compliance.",
-};
-
 "use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { YearSelector } from "@/components/ui/year-selector";
-import { formatNumber, formatCurrency } from "@/lib/utils";
-import { DataCardSkeleton } from "@/components/ui/skeleton";
+import { formatCurrency, formatNumber } from "@/lib/utils";
+import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { ExportButton } from "@/components/ui/export-button";
-import { FileText, DollarSign, Calendar, Download, AlertCircle, Building2 } from "lucide-react";
+import { YearSelectorDropdown } from "@/components/ui/year-selector-dropdown";
+import { FileText, DollarSign, Calendar, Download, AlertCircle, Building2, Users, TrendingUp, Shield, BookOpen, FileCheck, Briefcase } from "lucide-react";
 
 export default function GovernancePage() {
-  const [data, setData] = useState<any>(null);
+  const [statisticsData, setStatisticsData] = useState<any>(null);
+  const [annualReportData, setAnnualReportData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<{ type: "network" | "notfound" | "generic"; message?: string } | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number>(2007);
+  const [selectedYear, setSelectedYear] = useState<number>(2024);
 
   const loadData = () => {
     setLoading(true);
     setError(null);
     
-    axios.get("/data/governance-2007.json")
-      .then(res => {
-        if (!res.data) {
-          setError({ type: "notfound", message: "Governance data is not available at this time." });
-          setLoading(false);
-          return;
-        }
-        setData(res.data);
+    Promise.all([
+      axios.get(`/data/statistics-charts-${selectedYear}.json`).catch(err => {
+        console.warn(`Statistics charts for ${selectedYear} not found, using empty data`);
+        return { data: {} };
+      }),
+      axios.get(`/data/annual-report-${selectedYear}.json`).catch(err => {
+        console.warn(`Annual report for ${selectedYear} not found, using empty data`);
+        return { data: {} };
+      })
+    ])
+      .then(([statsRes, reportRes]) => {
+        setStatisticsData(statsRes.data);
+        setAnnualReportData(reportRes.data);
         setLoading(false);
       })
       .catch(err => {
@@ -43,7 +42,7 @@ export default function GovernancePage() {
         if (err.code === "ERR_NETWORK" || err.message?.includes("Network")) {
           setError({ type: "network", message: "Unable to load governance data. Please check your connection." });
         } else if (err.response?.status === 404) {
-          setError({ type: "notfound", message: "Governance data file was not found." });
+          setError({ type: "notfound", message: "Governance data files were not found." });
         } else {
           setError({ type: "generic", message: "An unexpected error occurred while loading governance data." });
         }
@@ -53,22 +52,12 @@ export default function GovernancePage() {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [selectedYear]);
 
-  if (loading || !data) {
+  if (loading || !statisticsData || !annualReportData) {
     return (
       <DashboardLayout>
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <div className="h-10 w-64 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-            <div className="h-5 w-96 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <DataCardSkeleton key={i} />
-            ))}
-          </div>
-        </div>
+        <PageLoadingSkeleton />
       </DashboardLayout>
     );
   }
@@ -86,376 +75,264 @@ export default function GovernancePage() {
     );
   }
 
+  // Check if we have valid data
+  if (!statisticsData && !annualReportData) {
+    return (
+      <DashboardLayout>
+        <ErrorMessage
+          type="notfound"
+          message="No governance data available for the selected year."
+          onRetry={loadData}
+          showHomeButton={true}
+        />
+      </DashboardLayout>
+    );
+  }
+
+  // Extract data based on year
+  let reportData: any = {};
+  let auditorReport: any = null;
+  let financialStatements: any = null;
+  let keyPersonnel: any = null;
+  let vision: string = "";
+  let mission: string = "";
+  let coreValues: string = "";
+  let theme: string = "";
+  let pdfUrl: string = "";
+  let fileSize: string = "";
+  let benefitEnhancements: any[] = [];
+  let coverage: any = null;
+
+  if (selectedYear === 2024) {
+    reportData = annualReportData.philhealth_annual_report_2024 || {};
+    auditorReport = reportData.auditor_report || null;
+    financialStatements = reportData.financial_statements || null;
+    const mandateVision = reportData.mandate_and_vision || {};
+    vision = mandateVision.vision || "";
+    mission = mandateVision.mandate || "";
+    coreValues = mandateVision.core_values?.join(", ") || "";
+  } else if (selectedYear === 2023) {
+    reportData = annualReportData;
+    keyPersonnel = reportData.keyPersonnel || null;
+    vision = reportData.vision || "";
+    mission = reportData.mission || "";
+    coreValues = reportData.coreValues || "";
+    theme = reportData.theme || "";
+    pdfUrl = reportData.pdfUrl || "";
+    fileSize = reportData.fileSize || "";
+    benefitEnhancements = reportData.benefitEnhancements || [];
+    coverage = reportData.coverage || null;
+  } else if (selectedYear === 2022) {
+    reportData = annualReportData.philhealth_2022_annual_report_data || {};
+    financialStatements = reportData.financial_statements_summary || null;
+  }
+
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        {/* Header with Export */}
+        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground">Governance & Transparency</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground">Governance & Accountability</h1>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Corporate governance, board activities, and transparency initiatives
+              Transparency in corporate governance and accountability measures
             </p>
           </div>
-          <ExportButton
-            data={data}
-            filename={`philhealth-governance-${selectedYear}`}
-          />
         </div>
 
-        {/* Year Selector */}
-        <YearSelector
-          selectedYear={selectedYear}
-          availableYears={[2007]}
-          onYearChange={setSelectedYear}
-          hasDetailedBreakdown={false}
-        />
-
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Board Meetings */}
-          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
-            <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Board Meetings</p>
-              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.corporateGovernance.totalBoardMeetings)}</p>
-              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Held in {selectedYear}</p>
-            </div>
-          </div>
-
-          {/* Board Resolutions */}
-          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
-            <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Board Resolutions</p>
-              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatNumber(data.corporateGovernance.totalBoardResolutions)}</p>
-              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Passed in {selectedYear}</p>
-            </div>
-          </div>
-
-          {/* Annual Reports Available */}
-          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
-            <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Annual Reports</p>
-              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">22</p>
-              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Available (2003-2024)</p>
-            </div>
-          </div>
-
-          {/* Executive Compensation */}
-          <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all group">
-            <div className="relative"><p className="text-sm font-medium text-muted-foreground mb-2">Executive Compensation</p>
-              <p className="text-2xl sm:text-3xl font-bold mb-2 break-words">{formatCurrency(data.boardOfDirectors.boardCompensation2007.totalHonorarium)}</p>
-              <p className="text-sm text-muted-foreground dark:text-muted-foreground">Board Total {selectedYear}</p>
-            </div>
-          </div>
+        {/* Introduction */}
+        <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-6 rounded">
+          <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">
+            About This Page
+          </h3>
+          <p className="text-blue-800 dark:text-blue-200">
+            This page is dedicated to governance and accountability information. The sections below represent key areas of transparency that are essential for public accountability. 
+            Please note that PhilHealth has not provided detailed data for these specific categories in their published annual reports.
+          </p>
         </div>
 
-        {/* Board Meeting Minutes - FUTURE ENHANCEMENT */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-              <FileText className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground">Board Meeting Minutes</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{data.corporateGovernance.totalBoardMeetings} meetings held in {selectedYear}</p>
-            </div>
-          </div>
-
-          <div className="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-6">
-            <div className="flex items-start gap-3 mb-4">
-              <AlertCircle className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">Future Enhancement</h4>
-                <p className="text-sm text-blue-800 dark:text-blue-200 mb-4">
-                  Detailed board meeting minutes, agendas, and voting records will be made available here. This section will include:
+        {/* Board Meeting Minutes and Resolutions */}
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 dark:border-yellow-600 rounded-lg p-6">
+          <div className="flex items-start gap-4">
+            <FileCheck className="w-8 h-8 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+                Board Meeting Minutes and Resolutions
+              </h3>
+              <p className="text-yellow-800 dark:text-yellow-200 mb-3">
+                Decisions affecting policy and operations
+              </p>
+              <div className="bg-yellow-100 dark:bg-yellow-900/40 rounded p-4">
+                <p className="text-sm font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+                  ⚠️ Data Not Provided by PhilHealth
                 </p>
-                <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-2 ml-4">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">ï¿½</span>
-                    <span>Complete meeting minutes with discussion summaries</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">ï¿½</span>
-                    <span>Agenda items and topics discussed</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">ï¿½</span>
-                    <span>Attendance records and voting results</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">ï¿½</span>
-                    <span>Resolutions passed and their implementation status</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-500 mt-1">ï¿½</span>
-                    <span>Downloadable PDF documents for each meeting</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Preview Template */}
-            <div className="mt-4 bg-white dark:bg-gray-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-              <h5 className="text-md font-semibold mb-3 text-gray-700 dark:text-muted-foreground">Preview: How Minutes Will Be Displayed</h5>
-              <div className="space-y-2">
-                {[
-                  { date: "December 15, 2007", title: "Regular Board Meeting #12", resolutions: 8, attendance: "13/13" },
-                  { date: "November 20, 2007", title: "Regular Board Meeting #11", resolutions: 10, attendance: "12/13" },
-                  { date: "October 10, 2007", title: "Special Board Meeting", resolutions: 5, attendance: "13/13" },
-                ].map((meeting, index) => (
-                  <div key={index} className="flex justify-between items-center p-3 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      <div>
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{meeting.title}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{meeting.date} â€¢ {meeting.resolutions} resolutions â€¢ Attendance: {meeting.attendance}</p>
-                      </div>
-                    </div>
-                    <Download className="w-4 h-4 text-gray-400" />
-                  </div>
-                ))}
+                <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                  PhilHealth has not published board meeting minutes, resolutions, or detailed documentation of board decisions in their public annual reports. 
+                  This information would include dates of meetings, attendance records, agenda items discussed, and specific resolutions passed affecting organizational policy and operations.
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Annual Reports - AVAILABLE */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl">
-              <Download className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground">Annual Reports</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Comprehensive overview of achievements, challenges, and plans</p>
-            </div>
-          </div>
-
-          <div className="bg-emerald-50 dark:bg-emerald-900/20 border-2 border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
-            <div className="flex items-start gap-3 mb-4">
-              <Download className="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-1" />
-              <div className="flex-1">
-                <h4 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-2">22 Annual Reports Available (2003-2024)</h4>
-                <p className="text-sm text-emerald-800 dark:text-emerald-200 mb-4">
-                  PhilHealth annual reports provide comprehensive overviews of organizational achievements, financial performance,
-                  challenges faced, and strategic plans for the future.
+        {/* Annual Reports */}
+        <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-500 dark:border-green-600 rounded-lg p-6">
+          <div className="flex items-start gap-4">
+            <BookOpen className="w-8 h-8 text-green-600 dark:text-green-400 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-green-900 dark:text-green-100 mb-2">
+                Annual Reports
+              </h3>
+              <p className="text-green-800 dark:text-green-200 mb-3">
+                Comprehensive overview of achievements, challenges, and plans
+              </p>
+              <div className="bg-green-100 dark:bg-green-900/40 rounded p-4 mb-4">
+                <p className="text-sm font-semibold text-green-900 dark:text-green-100 mb-2">
+                  ✓ Annual Reports Available
                 </p>
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-emerald-200 dark:border-emerald-700">
-                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-3">ðŸ“¥ Download Annual Reports</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">
-                    Access all 22 annual reports from 2003 to 2024. Each report includes: financial statements, 
-                    operational highlights, member statistics, policy changes, and strategic initiatives.
-                  </p>
-                  <Link
-                    href="/downloads/annual-reports"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-foreground text-sm font-medium rounded-lg transition-colors"
-                  >
-                    <Download className="h-4 w-4" />
-                    View All Annual Reports
-                  </Link>
-                </div>
+                <p className="text-sm text-green-800 dark:text-green-200 mb-3">
+                  PhilHealth publishes annual reports containing financial highlights, membership statistics, and operational achievements. 
+                  You can download and review these comprehensive documents.
+                </p>
+                <Link 
+                  href="/downloads/annual-reports"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  View Annual Reports
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
         {/* Executive Compensation */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
-              <DollarSign className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground">Executive Compensation</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Salaries and benefits of key officials</p>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            {/* Board Compensation */}
-            <div>
-              <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Board of Directors Honorarium</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-card border border-border">
-                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">{selectedYear}</p>
-                  <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{formatCurrency(data.boardOfDirectors.boardCompensation2007.totalHonorarium)}</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{data.corporateGovernance.totalBoardMembers} board members</p>
-                </div>
-                <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
-                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">2006</p>
-                  <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{formatCurrency(data.boardOfDirectors.boardCompensation2006.totalHonorarium)}</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Previous year comparison</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Key Management Personnel */}
-            <div>
-              <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Key Management Personnel</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-card border border-border">
-                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">{selectedYear}</p>
-                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{formatCurrency(data.executiveOfficers.compensation2007.keyManagementPersonnel.total)}</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Total compensation</p>
-                </div>
-                <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
-                  <p className="text-sm font-medium text-gray-700 dark:text-muted-foreground mb-2">2006</p>
-                  <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{formatCurrency(data.executiveOfficers.compensation2006.keyManagementPersonnel.total)}</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Previous year comparison</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Organizational Structure - FUTURE ENHANCEMENT */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-xl">
-              <Building2 className="h-6 w-6 text-orange-600 dark:text-orange-400" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground">Organizational Structure</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Departments, units, and reporting relationships</p>
-            </div>
-          </div>
-
-          <div className="bg-orange-50 dark:bg-orange-900/20 border-2 border-orange-200 dark:border-orange-800 rounded-lg p-6">
-            <div className="flex items-start gap-3 mb-4">
-              <AlertCircle className="w-6 h-6 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="text-lg font-semibold text-orange-900 dark:text-orange-100 mb-2">Future Enhancement</h4>
-                <p className="text-sm text-orange-800 dark:text-orange-200 mb-4">
-                  A detailed organizational chart and structure will be displayed here, including:
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 dark:border-yellow-600 rounded-lg p-6">
+          <div className="flex items-start gap-4">
+            <DollarSign className="w-8 h-8 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+                Executive Compensation
+              </h3>
+              <p className="text-yellow-800 dark:text-yellow-200 mb-3">
+                Salaries and benefits of key officials
+              </p>
+              <div className="bg-yellow-100 dark:bg-yellow-900/40 rounded p-4">
+                <p className="text-sm font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+                  ⚠️ Data Not Provided by PhilHealth
                 </p>
-                <ul className="text-sm text-orange-700 dark:text-orange-300 space-y-2 ml-4">
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-500 mt-1">ï¿½</span>
-                    <span>Interactive organizational chart</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-500 mt-1">ï¿½</span>
-                    <span>Department and division descriptions</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-500 mt-1">ï¿½</span>
-                    <span>Regional office structure</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-500 mt-1">ï¿½</span>
-                    <span>Key personnel by department</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-orange-500 mt-1">ï¿½</span>
-                    <span>Contact information for each unit</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Policy Decisions - FUTURE ENHANCEMENT */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-teal-100 dark:bg-teal-900/30 rounded-xl">
-              <FileText className="h-6 w-6 text-teal-600 dark:text-teal-400" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground">Policy Decisions</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{data.corporateGovernance.totalBoardResolutions} resolutions passed in {selectedYear}</p>
-            </div>
-          </div>
-
-          <div className="bg-teal-50 dark:bg-teal-900/20 border-2 border-teal-200 dark:border-teal-800 rounded-lg p-6">
-            <div className="flex items-start gap-3 mb-4">
-              <AlertCircle className="w-6 h-6 text-teal-600 dark:text-teal-400 flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="text-lg font-semibold text-teal-900 dark:text-teal-100 mb-2">Future Enhancement</h4>
-                <p className="text-sm text-teal-800 dark:text-teal-200 mb-4">
-                  Detailed policy decisions, resolutions, and circulars will be accessible here, including:
+                <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                  PhilHealth has not disclosed detailed executive compensation information in their public annual reports. 
+                  This would typically include base salaries, bonuses, allowances, benefits, and total compensation packages for the President/CEO, senior vice presidents, 
+                  board members, and other key management personnel. Such disclosure is a standard practice in corporate governance transparency.
                 </p>
-                <ul className="text-sm text-teal-700 dark:text-teal-300 space-y-2 ml-4">
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-500 mt-1">ï¿½</span>
-                    <span>Board resolutions with full text and voting records</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-500 mt-1">ï¿½</span>
-                    <span>Policy circulars and memoranda</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-500 mt-1">ï¿½</span>
-                    <span>Implementation guidelines</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-500 mt-1">ï¿½</span>
-                    <span>Regulatory changes affecting members</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-500 mt-1">ï¿½</span>
-                    <span>Searchable database of all policy documents</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
         </div>
 
-        {/* FAQ Section */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="font-semibold text-gray-900 dark:text-foreground mb-2 flex items-center gap-2">
-                <span className="text-emerald-500">Q:</span> How often does the PhilHealth Board meet?
+        {/* Procurement Contracts */}
+        <div className="bg-purple-50 dark:bg-purple-900/20 border-2 border-purple-500 dark:border-purple-600 rounded-lg p-6">
+          <div className="flex items-start gap-4">
+            <Briefcase className="w-8 h-8 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-purple-900 dark:text-purple-100 mb-2">
+                Procurement Contracts
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 pl-6">
-                A: The PhilHealth Board holds regular meetings as mandated by the corporation's charter. In 2007,
-                there were {formatNumber(data.corporateGovernance.totalBoardMeetings)} board meetings to discuss policy, 
-                operations, and strategic initiatives.
+              <p className="text-purple-800 dark:text-purple-200 mb-3">
+                Major purchases and vendor selections with amounts
               </p>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="font-semibold text-gray-900 dark:text-foreground mb-2 flex items-center gap-2">
-                <span className="text-emerald-500">Q:</span> Where can I access PhilHealth's official documents?
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 pl-6">
-                A: PhilHealth publishes various documents including annual reports, financial statements, circulars, 
-                and board resolutions on the official website. You can also request documents through the Freedom of Information (FOI) program.
-              </p>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="font-semibold text-gray-900 dark:text-foreground mb-2 flex items-center gap-2">
-                <span className="text-emerald-500">Q:</span> How does PhilHealth ensure transparency in its operations?
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 pl-6">
-                A: PhilHealth adheres to good governance principles through regular audits by the Commission on Audit (COA), 
-                publication of financial reports, disclosure of board resolutions, and active participation in transparency initiatives. 
-                The organization is committed to accountability and public trust.
-              </p>
+              <div className="bg-purple-100 dark:bg-purple-900/40 rounded p-4 mb-4">
+                <p className="text-sm font-semibold text-purple-900 dark:text-purple-100 mb-2">
+                  ✓ Procurement Documents Available
+                </p>
+                <p className="text-sm text-purple-800 dark:text-purple-200 mb-3">
+                  PhilHealth has published procurement-related documents and amendments. While comprehensive contract details with amounts and vendor selections 
+                  are not fully disclosed, you can review available procurement documentation.
+                </p>
+                <Link 
+                  href="/procurement"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+                >
+                  <FileText className="w-4 h-4" />
+                  View Procurement Documents
+                </Link>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Data Source */}
-        <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border-l-4 border-emerald-500 dark:border-emerald-400 p-6 rounded-lg shadow-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-            <p className="text-sm text-gray-800 dark:text-gray-200 font-medium">
-              <strong>Data Source:</strong> PhilHealth Annual Report {selectedYear} (Official Audited Data) | 
-              <strong> Last Updated:</strong> December 31, {selectedYear}
+        {/* Call to Action */}
+        <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            Transparency & Public Accountability
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            Transparency in governance is essential for public trust and accountability. This page highlights areas where additional disclosure would enhance 
+            public understanding of PhilHealth's governance practices, decision-making processes, and use of public funds.
+          </p>
+          <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
+              <strong>Note:</strong> The absence of certain governance data does not necessarily indicate impropriety. However, comprehensive disclosure of 
+              board decisions, executive compensation, and detailed procurement information would align with international best practices in public sector transparency 
+              and strengthen public confidence in the organization.
             </p>
+          </div>
+        </div>
+
+        {/* Additional Resources */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow border border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-[#009a3d]" />
+            Additional Resources
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Link 
+              href="/downloads/annual-reports"
+              className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors border border-green-200 dark:border-green-800"
+            >
+              <FileText className="w-8 h-8 text-[#009a3d]" />
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white">Annual Reports</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Download complete annual reports</p>
+              </div>
+            </Link>
+            
+            <Link 
+              href="/procurement"
+              className="flex items-center gap-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors border border-purple-200 dark:border-purple-800"
+            >
+              <Briefcase className="w-8 h-8 text-purple-600" />
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white">Procurement Documents</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">View available procurement files</p>
+              </div>
+            </Link>
+
+            <Link 
+              href="/financials"
+              className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors border border-blue-200 dark:border-blue-800"
+            >
+              <DollarSign className="w-8 h-8 text-blue-600" />
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white">Financial Performance</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">View financial statements and reports</p>
+              </div>
+            </Link>
+
+            <Link 
+              href="/claims"
+              className="flex items-center gap-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-colors border border-yellow-200 dark:border-yellow-800"
+            >
+              <FileCheck className="w-8 h-8 text-yellow-600" />
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white">Claims Analytics</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Review claims data and statistics</p>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
     </DashboardLayout>
   );
 }
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,67 @@
+{
+  "year": 2017,
+  "theme": "Universal Health Care: Challenged by Change, Empowered by Unity",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2017.pdf",
+  "fileSize": "6.83 MB",
+  "anniversary": "22nd year as the country's main financier of health care services",
+  "vision": "Bawat Filipino, Miyembro, Bawat Miyembro, Protekdado, Kalusugan ng lahat, Segurado",
+  "mission": "Benepisyong Pangkalusugan Sapat at De-kalidad para sa Lahat",
+  "coreValues": "Integridad, Inobasyon, Agarang Serbisyo, Taus pusong Paglilingkod, Pagmamalasakit, Angkop na Benepisyo, Panlipunang Pagkakabuklod",
+  "projectedPopulation": "104.5 million",
+  "financialPerformance": {
+    "totalBenefitPayment": "Almost Php110.49 billion",
+    "supportValue": {
+      "percentage": "55%",
+      "averageValuePerClaim": "P9,870",
+      "estimatedAverageCost": "P17,801"
+    },
+    "noBalanceBillingCompliance": "72.03% (Exit Survey Results)",
+    "claimsProcessingIssue": "26 claims (P270,000) took 32-53 days (standard: 30 working days)"
+  },
+  "receivables": {
+    "fromNGAs": "P394.74 million (deficiency in employer share)",
+    "fromLGUs": "Outstanding accounts for Sponsored members"
+  },
+  "governanceThrust": {
+    "priority": "Combating Fraud and Corruption",
+    "measures": [
+      {
+        "policy": "PhilHealth Whistleblowing Policy",
+        "detail": "Report illegal/unethical acts to Integrity Monitoring Committee"
+      },
+      {
+        "policy": "Anti-Fraud Task Force",
+        "detail": "Prevent activities that defraud NHIP"
+      },
+      {
+        "policy": "Fact Finding Investigations",
+        "detail": "Address irregularities by stakeholders and officials"
+      }
+    ]
+  },
+  "citizenSatisfaction": {
+    "rating": "High satisfaction rating since 2011",
+    "awardWinners": "23 PhilHealth offices (22 LHIOs, 1 PRO)",
+    "award": "Citizen's Satisfaction Center-Seal of Excellence Award",
+    "basis": "ARTA compliance and overall client satisfaction",
+    "wellKnownBenefits": [
+      "No balance billing",
+      "Maternity care package",
+      "Case-rate package"
+    ]
+  },
+  "headOfficeProject": {
+    "location": "Quezon City",
+    "area": "17,230.50 square meters",
+    "appraisedValue": "P1.2 Billion (December 29, 2016)"
+  },
+  "specialPrograms": {
+    "foreignRetirees": {
+      "requirement": "Special Resident Retiree's Visa (SRRV) and permanent residency",
+      "benefits": "Inpatient, outpatient, and special benefit packages for retirees and dependents"
+    }
+  },
+  "keyPersonnel": {
+    "president": "RODRIGO ROA DUTERTE"
+  }
+}

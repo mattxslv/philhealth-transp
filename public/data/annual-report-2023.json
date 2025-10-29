@@ -1,0 +1,178 @@
+{
+  "year": 2023,
+  "theme": "Pinalawak at Mga Bagong Benepisyo Para sa Mamamayang Filipino (Expanded and New Benefits for Filipino Citizens)",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2023.pdf",
+  "fileSize": "18.02 MB",
+  "vision": "Bawat Filipino, Miyembro. Bawat Miyembro, Protektado. Kalusugan ng Lahat, Segurado.",
+  "mission": "Benepisyong Pangkalusugan, Sapat at Dekalidad para sa Lahat.",
+  "coreValues": "Integridad, Inobasyon, Agarang Serbisyo, Taus-pusong Paglilingkod, Pagmamalasakit, Angkop na Benepisyo, Panlipunang Pagkakabuklod",
+  "coverage": {
+    "estimatedPopulation": "112,892,781 (PSA 2015 Projections)",
+    "populationCoverageRate": "100% (All Filipinos automatically insured)",
+    "totalRegisteredBeneficiaries": "108,505,167",
+    "registrationRate": "96% of estimated population"
+  },
+  "membershipBreakdown": {
+    "directContributors": {
+      "total": "66,666,112",
+      "members": "36,895,531",
+      "dependents": "29,770,581",
+      "categories": {
+        "employedPrivate": "30,760,693",
+        "employedGovernment": "7,018,326",
+        "informalSelfEarning": "20,675,486",
+        "ofwMigrantWorkers": "5,484,281",
+        "lifetimeMembers": "2,592,320",
+        "kasambahay": "121,277",
+        "others": "13,729"
+      }
+    },
+    "indirectContributors": {
+      "total": "41,839,055",
+      "members": "25,340,992",
+      "dependents": "16,498,063",
+      "categories": {
+        "indigentsNHTSPR": "26,190,883",
+        "seniorCitizens": "12,583,683",
+        "sponsoredProgram": "3,064,489"
+      }
+    }
+  },
+  "financialHighlights": {
+    "premiumContributions": {
+      "total": "P236.16 billion",
+      "growth": "9.4% increase over P216B (2022 restated)",
+      "directContributorShare": "P157.35 billion (67%)",
+      "indirectContributorShare": "P78.81 billion (33%)"
+    },
+    "premiumBreakdown": {
+      "employedPrivate": "P105.91 billion",
+      "employedGovernment": "P42.30 billion",
+      "informalEconomy": "P9.14 billion",
+      "indigentNHTSPR": "P35.26 billion",
+      "seniorCitizen": "P42.93 billion",
+      "sponsored": "P618.09 million"
+    },
+    "claimsPaid": {
+      "amount": "P122.38 billion",
+      "count": "12,675,634 claims",
+      "directContributorShare": "49.6%",
+      "indirectContributorShare": "50.4%",
+      "topUtilizers": "Informal (19%), Indigent (19%), Sponsored (19%) - tied"
+    },
+    "irmLiquidation": "100% liquidated (out of P14.97B released)"
+  },
+  "claimsDistribution": {
+    "byMemberType": {
+      "member": "73%",
+      "dependent": "27%"
+    },
+    "byIllnessType": {
+      "procedural": "74%",
+      "medical": "26%"
+    },
+    "byGender": {
+      "female": "55%",
+      "male": "45%"
+    }
+  },
+  "claimsByCategory": {
+    "directContributors": {
+      "amount": "P62.05 billion",
+      "count": "6,287,618",
+      "topCategories": {
+        "employedPrivate": {
+          "amount": "P22.02 billion",
+          "count": "2,139,785"
+        },
+        "informalSelfEarning": {
+          "amount": "P22.23 billion",
+          "count": "2,409,192"
+        }
+      }
+    },
+    "indirectContributors": {
+      "amount": "P60.34 billion",
+      "count": "6,388,016",
+      "topCategories": {
+        "seniorCitizen": {
+          "amount": "P26.28 billion",
+          "count": "2,344,525"
+        },
+        "indigentNHTSPR": {
+          "amount": "P14.30 billion",
+          "count": "1,638,248"
+        },
+        "sponsored": {
+          "amount": "P19.75 billion",
+          "count": "2,405,243"
+        }
+      }
+    }
+  },
+  "benefitEnhancements": [
+    {
+      "package": "Hemodialysis",
+      "enhancement": "Expanded from 90 to 156 sessions annually",
+      "maximumBenefit": "P405,600"
+    },
+    {
+      "package": "Pneumonia (High-Risk)",
+      "enhancement": "Coverage amplified nearly three-fold"
+    },
+    {
+      "package": "Stroke",
+      "enhancement": "Ischemic and hemorrhagic coverage increased by average of 138%"
+    },
+    {
+      "package": "Outpatient Mental Health",
+      "enhancement": "New annual packages ranging from P9,000 to P16,000"
+    },
+    {
+      "package": "Z Benefits (Colon and Rectal Cancer)",
+      "enhancement": "Rationalized packages"
+    },
+    {
+      "package": "Orthopedic Implants",
+      "enhancement": "Rationalized coverage"
+    }
+  ],
+  "accreditation": {
+    "totalFacilities": "11,904 (9% increase from 2022)",
+    "hospitals": {
+      "total": "1,879",
+      "private": "58%",
+      "government": "42%",
+      "byLevel": {
+        "level1": {
+          "government": "334",
+          "private": "460"
+        },
+        "level2": {
+          "government": "52",
+          "private": "318"
+        },
+        "level3": {
+          "government": "59",
+          "private": "64"
+        },
+        "infirmary": {
+          "government": "340",
+          "private": "252"
+        }
+      }
+    },
+    "konsultaProviders": "2,611 (of 10,025 specific-benefit facilities)",
+    "professionals": {
+      "total": "49,179",
+      "physicians": "45,150",
+      "dentists": "716",
+      "nurses": "103",
+      "midwives": "3,210"
+    }
+  },
+  "keyPersonnel": {
+    "presidentCEO": "Emmanuel R. Ledesma, Jr.",
+    "chairman": "Teodoro J. Herbosa, MD (Secretary of Health)"
+  }
+}

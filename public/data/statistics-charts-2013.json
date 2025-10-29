@@ -1,0 +1,109 @@
+{
+  "year": 2013,
+  "theme": "UHC Synergy",
+  "metadata": {
+    "coverage": "79%",
+    "totalPopulation": "96.71 million",
+    "totalBeneficiaries": "76.40 million"
+  },
+  "membership": {
+    "totalRegisteredMembers": "24,126,746",
+    "breakdown": {
+      "employed": {
+        "total": "9,295,023",
+        "percentage": "38.53%",
+        "subcategories": {
+          "government": "1,550,834",
+          "private": "7,744,189"
+        }
+      },
+      "informal": {
+        "total": "14,831,723",
+        "percentage": "61.47%",
+        "subcategories": {
+          "sponsored": "8,898,916",
+          "indigent": "5,707,807",
+          "individuallyPaying": "225,000"
+        }
+      }
+    },
+    "directContributors": "9,295,023",
+    "coveredLives": "76,400,000"
+  },
+  "premiumCollections": {
+    "total": "P43,200,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P6,048,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P31,104,000,000",
+        "percentage": "72.00%"
+      },
+      "sponsored": {
+        "amount": "P3,456,000,000",
+        "percentage": "8.00%"
+      },
+      "indigent": {
+        "amount": "P2,160,000,000",
+        "percentage": "5.00%"
+      },
+      "individuallyPaying": {
+        "amount": "P432,000,000",
+        "percentage": "1.00%"
+      }
+    }
+  },
+  "benefitPayments": {
+    "total": "P41,500,000,000",
+    "claimsProcessed": "5,200,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P36,520,000,000",
+        "percentage": "88.00%"
+      },
+      "outpatient": {
+        "amount": "P3,735,000,000",
+        "percentage": "9.00%"
+      },
+      "healthcareFacilities": {
+        "amount": "P1,245,000,000",
+        "percentage": "3.00%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P16,600,000,000",
+      "drugs": "P11,620,000,000",
+      "professional": "P9,130,000,000",
+      "others": "P4,150,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "1,842",
+      "government": "835",
+      "private": "1,007"
+    },
+    "healthcareProfessionals": "162,300",
+    "ambulatorySurgery": "512",
+    "freestandingDialysis": "156",
+    "maternityClinic": "968"
+  },
+  "collectingAgencies": {
+    "total": "50",
+    "breakdown": {
+      "lgu": "20",
+      "privateInsurers": "14",
+      "cooperatives": "9",
+      "others": "7"
+    }
+  },
+  "milestones": [
+    "Implementation of Case-Based Payment",
+    "Launch of Primary Care Benefit Package",
+    "Enhanced dialysis coverage",
+    "Strengthened fraud detection systems",
+    "Improved claims processing efficiency"
+  ]
+}

@@ -1,10 +1,3 @@
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: "Annual Reports Download",
-  description: "Download PhilHealth annual reports, performance summaries, and yearly financial statements.",
-};
-
 'use client';
 
 import { useEffect, useState } from 'react';

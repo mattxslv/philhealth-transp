@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/contexts/sidebar-context";
 
@@ -27,7 +28,7 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-background border-b border-border shadow-sm">
       <nav 
         className={cn(
-          "flex items-center p-4 transition-all duration-300",
+          "flex items-center px-4 h-[72px] transition-all duration-300",
           "lg:px-8",
           sidebarOpen ? "lg:ml-64" : "lg:ml-0"
         )}
@@ -45,29 +46,43 @@ export function Navbar() {
             <Menu className="h-5 w-5" />
           </button>
           
-          {/* Desktop: Text only when sidebar is open, Logo + Text when sidebar is closed */}
-          {sidebarOpen ? (
-            // Text only when sidebar is open
-            <div className="hidden lg:flex flex-col">
-              <span className="text-lg font-bold text-foreground">PhilHealth</span>
-              <span className="text-sm text-muted-foreground">Transparency Portal</span>
-            </div>
-          ) : (
-            // Logo + Text when sidebar is closed - with extra left margin
-            <Link href="/" className="hidden lg:flex items-center gap-3 ml-16">
-              <Image
-                src="/images/philhealth logo.png"
-                alt="PhilHealth Logo"
-                width={48}
-                height={48}
-                className="object-contain"
+          {/* Desktop: Nothing when sidebar is open, Logo + Text when sidebar is closed */}
+          <AnimatePresence mode="wait">
+            {sidebarOpen ? (
+              // When sidebar is open we don't show branding in topbar
+              <motion.div
+                key="empty"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="hidden lg:block"
               />
-              <div className="flex flex-col">
-                <span className="text-lg font-bold text-foreground">PhilHealth</span>
-                <span className="text-sm text-muted-foreground">Transparency Portal</span>
-              </div>
-            </Link>
-          )}
+            ) : (
+              // Logo + Text when sidebar is closed - with animated entrance
+              <motion.div
+                key="branding"
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -8 }}
+                transition={{ duration: 0.15 }}
+                className="hidden lg:flex items-center gap-3 ml-16"
+              >
+                <Link href="/" className="flex items-center gap-3">
+                  <Image
+                    src="/images/philhealth logo.png"
+                    alt="PhilHealth Logo"
+                    width={48}
+                    height={48}
+                    className="object-contain"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-lg font-bold text-foreground">PhilHealth</span>
+                    <span className="text-sm text-muted-foreground">Transparency Portal</span>
+                  </div>
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
           
           {/* Mobile: Logo + Text always */}
           <Link href="/" className="flex lg:hidden items-center gap-3">

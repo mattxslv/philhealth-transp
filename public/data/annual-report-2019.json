@@ -1,0 +1,41 @@
+{
+  "year": 2019,
+  "theme": "Universal Health Care: Trailblazing a New Era of Quality Health Care",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2019.pdf",
+  "fileSize": "9.07 MB",
+  "anniversary": "25th Year",
+  "keyLegislation": {
+    "name": "Universal Health Care (UHC) Law (RA 11223)",
+    "signed": "February 2019",
+    "role": "PhilHealth as key implementer of National Insurance Program"
+  },
+  "vision": "Bawat Filipino, Miyembro. Bawat Miyembro, Protektado. Kalusugan ng Lahat, Sigurado.",
+  "mission": "Benepisyong Pangkalusugan, Sapat at Dekalidad para sa Lahat.",
+  "coreValues": "Integridad, Inobasyon, Agarang Serbisyo, Taus-pusong Paglilingkod, Pagmamalasakit, Angkop na Benepisyo, Panlipunang Pagkakabuklod",
+  "challenges": "Year was difficult with controversies, bad press, congressional hearings and political backlash",
+  "policyThrusts": [
+    {
+      "policy": "No Balance Billing (NBB)",
+      "detail": "Continued implementation guaranteeing zero co-payment for economically challenged",
+      "coverage": "No fees charged above PhilHealth's package rate"
+    },
+    {
+      "policy": "Anti-Fraud Initiatives",
+      "detail": "Strengthened quasi-judicial business processes and SOPs"
+    },
+    {
+      "policy": "Strategy Refocus",
+      "detail": "From equality of opportunity to attaining UHC goals for whole nation"
+    }
+  ],
+  "financialStatements": [
+    "Statements of Financial Position",
+    "Statements of Comprehensive Income",
+    "Statements of Changes in Equity",
+    "Statements of Cash Flow",
+    "Notes to Financial Statements"
+  ],
+  "keyPersonnel": {
+    "president": "RODRIGO ROA DUTERTE"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "year": 2012,
+  "theme": "Arangkada",
+  "metadata": {
+    "coverage": "84%",
+    "totalPopulation": "94.17 million",
+    "totalBeneficiaries": "79.10 million",
+    "enrolled": "84%"
+  },
+  "membership": {
+    "totalRegisteredMembers": "24,900,000",
+    "breakdown": {
+      "employed": {
+        "total": "9,456,000",
+        "percentage": "37.98%",
+        "subcategories": {
+          "government": "1,523,000",
+          "private": "7,933,000"
+        }
+      },
+      "informal": {
+        "total": "15,444,000",
+        "percentage": "62.02%",
+        "subcategories": {
+          "sponsored": "9,234,000",
+          "indigent": "6,035,000",
+          "individuallyPaying": "175,000"
+        }
+      }
+    },
+    "directContributors": "9,456,000",
+    "coveredLives": "79,100,000"
+  },
+  "premiumCollections": {
+    "total": "P38,500,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P5,390,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P28,050,000,000",
+        "percentage": "72.86%"
+      },
+      "sponsored": {
+        "amount": "P2,772,000,000",
+        "percentage": "7.20%"
+      },
+      "indigent": {
+        "amount": "P1,810,500,000",
+        "percentage": "4.70%"
+      },
+      "individuallyPaying": {
+        "amount": "P477,500,000",
+        "percentage": "1.24%"
+      }
+    }
+  },
+  "benefitPayments": {
+    "total": "P36,800,000,000",
+    "claimsProcessed": "4,850,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P32,500,000,000",
+        "percentage": "88.32%"
+      },
+      "outpatient": {
+        "amount": "P3,200,000,000",
+        "percentage": "8.70%"
+      },
+      "healthcareFacilities": {
+        "amount": "P1,100,000,000",
+        "percentage": "2.99%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P14,720,000,000",
+      "drugs": "P10,304,000,000",
+      "professional": "P8,096,000,000",
+      "others": "P3,680,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "1,796",
+      "government": "812",
+      "private": "984"
+    },
+    "healthcareProfessionals": "148,500",
+    "ambulatorySurgery": "485",
+    "freestandingDialysis": "142",
+    "maternityClinic": "925"
+  },
+  "collectingAgencies": {
+    "total": "48",
+    "breakdown": {
+      "lgu": "19",
+      "privateInsurers": "13",
+      "cooperatives": "8",
+      "others": "8"
+    }
+  },
+  "milestones": [
+    "Full implementation of No Balance Billing",
+    "Enhanced TB-DOTS package",
+    "Improved primary care benefit",
+    "Strengthened accreditation standards",
+    "Expansion of Z Benefits"
+  ]
+}

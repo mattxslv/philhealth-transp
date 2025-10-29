@@ -1,0 +1,219 @@
+{
+  "year": 2008,
+  "theme": "Raising the Bar",
+  "metadata": {
+    "reportType": "Statistics and Charts",
+    "dataAsOf": "December 31, 2008"
+  },
+  "membership": {
+    "totalActiveBeneficiaries": 69000000,
+    "populationCoverage": 76,
+    "projectedPopulation": 90000000,
+    "totalPrincipalMembers": 16460000,
+    "sectorDistribution": {
+      "private": 34,
+      "indigent": 24,
+      "individuallyPaying": 18,
+      "ofw": 12,
+      "government": 11,
+      "nonPaying": 1
+    },
+    "membersByCategory": [
+      {
+        "sector": "Private-Employed",
+        "members": 6380000,
+        "beneficiaries": 23190000,
+        "note": "Estimated actively-paying members"
+      },
+      {
+        "sector": "Sponsored Program",
+        "members": 3260000,
+        "beneficiaries": 16490000,
+        "note": "Active enrollment"
+      },
+      {
+        "sector": "Overseas Workers Program",
+        "members": 1840000,
+        "beneficiaries": 8060000,
+        "note": "Registered"
+      },
+      {
+        "sector": "Government-Employed",
+        "members": 1860000,
+        "beneficiaries": 7740000,
+        "note": "Estimated actively-paying members"
+      },
+      {
+        "sector": "Individually-Paying",
+        "members": 2720000,
+        "beneficiaries": 12510000,
+        "note": "Estimated actively-paying members"
+      },
+      {
+        "sector": "Non-Paying Program",
+        "members": 400000,
+        "beneficiaries": 690000,
+        "note": "Registered"
+      }
+    ],
+    "sponsoredProgram": {
+      "enrolledFamilies": 3300000,
+      "totalBeneficiaries": 16500000,
+      "activelyEnrolledMembers": 3263749
+    },
+    "individuallyPayingProgram": {
+      "registeredMembers": 3000000,
+      "cumulativeFigure": 2975527
+    },
+    "nonPayingMembers": {
+      "description": "Pensioners & Retirees",
+      "registeredMembers": 400000,
+      "cumulativeFigure": 403198
+    }
+  },
+  "premiumCollections": {
+    "totalCollections": 25600000000,
+    "collectionsBySector": [
+      {
+        "sector": "Private",
+        "amount2007": 15439000000,
+        "amount2008": 15752000000,
+        "percentChange": 2.0
+      },
+      {
+        "sector": "Government",
+        "amount2007": 4598000000,
+        "amount2008": 5240000000,
+        "percentChange": 14
+      },
+      {
+        "sector": "Indigent",
+        "amount2007": 2982000000,
+        "amount2008": 2705000000,
+        "percentChange": -9
+      },
+      {
+        "sector": "IPP",
+        "amount2007": 1024000000,
+        "amount2008": 1231000000,
+        "percentChange": 20
+      },
+      {
+        "sector": "OFW",
+        "amount2007": 713000000,
+        "amount2008": 630000000,
+        "percentChange": -11.6
+      }
+    ]
+  },
+  "benefitPayments": {
+    "totalPayments": 18200000000,
+    "yearOnYearGrowth": 4,
+    "paymentsBySector": [
+      {
+        "sector": "Private",
+        "amount2007": 7037000000,
+        "amount2008": 7649000000,
+        "percentChange": 8.7
+      },
+      {
+        "sector": "Government",
+        "amount2007": 3644000000,
+        "amount2008": 3559000000,
+        "percentChange": -2.3
+      },
+      {
+        "sector": "Indigent",
+        "amount2007": 3087000000,
+        "amount2008": 2664000000,
+        "percentChange": -14,
+        "note": "Highest rate of decrease"
+      },
+      {
+        "sector": "IPP",
+        "amount2007": 2148000000,
+        "amount2008": 2491000000,
+        "percentChange": 16
+      },
+      {
+        "sector": "Non-Paying Member",
+        "amount2007": 936000000,
+        "amount2008": 1199000000,
+        "percentChange": 28,
+        "note": "Highest rate of increase"
+      },
+      {
+        "sector": "OFW",
+        "amount2007": 594000000,
+        "amount2008": 593000000,
+        "percentChange": -0.2
+      }
+    ],
+    "benefitItemDistribution": [
+      {
+        "item": "Drugs & Meds",
+        "percentage": 31
+      },
+      {
+        "item": "Professional Fees",
+        "percentage": 24
+      },
+      {
+        "item": "X-Ray/Lab/Others",
+        "percentage": 21
+      },
+      {
+        "item": "Room & Board",
+        "percentage": 17
+      },
+      {
+        "item": "OR Fee",
+        "percentage": 7
+      }
+    ]
+  },
+  "accreditation": {
+    "facilities": {
+      "professionals": 21143,
+      "hospitals": 1531,
+      "ruralHealthUnits": 1217,
+      "tbDotsCenters": 507,
+      "maternityClinics": 396,
+      "freestandingDialysisClinics": 28
+    },
+    "hospitalsByType": {
+      "private": 931,
+      "government": 600,
+      "total": 1531,
+      "privatePercentage": 61,
+      "governmentPercentage": 39,
+      "note": "9 of 10 DOH-licensed hospitals are accredited by PhilHealth"
+    }
+  },
+  "collectingAgencies": {
+    "totalActiveACAs": 45,
+    "totalBranches": 4510,
+    "breakdown": [
+      {
+        "type": "Commercial Banks",
+        "count": 28,
+        "branches": 3814
+      },
+      {
+        "type": "Rural Banks",
+        "count": 14,
+        "branches": 247
+      },
+      {
+        "type": "Non-Bank",
+        "count": 2,
+        "branches": 139
+      },
+      {
+        "type": "Agencies",
+        "count": 1,
+        "branches": 310
+      }
+    ]
+  }
+}

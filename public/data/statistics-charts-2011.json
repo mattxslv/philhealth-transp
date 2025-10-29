@@ -1,0 +1,109 @@
+{
+  "year": 2011,
+  "theme": "Kambyo, SHIFTING GEAR",
+  "metadata": {
+    "coverage": "82%",
+    "totalPopulation": "92.34 million",
+    "totalBeneficiaries": "75.66 million"
+  },
+  "membership": {
+    "totalRegisteredMembers": "23,791,355",
+    "breakdown": {
+      "employed": {
+        "total": "8,987,029",
+        "percentage": "37.78%",
+        "subcategories": {
+          "government": "1,486,637",
+          "private": "7,500,392"
+        }
+      },
+      "informal": {
+        "total": "14,804,326",
+        "percentage": "62.22%",
+        "subcategories": {
+          "sponsored": "8,799,716",
+          "indigent": "5,774,610",
+          "individuallyPaying": "230,000"
+        }
+      }
+    },
+    "directContributors": "8,987,029",
+    "coveredLives": "75,664,313"
+  },
+  "premiumCollections": {
+    "total": "P31,582,880,000",
+    "breakdown": {
+      "government": {
+        "amount": "P4,458,970,000",
+        "percentage": "14.12%"
+      },
+      "private": {
+        "amount": "P22,499,360,000",
+        "percentage": "71.23%"
+      },
+      "sponsored": {
+        "amount": "P2,638,860,000",
+        "percentage": "8.36%"
+      },
+      "indigent": {
+        "amount": "P1,731,840,000",
+        "percentage": "5.48%"
+      },
+      "individuallyPaying": {
+        "amount": "P253,850,000",
+        "percentage": "0.81%"
+      }
+    }
+  },
+  "benefitPayments": {
+    "total": "P30,500,000,000",
+    "claimsProcessed": "4,200,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P27,000,000,000",
+        "percentage": "88.52%"
+      },
+      "outpatient": {
+        "amount": "P2,500,000,000",
+        "percentage": "8.20%"
+      },
+      "healthcareFacilities": {
+        "amount": "P1,000,000,000",
+        "percentage": "3.28%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P12,000,000,000",
+      "drugs": "P8,500,000,000",
+      "professional": "P6,500,000,000",
+      "others": "P3,500,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "1,738",
+      "government": "786",
+      "private": "952"
+    },
+    "healthcareProfessionals": "135,000",
+    "ambulatorySurgery": "450",
+    "freestandingDialysis": "125",
+    "maternityClinic": "890"
+  },
+  "collectingAgencies": {
+    "total": "47",
+    "breakdown": {
+      "lgu": "18",
+      "privateInsurers": "12",
+      "cooperatives": "8",
+      "others": "9"
+    }
+  },
+  "milestones": [
+    "Implemented Point-of-Care enrollment",
+    "Launched No Balance Billing policy",
+    "Expanded maternity care package",
+    "Strengthened anti-fraud initiatives",
+    "Enhanced Z Benefits coverage"
+  ]
+}

@@ -43,7 +43,7 @@ export function KPIStatCard({
       
       <div className="flex-1 max-w-full overflow-hidden">
         <p className={cn(
-          "font-bold text-foreground leading-tight overflow-hidden",
+          "font-bold text-foreground leading-tight break-words",
           isLongNumber ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl"
         )}>{value}</p>
         {description && (

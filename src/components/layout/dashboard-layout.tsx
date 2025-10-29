@@ -26,17 +26,22 @@ const topNavigation = [
 
 const navigationGroups = [
   {
+    label: "Overview",
+    items: [
+      { name: "Home", href: "/" },
+      { name: "Performance Analytics", href: "/overview/fund-performance" },
+    ]
+  },
+  {
     label: "Financial Reports",
     items: [
       { name: "Financial Information", href: "/financials" },
-      { name: "Procurement", href: "/procurement" },
     ]
   },
   {
     label: "Operational Data",
     items: [
       { name: "Claims", href: "/claims" },
-      { name: "Coverage", href: "/coverage" },
       { name: "Facilities", href: "/facilities" },
     ]
   },
@@ -50,6 +55,7 @@ const navigationGroups = [
   {
     label: "Documents",
     items: [
+      { name: "Procurement", href: "/procurement" },
       { name: "Annual Reports", href: "/downloads/annual-reports" },
       { name: "Statistics & Charts", href: "/downloads/statistics" },
     ]
@@ -75,7 +81,7 @@ function NavigationGroup({
       {/* Group header - clickable */}
       <button
         onClick={toggleExpanded}
-        className="group/button flex items-center justify-between w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 text-muted-foreground"
+        className="group/button flex items-center justify-between w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 text-muted-foreground hover:text-primary"
         type="button"
       >
         <span>{group.label}</span>
@@ -103,8 +109,8 @@ function NavigationGroup({
                 className={cn(
                   "block rounded-lg px-3 py-2 text-sm transition-all duration-200",
                   isActive
-                    ? "text-primary font-medium"
-                    : "text-muted-foreground hover:text-primary"
+                    ? "bg-primary/10 text-primary font-medium"
+                    : "text-muted-foreground hover:text-primary hover:bg-primary/5"
                 )}
                 onClick={handleLinkClick}
               >
@@ -169,15 +175,19 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <div className="flex h-full flex-col overflow-y-auto">
           {/* Top section with Logo and Hamburger */}
           <div className="px-3 py-3 flex items-center justify-between">
-            {/* PhilHealth Logo - Only logo, no text */}
-            <Link href="/" className="flex items-center" onClick={handleLinkClick}>
+            {/* PhilHealth Logo with Text */}
+            <Link href="/" className="flex items-center gap-3" onClick={handleLinkClick}>
               <Image
                 src="/images/philhealth logo.png"
                 alt="PhilHealth Logo"
                 width={40}
                 height={40}
-                className="object-contain"
+                className="object-contain flex-shrink-0"
               />
+              <div className="flex flex-col">
+                <span className="text-sm font-bold text-gray-900 leading-tight">PhilHealth</span>
+                <span className="text-xs text-gray-600 leading-tight">Transparency Portal</span>
+              </div>
             </Link>
             
             {/* Hamburger button */}
@@ -192,19 +202,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
           {/* Navigation */}
           <nav className="px-3 pb-2" role="navigation" aria-label="Dashboard navigation">
-            {/* Home link */}
-            <Link
-              href="/"
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 mb-2 text-sm font-medium transition-all duration-200",
-                pathname === "/"
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
-              )}
-              onClick={handleLinkClick}
-            >
-              Home
-            </Link>
 
             {/* Top navigation links - Mobile only */}
             <div className="lg:hidden mb-4 pb-4 border-b border-border">
@@ -265,21 +262,21 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <div className="flex-1"></div>
 
           {/* Partnership Section */}
-          <div className="px-4 py-6 border-t border-border/50">
-            <div className="text-sm text-muted-foreground mb-4 font-medium text-center">In partnership with</div>
-            <div className="flex items-center justify-center gap-6">
+          <div className="px-4 py-3 border-t border-border/50">
+            <div className="flex items-center justify-center gap-3">
+              <div className="text-xs text-muted-foreground font-medium">In partnership with</div>
               <Image
                 src="/images/DICT-Logo-icon_only.png"
                 alt="DICT Logo"
-                width={60}
-                height={60}
+                width={32}
+                height={32}
                 className="object-contain"
               />
               <Image
                 src="/images/bagong-pilipinas-logo.png"
                 alt="Bagong Pilipinas Logo"
-                width={60}
-                height={60}
+                width={36}
+                height={36}
                 className="object-contain"
               />
             </div>
@@ -290,7 +287,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       {/* Main content */}
       <div 
         className={cn(
-          "flex-1 transition-all duration-300 pt-[20px]",
+          "flex-1 transition-all duration-300 pt-[92px]",
           sidebarOpen ? "lg:ml-64" : "lg:ml-0"
         )}
       >

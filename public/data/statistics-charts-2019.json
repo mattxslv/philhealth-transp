@@ -1,0 +1,113 @@
+{
+  "year": 2019,
+  "theme": "UHC Law Implementation (RA 11223) - 25th Year",
+  "metadata": {
+    "coverage": "95%",
+    "totalPopulation": "108.12 million",
+    "totalBeneficiaries": "102.71 million",
+    "uhcLawSigned": "February 20, 2019"
+  },
+  "membership": {
+    "totalRegisteredMembers": "32,436,875",
+    "breakdown": {
+      "employed": {
+        "total": "11,952,787",
+        "percentage": "36.84%",
+        "subcategories": {
+          "government": "1,862,034",
+          "private": "10,090,753"
+        }
+      },
+      "informal": {
+        "total": "20,484,088",
+        "percentage": "63.16%",
+        "subcategories": {
+          "sponsored": "12,290,453",
+          "indigent": "7,918,635",
+          "individuallyPaying": "275,000"
+        }
+      }
+    },
+    "directContributors": "11,952,787",
+    "coveredLives": "102,710,000",
+    "automaticMembership": "All Filipinos (UHC Law)"
+  },
+  "premiumCollections": {
+    "total": "P113,500,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P15,890,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P81,720,000,000",
+        "percentage": "72.00%"
+      },
+      "sponsored": {
+        "amount": "P9,080,000,000",
+        "percentage": "8.00%"
+      },
+      "indigent": {
+        "amount": "P5,675,000,000",
+        "percentage": "5.00%"
+      },
+      "individuallyPaying": {
+        "amount": "P1,135,000,000",
+        "percentage": "1.00%"
+      }
+    }
+  },
+  "benefitPayments": {
+    "total": "P108,400,000,000",
+    "claimsProcessed": "9,250,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P95,392,000,000",
+        "percentage": "88.00%"
+      },
+      "outpatient": {
+        "amount": "P9,756,000,000",
+        "percentage": "9.00%"
+      },
+      "healthcareFacilities": {
+        "amount": "P3,252,000,000",
+        "percentage": "3.00%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P43,360,000,000",
+      "drugs": "P30,352,000,000",
+      "professional": "P23,848,000,000",
+      "others": "P10,840,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "2,458",
+      "government": "1,114",
+      "private": "1,344"
+    },
+    "healthcareProfessionals": "275,600",
+    "ambulatorySurgery": "768",
+    "freestandingDialysis": "298",
+    "maternityClinic": "1,385",
+    "primaryCareProviders": "3,250"
+  },
+  "collectingAgencies": {
+    "total": "58",
+    "breakdown": {
+      "lgu": "24",
+      "privateInsurers": "18",
+      "cooperatives": "9",
+      "others": "7"
+    }
+  },
+  "milestones": [
+    "Universal Health Care Law signed (RA 11223)",
+    "25th Anniversary celebration",
+    "Automatic PhilHealth membership for all Filipinos",
+    "Enhanced primary care benefit packages",
+    "Improved catastrophic coverage",
+    "Launch of Konsulta Plus"
+  ]
+}

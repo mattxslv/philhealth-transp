@@ -1,0 +1,67 @@
+{
+  "year": 2018,
+  "theme": "Primed for Change, Grounded in Our Vision",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2018.pdf",
+  "fileSize": "13.22 MB",
+  "focus": "Major preparations for smooth implementation of Universal Health Care (UHC) bill",
+  "vision": "Bawat Filipino, Miyembro Bawat Miyembro, Protektado, Kalusugan ng Lahat Segurado",
+  "mission": "Benepisyong Pangkalusugan, Sapat at Dekalidad para sa Lahat",
+  "uhcContext": "PhilHealth designated as national strategic purchaser to catalyze people-centered, primary care-oriented transformation",
+  "legislationSigned": [
+    {
+      "name": "Republic Act No. 11223 (Universal Healthcare Act)",
+      "detail": "Automatically enrolls every Filipino into NHIP"
+    },
+    {
+      "name": "Republic Act No. 11228 (Amended Magna Carta for PWDs)",
+      "detail": "Mandatory insurance coverage for Persons with Disability"
+    }
+  ],
+  "financialPerformance": {
+    "netGain": "Posted net gain in 2018",
+    "collectionEfficiency": "Exceeded target collection efficiency"
+  },
+  "coverageAndOperations": {
+    "totalCoverage": "Over 100 million Filipinos (major milestone)",
+    "claimsProcessingTAT": "20-day national turn-around-time"
+  },
+  "newExpandedBenefits": [
+    {
+      "name": "Z Benefits for Children with Visual Disabilities",
+      "detail": "New package launched"
+    },
+    {
+      "name": "Z Benefits for Children with Hearing Impairment",
+      "detail": "New package launched"
+    },
+    {
+      "name": "Expanded Primary Care Benefits",
+      "coverage": "Formal Economy, Lifetime Members, and Senior Citizens",
+      "includes": "Free consultation, diagnostics, and medicines"
+    }
+  ],
+  "partnerships": [
+    {
+      "initiative": "Malasakit Center",
+      "location": "First center opened in Iloilo",
+      "detail": "One-stop shop for PhilHealth and government agency services"
+    },
+    {
+      "initiative": "Persons of Concern (PoC)",
+      "detail": "Inter-agency agreement for refugees, asylum seekers, and stateless persons"
+    },
+    {
+      "initiative": "Health Sector Covenant",
+      "partners": [
+        "Philippine Medical Association (PMA)",
+        "Philippine Hospital Association (PHA)",
+        "Private Hospitals Association of the Philippines (PHAP)"
+      ],
+      "purpose": "Ensure quality of care and efficient NHIP implementation"
+    }
+  ],
+  "keyPersonnel": {
+    "president": "RODRIGO ROA DUTERTE",
+    "chairman": "DR. FRANCISCO T. DUQUE III, M.Sc. (Secretary of Health)"
+  }
+}

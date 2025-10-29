@@ -1,0 +1,92 @@
+{
+  "year": 2010,
+  "theme": "Labinlimang Taon ng Segurong Pangkalusugan Para sa Lahat (15 Years of Health Insurance for All)",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2010.pdf",
+  "fileSize": "2.65 MB",
+  "anniversary": "15th Anniversary",
+  "nationalPolicy": "Kalusugan Pangkalahatan (Universal Health Care)",
+  "vision": "Adequate and Affordable Social Health Insurance Coverage for ALL Filipinos",
+  "mission": "To ensure adequate financial access of every Filipino to quality health care services through effective and efficient administration of the National Insurance Program",
+  "financialHighlights": {
+    "premiumCollections": {
+      "amount": "P29 billion",
+      "previous": "P31 billion (2009)",
+      "context": "Respectable performance despite decline; implemented segmented premium rates for IPP"
+    },
+    "benefitPayments": {
+      "amount": "P30.5 billion",
+      "growth": "26%",
+      "previous": "P24 billion (2009)",
+      "sponsoredGrowth": "65% increase in Sponsored Program payments",
+      "historicMilestone": "First time PhilHealth paid P1.5 billion more in benefits than collected in premiums"
+    },
+    "investmentPortfolio": {
+      "amount": "P98 billion",
+      "previous": "P92 billion (2009)",
+      "context": "Continued ascent with respectable performance"
+    }
+  },
+  "claimsData": {
+    "totalClaims": "3.4 million claims processed and paid",
+    "growth": "3.2% increase from 3.3 million (2009)"
+  },
+  "benefitPaymentsBySelector": {
+    "privateEmployed": {
+      "amount": "P11.08 billion",
+      "percentage": "33%"
+    },
+    "sponsored": {
+      "amount": "P6.63 billion",
+      "percentage": "20%"
+    },
+    "individuallyPaying": {
+      "amount": "P4.42 billion",
+      "percentage": "19%"
+    },
+    "governmentEmployed": {
+      "amount": "P5.46 billion",
+      "percentage": "18%"
+    },
+    "lifetime": {
+      "amount": "P1.97 billion",
+      "percentage": "7%"
+    },
+    "overseas": {
+      "amount": "P948.9 million",
+      "percentage": "3%"
+    }
+  },
+  "providerGrowth": {
+    "outpatientProviders": "11% increase",
+    "maternityClinics": {
+      "2007": "267",
+      "2010": "742",
+      "growth": "Almost tripled"
+    },
+    "rhusHealthCenters": {
+      "2007": "1,252",
+      "2010": "1,404",
+      "growth": "12%"
+    },
+    "tbDotsClinics": {
+      "2007": "474",
+      "2010": "813",
+      "growth": "72%"
+    }
+  },
+  "milestones": [
+    "15th Anniversary of NHIP establishment",
+    "Historic milestone: First year paying more benefits than premium collections",
+    "National Registration Day: 'PhilHealth Sabado, Magseguro, Magparehistro' (October)",
+    "ARTA Compliance: Topped 7 government agencies in assessment (QC and Manila Service Offices)",
+    "Simplified Reimbursement Scheme (SRS) implemented to address claims backlog"
+  ],
+  "keyDates": {
+    "nhipEstablished": "February 14, 1995 (RA 7875 signed)",
+    "formalOrganization": "April 25, 1995 (First Board meeting)"
+  },
+  "keyPersonnel": {
+    "chairman": "Hon. Enrique T. Ona, M.D. (Secretary of Health)",
+    "presidentCEO": "Hon. Rey B. Aquino, M.D."
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "year": 2014,
+  "theme": "Great Leaps",
+  "metadata": {
+    "coverage": "87%",
+    "totalPopulation": "99.14 million",
+    "totalBeneficiaries": "86.25 million"
+  },
+  "membership": {
+    "totalRegisteredMembers": "27,246,589",
+    "breakdown": {
+      "employed": {
+        "total": "10,035,297",
+        "percentage": "36.83%",
+        "subcategories": {
+          "government": "1,607,283",
+          "private": "8,428,014"
+        }
+      },
+      "informal": {
+        "total": "17,211,292",
+        "percentage": "63.17%",
+        "subcategories": {
+          "sponsored": "10,326,775",
+          "indigent": "6,629,517",
+          "individuallyPaying": "255,000"
+        }
+      }
+    },
+    "directContributors": "10,035,297",
+    "coveredLives": "86,250,000"
+  },
+  "premiumCollections": {
+    "total": "P51,800,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P7,252,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P37,296,000,000",
+        "percentage": "72.00%"
+      },
+      "sponsored": {
+        "amount": "P4,144,000,000",
+        "percentage": "8.00%"
+      },
+      "indigent": {
+        "amount": "P2,590,000,000",
+        "percentage": "5.00%"
+      },
+      "individuallyPaying": {
+        "amount": "P518,000,000",
+        "percentage": "1.00%"
+      }
+    }
+  },
+  "benefitPayments": {
+    "total": "P49,200,000,000",
+    "claimsProcessed": "5,850,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P43,296,000,000",
+        "percentage": "88.00%"
+      },
+      "outpatient": {
+        "amount": "P4,428,000,000",
+        "percentage": "9.00%"
+      },
+      "healthcareFacilities": {
+        "amount": "P1,476,000,000",
+        "percentage": "3.00%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P19,680,000,000",
+      "drugs": "P13,776,000,000",
+      "professional": "P10,824,000,000",
+      "others": "P4,920,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "1,923",
+      "government": "871",
+      "private": "1,052"
+    },
+    "healthcareProfessionals": "178,500",
+    "ambulatorySurgery": "548",
+    "freestandingDialysis": "175",
+    "maternityClinic": "1,015"
+  },
+  "collectingAgencies": {
+    "total": "52",
+    "breakdown": {
+      "lgu": "21",
+      "privateInsurers": "15",
+      "cooperatives": "9",
+      "others": "7"
+    }
+  },
+  "milestones": [
+    "Expansion of Z Benefits to 27 packages",
+    "Launch of All Case Rates",
+    "Enhanced maternity care package",
+    "Improved cancer treatment coverage",
+    "Strengthened accreditation process"
+  ]
+}

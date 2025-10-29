@@ -1,0 +1,352 @@
+{
+  "year": 2009,
+  "theme": "Reaching New Heights",
+  "metadata": {
+    "reportType": "Statistics and Charts",
+    "dataAsOf": "December 31, 2009"
+  },
+  "coverage": {
+    "populationCoverageRate": 87,
+    "indigentCoverage": 26000000,
+    "note": "Surpassed the target of 85% coverage by 2010"
+  },
+  "membership": {
+    "totalRegisteredMembers": 20180000,
+    "areaDistribution": {
+      "ncrAndNorthLuzon": 41,
+      "southLuzonAndVisayas": 37,
+      "mindanao": 22
+    },
+    "membersBySector": [
+      {
+        "sector": "Private-Employed",
+        "members": 7010000,
+        "percentage": 35
+      },
+      {
+        "sector": "Sponsored Program",
+        "members": 5380000,
+        "percentage": 27
+      },
+      {
+        "sector": "Individually-Paying",
+        "members": 3330000,
+        "percentage": 17
+      },
+      {
+        "sector": "Overseas Workers Program",
+        "members": 2100000,
+        "percentage": 10
+      },
+      {
+        "sector": "Government-Employed",
+        "members": 1900000,
+        "percentage": 9
+      },
+      {
+        "sector": "Lifetime Members",
+        "members": 460000,
+        "percentage": 2
+      }
+    ]
+  },
+  "financialHighlights": {
+    "benefitPayments": {
+      "amount2008": 18100000000,
+      "amount2009": 24300000000,
+      "growth": 34,
+      "note": "Reflects a 35% increase in benefit packages"
+    },
+    "premiumCollections": {
+      "amount2008": 28000000000,
+      "amount2009": 26000000000,
+      "note": "Slight decline attributed to discounts and payment incentives after national calamities"
+    },
+    "investmentPortfolio": {
+      "amount2008": 85200000000,
+      "amount2009": 92100000000,
+      "growth": 8,
+      "note": "Continued growth despite global financial crisis"
+    },
+    "statementOfFinancialPosition": {
+      "totalAssets": 100540681379,
+      "totalLiabilities": 8920443015,
+      "equity": 91620238364,
+      "totalRevenues": 33565302339,
+      "totalExpenses": 24424401921,
+      "netIncome": 9140900418
+    }
+  },
+  "premiumCollections": {
+    "totalCollections": 25981100000,
+    "collectionsBySector": [
+      {
+        "sector": "Private-Employed",
+        "amount": 16264600000,
+        "percentage": 63
+      },
+      {
+        "sector": "Government-Employed",
+        "amount": 5685300000,
+        "percentage": 22
+      },
+      {
+        "sector": "Sponsored Program",
+        "amount": 1881000000,
+        "percentage": 7
+      },
+      {
+        "sector": "Individually-Paying",
+        "amount": 1427900000,
+        "percentage": 5
+      },
+      {
+        "sector": "Overseas Workers Program",
+        "amount": 722400000,
+        "percentage": 3
+      }
+    ]
+  },
+  "benefitPayments": {
+    "totalPayments": 24309800000,
+    "paymentsBySector": [
+      {
+        "sector": "Private-Employed",
+        "amount": 9359800000,
+        "percentage": 39
+      },
+      {
+        "sector": "Government-Employed",
+        "amount": 4688400000,
+        "percentage": 19
+      },
+      {
+        "sector": "Sponsored Program",
+        "amount": 4015300000,
+        "percentage": 17
+      },
+      {
+        "sector": "Individually-Paying",
+        "amount": 3745300000,
+        "percentage": 15
+      },
+      {
+        "sector": "Lifetime Members",
+        "amount": 1745100000,
+        "percentage": 7
+      },
+      {
+        "sector": "Overseas Workers Program",
+        "amount": 755800000,
+        "percentage": 3
+      }
+    ],
+    "claimsProcessing": {
+      "totalClaimsPaid": 3371834,
+      "averageValuePerClaim": 6737,
+      "bySector": [
+        {
+          "sector": "Private",
+          "claimsPaid": 1236890,
+          "avpc": 6951,
+          "percentage": 37
+        },
+        {
+          "sector": "IPP",
+          "claimsPaid": 635867,
+          "avpc": 6244,
+          "percentage": 19
+        },
+        {
+          "sector": "Government",
+          "claimsPaid": 649448,
+          "avpc": 6750,
+          "percentage": 19
+        },
+        {
+          "sector": "Sponsored Program",
+          "claimsPaid": 501663,
+          "avpc": 6039,
+          "percentage": 15
+        },
+        {
+          "sector": "Lifetime",
+          "claimsPaid": 242784,
+          "avpc": 7996,
+          "percentage": 7
+        },
+        {
+          "sector": "OWP",
+          "claimsPaid": 105182,
+          "avpc": 7549,
+          "percentage": 3
+        }
+      ]
+    },
+    "benefitItemDistribution": [
+      {
+        "item": "Drugs & Medicine",
+        "percentage": 30
+      },
+      {
+        "item": "Professional Fees",
+        "percentage": 23
+      },
+      {
+        "item": "X-Ray/Lab/Others",
+        "percentage": 23
+      },
+      {
+        "item": "Room & Board",
+        "percentage": 17
+      },
+      {
+        "item": "OR Fee",
+        "percentage": 7
+      }
+    ],
+    "top20Illnesses": [
+      {
+        "rank": 1,
+        "illness": "Pneumonia, organism unspecified",
+        "totalAmount": 1640100000,
+        "claimsPaid": 293131
+      },
+      {
+        "rank": 2,
+        "illness": "Diarrhoea and gastroenteritis of presumed infectious origin",
+        "totalAmount": 722500000,
+        "claimsPaid": 210606
+      },
+      {
+        "rank": 3,
+        "illness": "Chronic renal failure",
+        "totalAmount": 667200000,
+        "claimsPaid": 203039
+      },
+      {
+        "rank": 4,
+        "illness": "Single spontaneous delivery",
+        "totalAmount": 696800000,
+        "claimsPaid": 167794
+      },
+      {
+        "rank": 5,
+        "illness": "Other disorders of urinary system",
+        "totalAmount": 513200000,
+        "claimsPaid": 121374
+      }
+    ]
+  },
+  "accreditation": {
+    "facilities": {
+      "professionals": 23501,
+      "hospitals": 1654,
+      "ruralHealthUnits": 1301,
+      "tbDotsCenters": 710,
+      "maternityClinics": 627,
+      "authorizedHospitalsOPB": 156,
+      "freestandingDialysisClinics": 39,
+      "ambulatorySurgicalClinics": 36
+    },
+    "hospitalsByType": {
+      "private": 1003,
+      "government": 651,
+      "asc": 36,
+      "total": 1690,
+      "privatePercentage": 59,
+      "governmentPercentage": 39,
+      "ascPercentage": 2,
+      "note": "9 out of 10 DOH-licensed hospitals are accredited by PhilHealth"
+    },
+    "professionalsByType": [
+      {
+        "type": "Medical Specialist",
+        "count": 11909
+      },
+      {
+        "type": "General Practitioner",
+        "count": 11042
+      },
+      {
+        "type": "Midwife",
+        "count": 355
+      },
+      {
+        "type": "Dentist",
+        "count": 195
+      }
+    ]
+  },
+  "collectingAgencies": {
+    "totalActiveACAs": 54,
+    "totalBranches": 4095,
+    "breakdown": [
+      {
+        "type": "Universal Banks",
+        "count": 12,
+        "branches": 2629
+      },
+      {
+        "type": "Thrift",
+        "count": 11,
+        "branches": 414
+      },
+      {
+        "type": "Government Agencies",
+        "count": 9,
+        "branches": 336
+      },
+      {
+        "type": "Commercial Banks",
+        "count": 5,
+        "branches": 302
+      },
+      {
+        "type": "Rural Banks",
+        "count": 13,
+        "branches": 270
+      },
+      {
+        "type": "Private Agencies",
+        "count": 3,
+        "branches": 140
+      },
+      {
+        "type": "Cooperative Bank",
+        "count": 1,
+        "branches": 4
+      }
+    ]
+  },
+  "benefitEnhancements": {
+    "maternity": "Expanded to include 4th Normal Spontaneous Delivery (NSD)",
+    "outpatientBenefits": "Expanded and Enhanced Outpatient Benefit Package",
+    "surgicalProcedures": "Introduced Voluntary Surgical Procedures package",
+    "strategicProgram": "Leaping Fourward towards Financial Protection (2008-2010)"
+  },
+  "partnerships": {
+    "sponsoredProgram": [
+      {
+        "partner": "Antipolo City",
+        "families": 10000,
+        "type": "MOA"
+      },
+      {
+        "partner": "Northern Samar",
+        "families": 60000,
+        "type": "MOA"
+      }
+    ],
+    "informalSector": [
+      {
+        "partner": "NATCCO",
+        "type": "National Confederation of Cooperatives"
+      },
+      {
+        "partner": "Gawad Kalinga",
+        "type": "Partnership"
+      }
+    ]
+  }
+}

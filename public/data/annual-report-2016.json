@@ -1,0 +1,67 @@
+{
+  "year": 2016,
+  "theme": "MOVING FORWARD TOWARDS HEALTH FOR ALL",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2016.pdf",
+  "fileSize": "1.96 MB",
+  "anniversary": "21 years of securing the health of every Filipino",
+  "context": "16th Presidential Elections ushered in a new Administration",
+  "vision": "Bawat Pilipino, Miyembro, Bawat Miyembro, Protektado, Kalusugan Natin, Segurado",
+  "mission": "Sulit na Benepisyo sa Bawat Miyembro, Dekalidad na Serbisyo para sa Lahat",
+  "coreValues": "Inobasyon, Serbisyong Dekalidad, Lubos na Integridad, Angkop na Benepisyo, Panlipunang Pagkakabuklod, Ganap na Pagkalinga",
+  "coverage": {
+    "totalPopulationCoverage": "Approximately 91%",
+    "claimReimbursement": "Driven by higher reimbursements to Senior Citizens and Sponsored Members"
+  },
+  "claimsDistributionBySector": {
+    "nhtsPRSponsored": "33%",
+    "formalEconomy": "23%",
+    "informalEconomy": "23%",
+    "lifetimeSeniorCitizens": "21%"
+  },
+  "financialData": {
+    "totalPersonalServices": {
+      "2016": "P5.58 billion",
+      "2015": "P4.10 billion (restated)"
+    },
+    "totalOtherOperatingExpenses": {
+      "2016": "P2.20 billion",
+      "2015": "P2.09 billion"
+    },
+    "receivablesNote": "Long overdue LGU premium contributions reclassified to Other Assets per COA recommendation"
+  },
+  "policyMilestones": [
+    {
+      "milestone": "All Case Rate Payment Mechanism",
+      "detail": "Continued implementation"
+    },
+    {
+      "milestone": "Z Benefits for ALL",
+      "detail": "Adjusted rates in contracted hospitals including Baguio General Hospital and Philippine Children's Medical Center"
+    },
+    {
+      "milestone": "Z Benefit Package for Prematurity and Low Birth Weight Babies",
+      "detail": "Unveiled with DOH, WHO, and UNICEF",
+      "availability": "Expected early 2017",
+      "coverage": "Cortico-steroids and medicines to prevent eclampsia"
+    },
+    {
+      "milestone": "Medical Detoxification Package",
+      "detail": "Support for National Government's campaign against drug addiction"
+    }
+  ],
+  "awards": [
+    {
+      "award": "Customer Service and Transformation Excellence Award",
+      "project": "PhilHealth Customer Assistance, Relations and Empowerment Staff (PCARES)",
+      "event": "33rd ASEAN Social Security Association (ASSA) Board Meeting, Pasay City",
+      "detail": "PCARES began in 2012 deploying nurses in hospitals for personalized member services"
+    }
+  ],
+  "qualityManagement": {
+    "system": "Philippine Social Health Insurance Management System (PSHIMS)",
+    "partner": "Development Academy of the Philippines (DAP)"
+  },
+  "keyPersonnel": {
+    "president": "RODRIGO ROA DUTERTE"
+  }
+}

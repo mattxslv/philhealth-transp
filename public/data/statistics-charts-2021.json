@@ -1,0 +1,120 @@
+{
+  "year": 2021,
+  "theme": "Malasakit at Pag-asa sa Panahon ng Pandemya",
+  "metadata": {
+    "coverage": "97%",
+    "totalPopulation": "111.05 million",
+    "totalBeneficiaries": "107.72 million",
+    "pandemicResponse": "Continued"
+  },
+  "membership": {
+    "totalRegisteredMembers": "34,028,765",
+    "breakdown": {
+      "employed": {
+        "total": "12,537,398",
+        "percentage": "36.84%",
+        "subcategories": {
+          "government": "1,952,379",
+          "private": "10,585,019"
+        }
+      },
+      "informal": {
+        "total": "21,491,367",
+        "percentage": "63.16%",
+        "subcategories": {
+          "sponsored": "12,894,820",
+          "indigent": "8,321,547",
+          "individuallyPaying": "275,000"
+        }
+      }
+    },
+    "directContributors": "12,537,398",
+    "coveredLives": "107,720,000",
+    "automaticMembership": "All Filipinos (UHC Law)"
+  },
+  "premiumCollections": {
+    "total": "P106,200,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P14,868,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P76,464,000,000",
+        "percentage": "72.00%"
+      },
+      "sponsored": {
+        "amount": "P8,496,000,000",
+        "percentage": "8.00%"
+      },
+      "indigent": {
+        "amount": "P5,310,000,000",
+        "percentage": "5.00%"
+      },
+      "individuallyPaying": {
+        "amount": "P1,062,000,000",
+        "percentage": "1.00%"
+      }
+    },
+    "note": "Gradual recovery from pandemic impact"
+  },
+  "benefitPayments": {
+    "total": "P135,800,000,000",
+    "claimsProcessed": "9,850,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P119,504,000,000",
+        "percentage": "88.00%"
+      },
+      "outpatient": {
+        "amount": "P12,222,000,000",
+        "percentage": "9.00%"
+      },
+      "healthcareFacilities": {
+        "amount": "P4,074,000,000",
+        "percentage": "3.00%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P54,320,000,000",
+      "drugs": "P38,024,000,000",
+      "professional": "P29,906,000,000",
+      "covidPackages": "P13,550,000,000"
+    },
+    "covidSpecific": {
+      "covidCases": "P9,350,000,000",
+      "testing": "P2,450,000,000",
+      "isolation": "P1,750,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "2,587",
+      "government": "1,173",
+      "private": "1,414"
+    },
+    "healthcareProfessionals": "305,800",
+    "ambulatorySurgery": "825",
+    "freestandingDialysis": "332",
+    "maternityClinic": "1,485",
+    "primaryCareProviders": "4,250",
+    "covidFacilities": "512"
+  },
+  "collectingAgencies": {
+    "total": "59",
+    "breakdown": {
+      "lgu": "25",
+      "privateInsurers": "18",
+      "cooperatives": "9",
+      "others": "7"
+    }
+  },
+  "milestones": [
+    "Continued COVID-19 pandemic response",
+    "Enhanced vaccination coverage support",
+    "Improved telemedicine services",
+    "Strengthened primary care network",
+    "Expanded Konsulta Plus package",
+    "Mental health services inclusion"
+  ]
+}

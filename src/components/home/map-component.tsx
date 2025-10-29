@@ -35,11 +35,30 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
   useEffect(() => {
     if (!mapRef.current) return;
 
-    const getColor = (coverage: string) => {
-      const coverageNum = parseInt(coverage);
-      if (coverageNum >= 85) return "#009a3d"; // PhilHealth green
-      if (coverageNum >= 80) return "#06b04d"; // Lighter green
-      return "#f59e0b"; // Yellow/amber for low coverage
+    // Unique color for each region
+    const getColorByRegion = (regionName: string) => {
+      const colorMap: { [key: string]: string } = {
+        "NCR": "#009a3d",           // Dark Green
+        "Region I": "#06b04d",      // Light Green
+        "Region II": "#10b981",     // Emerald
+        "Region III": "#14b8a6",    // Teal
+        "Region IV-A": "#0ea5e9",   // Sky Blue
+        "Region IV-B": "#3b82f6",   // Blue
+        "Region V": "#6366f1",      // Indigo
+        "Region VI": "#8b5cf6",     // Purple
+        "Region VII": "#a855f7",    // Violet
+        "Region VIII": "#d946ef",   // Fuchsia
+        "Region IX": "#ec4899",     // Pink
+        "Region X": "#f43f5e",      // Rose
+        "Region XI": "#ef4444",     // Red
+        "Region XII": "#f97316",    // Orange
+        "Region XIII": "#f59e0b",   // Amber
+        "CAR": "#eab308",           // Yellow
+        "BARMM": "#84cc16",         // Lime
+        "Caraga": "#22c55e"         // Green
+      };
+      
+      return colorMap[regionName] || "#9ca3af"; // Gray fallback
     };
 
     // Create vector source and layer for regions
@@ -51,8 +70,8 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
     const vectorLayer = new VectorLayer({
       source: vectorSource,
       style: (feature) => {
-        const coverage = feature.get("coverage");
-        const color = coverage ? getColor(coverage) : "#9ca3af";
+        const regionName = feature.get("name") || feature.get("region");
+        const color = getColorByRegion(regionName);
         
         return new Style({
           fill: new Fill({
@@ -109,8 +128,8 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
       
       if (feature) {
         selectedFeature = feature;
-        const coverage = feature.get("coverage");
-        const color = coverage ? getColor(coverage) : "#9ca3af";
+        const regionName = feature.get("name") || feature.get("region");
+        const color = getColorByRegion(regionName);
         
         // Highlight on hover with slightly higher opacity
         (feature as any).setStyle(
@@ -160,13 +179,6 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
     };
   }, [onRegionSelect]);
 
-  const getColorForCoverage = (coverage: string) => {
-    const coverageNum = parseInt(coverage);
-    if (coverageNum >= 85) return "text-[#009a3d]"; // PhilHealth green
-    if (coverageNum >= 80) return "text-[#06b04d]"; // Lighter green
-    return "text-amber-500"; // Yellow
-  };
-
   return (
     <div className="relative">
       <div
@@ -177,39 +189,30 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
       {/* Popup overlay */}
       <div
         ref={popupRef}
-        className={`absolute bg-white dark:bg-gray-800 rounded-lg shadow-xl border-2 border-gray-200 dark:border-gray-700 p-4 min-w-[250px] transition-opacity pointer-events-none ${
-          popupInfo ? "opacity-100" : "opacity-0"
+        className={`absolute bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-md shadow-lg border border-gray-200/30 dark:border-gray-700/30 p-2 min-w-[160px] transition-all duration-200 pointer-events-none ${
+          popupInfo ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
         style={{
-          transform: "translate(-50%, calc(-100% - 15px))",
+          transform: "translate(-50%, calc(-100% - 12px))",
         }}
       >
         {popupInfo && (
-          <div className="space-y-2">
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-2">
-              <h3 className="font-bold text-lg text-gray-900 dark:text-white">
+          <div className="space-y-1.5">
+            <div className="border-b border-gray-200/30 dark:border-gray-700/30 pb-1 text-center">
+              <h3 className="font-bold text-sm text-gray-900 dark:text-white">
                 {popupInfo.name}
               </h3>
             </div>
             
-            <div className="space-y-1 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Members:</span>
-                <span className="font-semibold text-gray-900 dark:text-white">{popupInfo.members}</span>
+            <div className="space-y-1">
+              <div className="flex items-center justify-between">
+                <p className="text-[9px] text-gray-600 dark:text-gray-400">Coverage</p>
+                <p className="text-xs font-bold text-[#009a3d] dark:text-[#06b04d]">99.5%</p>
               </div>
               
-              <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Facilities:</span>
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {popupInfo.facilities?.toLocaleString()}
-                </span>
-              </div>
-              
-              <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Coverage:</span>
-                <span className={`font-bold ${getColorForCoverage(popupInfo.coverage)}`}>
-                  {popupInfo.coverage}
-                </span>
+              <div className="flex items-center justify-between">
+                <p className="text-[9px] text-gray-600 dark:text-gray-400">Members</p>
+                <p className="text-[10px] font-semibold text-gray-900 dark:text-white">36.2M</p>
               </div>
             </div>
           </div>
@@ -217,7 +220,7 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
         
         {/* Popup arrow */}
         <div className="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-full">
-          <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white dark:border-t-gray-800"></div>
+          <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white/70 dark:border-t-gray-800/70"></div>
         </div>
       </div>
     </div>

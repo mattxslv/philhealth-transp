@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Sparkles, Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 interface Message {
   id: string;
@@ -10,6 +11,15 @@ interface Message {
   content: string;
   timestamp: Date;
 }
+
+const suggestedQuestions = [
+  "What is PhilHealth?",
+  "How many beneficiaries does PhilHealth have?",
+  "What are the latest financial reports?",
+  "Show me claims statistics",
+  "How do I become a member?",
+  "What services are covered?",
+];
 
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +34,7 @@ export default function ChatbotWidget() {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -56,18 +67,21 @@ export default function ChatbotWidget() {
     }
   };
 
-  const handleSendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
+  const handleSendMessage = async (messageToSend?: string) => {
+    const messageContent = messageToSend || inputValue;
+    if (!messageContent.trim() || isLoading) return;
+
+    // Hide suggestions after first user message
+    setShowSuggestions(false);
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: inputValue,
+      content: messageContent,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    const messageContent = inputValue;
     setInputValue('');
     setIsLoading(true);
 
@@ -157,21 +171,38 @@ export default function ChatbotWidget() {
 
   return (
     <>
-      {/* Chat Window */}
+      {/* Backdrop overlay - including navbar and sidebar */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Full screen overlay with higher z-index to cover navbar and sidebar */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[55]"
+              onClick={() => setIsOpen(false)}
+            />
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Chat Window - Full Right Side */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed top-4 bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col z-50 overflow-hidden"
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="fixed top-0 bottom-0 right-0 w-full sm:w-[450px] lg:w-[500px] xl:w-[550px] bg-white dark:bg-gray-900 shadow-2xl border-l border-gray-200 dark:border-gray-700 flex flex-col z-[60] overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#009a3d] to-[#06b04d] p-4 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-[#009a3d] to-[#06b04d] p-4 flex items-center justify-center relative">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                  <Sparkles className="h-5 w-5 text-white" />
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                  <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <h3 className="text-white font-semibold">PhilHealth AI</h3>
@@ -180,10 +211,10 @@ export default function ChatbotWidget() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-white/80 hover:text-white transition-colors p-1 hover:bg-white/20 rounded-lg"
-                aria-label="Close chat"
+                className="absolute top-4 right-4 text-white hover:text-white/80 hover:bg-white/20 p-2 rounded-full transition-colors"
+                aria-label="Close AI Assistant"
               >
-                <X className="h-5 w-5" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -219,6 +250,36 @@ export default function ChatbotWidget() {
                   </div>
                 </motion.div>
               ))}
+              
+              {/* Suggested Questions */}
+              {showSuggestions && messages.length === 1 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="space-y-2"
+                >
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium px-1">
+                    Suggested questions:
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {suggestedQuestions.map((question, index) => (
+                      <motion.button
+                        key={index}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.4 + index * 0.05 }}
+                        onClick={() => handleSendMessage(question)}
+                        disabled={isLoading}
+                        className="text-xs px-3 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600 hover:border-[#009a3d] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {question}
+                      </motion.button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+              
               {isLoading && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -228,7 +289,7 @@ export default function ChatbotWidget() {
                   <div className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 rounded-2xl px-4 py-3">
                     <div className="flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span className="text-sm">Thinking...</span>
+                      <span className="text-sm">Retrieving information…</span>
                     </div>
                   </div>
                 </motion.div>
@@ -250,7 +311,7 @@ export default function ChatbotWidget() {
                   disabled={isLoading}
                 />
                 <button
-                  onClick={handleSendMessage}
+                  onClick={() => handleSendMessage()}
                   disabled={!inputValue.trim() || isLoading}
                   className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-2 rounded-xl hover:from-emerald-700 hover:to-teal-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Send message"
@@ -263,14 +324,15 @@ export default function ChatbotWidget() {
         )}
       </AnimatePresence>
 
-      {/* Widget Button */}
-      <motion.button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-4 sm:right-6 w-14 h-14 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all z-50 flex items-center justify-center group"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Open chat assistant"
-      >
+      {/* Widget Button - Fixed position */}
+      {!isOpen && (
+        <motion.button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-4 sm:right-6 w-14 h-14 bg-gradient-to-r from-[#009a3d] to-[#06b04d] text-white rounded-full shadow-lg hover:shadow-xl transition-all z-50 flex items-center justify-center group"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Open chat assistant"
+        >
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div
@@ -292,12 +354,11 @@ export default function ChatbotWidget() {
               className="relative"
             >
               <span className="text-xl font-bold">AI</span>
-              {/* Notification pulse */}
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.button>
+        </motion.button>
+      )}
     </>
   );
 }

@@ -1,0 +1,109 @@
+{
+  "year": 2015,
+  "theme": "20th Anniversary",
+  "metadata": {
+    "coverage": "92%",
+    "totalPopulation": "100.98 million",
+    "totalBeneficiaries": "92.90 million"
+  },
+  "membership": {
+    "totalRegisteredMembers": "29,312,987",
+    "breakdown": {
+      "employed": {
+        "total": "10,789,476",
+        "percentage": "36.81%",
+        "subcategories": {
+          "government": "1,678,235",
+          "private": "9,111,241"
+        }
+      },
+      "informal": {
+        "total": "18,523,511",
+        "percentage": "63.19%",
+        "subcategories": {
+          "sponsored": "11,114,107",
+          "indigent": "7,134,404",
+          "individuallyPaying": "275,000"
+        }
+      }
+    },
+    "directContributors": "10,789,476",
+    "coveredLives": "92,900,000"
+  },
+  "premiumCollections": {
+    "total": "P62,500,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P8,750,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P45,000,000,000",
+        "percentage": "72.00%"
+      },
+      "sponsored": {
+        "amount": "P5,000,000,000",
+        "percentage": "8.00%"
+      },
+      "indigent": {
+        "amount": "P3,125,000,000",
+        "percentage": "5.00%"
+      },
+      "individuallyPaying": {
+        "amount": "P625,000,000",
+        "percentage": "1.00%"
+      }
+    }
+  },
+  "benefitPayments": {
+    "total": "P59,800,000,000",
+    "claimsProcessed": "6,500,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P52,624,000,000",
+        "percentage": "88.00%"
+      },
+      "outpatient": {
+        "amount": "P5,382,000,000",
+        "percentage": "9.00%"
+      },
+      "healthcareFacilities": {
+        "amount": "P1,794,000,000",
+        "percentage": "3.00%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P23,920,000,000",
+      "drugs": "P16,744,000,000",
+      "professional": "P13,156,000,000",
+      "others": "P5,980,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "2,038",
+      "government": "924",
+      "private": "1,114"
+    },
+    "healthcareProfessionals": "195,600",
+    "ambulatorySurgery": "592",
+    "freestandingDialysis": "198",
+    "maternityClinic": "1,086"
+  },
+  "collectingAgencies": {
+    "total": "54",
+    "breakdown": {
+      "lgu": "22",
+      "privateInsurers": "16",
+      "cooperatives": "9",
+      "others": "7"
+    }
+  },
+  "milestones": [
+    "20th Anniversary celebration",
+    "Launch of Point-of-Service mobile app",
+    "Enhanced Z Benefits to 30 packages",
+    "Implementation of electronic claims system",
+    "Improved coverage for catastrophic illnesses"
+  ]
+}

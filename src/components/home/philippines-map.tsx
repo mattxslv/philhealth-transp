@@ -19,26 +19,6 @@ const MapComponent = dynamic<{ onRegionSelect: (region: string | null) => void }
   }
 );
 
-const regionalData = [
-  { region: "NCR", members: "4.2M", facilities: 892, coverage: "87%", color: "#009a3d" },
-  { region: "Region I", members: "1.8M", facilities: 245, coverage: "82%", color: "#06b04d" },
-  { region: "Region II", members: "1.2M", facilities: 178, coverage: "79%", color: "#f59e0b" },
-  { region: "Region III", members: "3.1M", facilities: 456, coverage: "85%", color: "#009a3d" },
-  { region: "Region IV-A", members: "4.5M", facilities: 623, coverage: "88%", color: "#009a3d" },
-  { region: "Region IV-B", members: "1.1M", facilities: 167, coverage: "78%", color: "#f59e0b" },
-  { region: "Region V", members: "2.3M", facilities: 312, coverage: "81%", color: "#06b04d" },
-  { region: "Region VI", members: "2.8M", facilities: 398, coverage: "83%", color: "#06b04d" },
-  { region: "Region VII", members: "3.2M", facilities: 445, coverage: "86%", color: "#009a3d" },
-  { region: "Region VIII", members: "1.9M", facilities: 267, coverage: "80%", color: "#06b04d" },
-  { region: "Region IX", members: "1.5M", facilities: 223, coverage: "77%", color: "#f59e0b" },
-  { region: "Region X", members: "1.8M", facilities: 289, coverage: "81%", color: "#06b04d" },
-  { region: "Region XI", members: "2.1M", facilities: 334, coverage: "84%", color: "#06b04d" },
-  { region: "Region XII", members: "1.3M", facilities: 198, coverage: "76%", color: "#f59e0b" },
-  { region: "CAR", members: "0.8M", facilities: 134, coverage: "75%", color: "#f59e0b" },
-  { region: "BARMM", members: "1.2M", facilities: 156, coverage: "72%", color: "#f59e0b" },
-  { region: "Caraga", members: "1.1M", facilities: 167, coverage: "78%", color: "#f59e0b" },
-];
-
 export function PhilippinesMap() {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
@@ -70,30 +50,14 @@ export function PhilippinesMap() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden p-6"
           >
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
               Interactive Regional Coverage Map
             </h3>
             
             <MapComponent onRegionSelect={setSelectedRegion} />
-            
-            {/* Legend */}
-            <div className="mt-6 flex items-center justify-center gap-6 flex-wrap">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-[#009a3d] rounded"></div>
-                <span className="text-sm text-gray-600 dark:text-gray-300">High Coverage (≥85%)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-[#06b04d] rounded"></div>
-                <span className="text-sm text-gray-600 dark:text-gray-300">Medium Coverage (80-84%)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-[#f59e0b] rounded"></div>
-                <span className="text-sm text-gray-600 dark:text-gray-300">Lower Coverage (&lt;80%)</span>
-              </div>
-            </div>
           </motion.div>
 
-          {/* Regional Statistics Table - Right Side */}
+          {/* Coverage Statistics - Right Side */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -102,97 +66,162 @@ export function PhilippinesMap() {
             className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden"
           >
             <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Regional Statistics
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 text-center">
+                2024 Coverage Statistics
               </h3>
               
               {/* Summary Stats as Text */}
               <div className="grid grid-cols-3 gap-4 mb-4 text-center">
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Members</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">35.7M</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">58.7M</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Facilities</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">6,284</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Beneficiaries</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">102.75M</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Avg Coverage</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">81.2%</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Coverage</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">91.0%</p>
                 </div>
               </div>
             </div>
+            
             <div className="overflow-y-auto max-h-[700px]">
-              <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-gray-800/50 sticky top-0">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-900 dark:text-white">
-                      Region
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-semibold text-gray-900 dark:text-white">
-                      Members
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-semibold text-gray-900 dark:text-white">
-                      Facilities
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-semibold text-gray-900 dark:text-white">
-                      Coverage
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {regionalData.map((data) => (
-                    <tr
-                      key={data.region}
-                      className={`hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${
-                        selectedRegion === data.region ? 'bg-primary/5' : ''
-                      }`}
-                    >
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
-                        <div className="flex items-center gap-2">
-                          <div 
-                            className="w-3 h-3 rounded-full" 
-                            style={{ backgroundColor: data.color }}
-                          ></div>
-                          {data.region}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-right text-gray-600 dark:text-gray-300">
-                        {data.members}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-right text-gray-600 dark:text-gray-300">
-                        {data.facilities.toLocaleString()}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-right">
-                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          parseInt(data.coverage) >= 85
-                            ? 'bg-[#009a3d]/10 text-[#009a3d] dark:bg-[#009a3d]/20 dark:text-[#06b04d]'
-                            : parseInt(data.coverage) >= 80
-                            ? 'bg-[#06b04d]/10 text-[#06b04d] dark:bg-[#06b04d]/20 dark:text-[#06b04d]'
-                            : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
-                        }`}>
-                          {data.coverage}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              {/* Membership Breakdown */}
+              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <Users className="w-4 h-4" />
+                  Membership Distribution
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-300">Employed Sector</span>
+                      <span className="text-sm font-semibold text-gray-900 dark:text-white">22,003,461 (37.49%)</span>
+                    </div>
+                    <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#009a3d] rounded-full" style={{ width: '37.49%' }}></div>
+                    </div>
+                    <div className="mt-2 ml-4 space-y-1">
+                      <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                        <span>• Government</span>
+                        <span>3,008,865</span>
+                      </div>
+                      <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                        <span>• Private</span>
+                        <span>18,994,596</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-300">Informal / Self-Earning</span>
+                      <span className="text-sm font-semibold text-gray-900 dark:text-white">10,812,544 (18.42%)</span>
+                    </div>
+                    <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#06b04d] rounded-full" style={{ width: '18.42%' }}></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-300">Indirect Contributors</span>
+                      <span className="text-sm font-semibold text-gray-900 dark:text-white">21,458,882 (36.56%)</span>
+                    </div>
+                    <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#10b981] rounded-full" style={{ width: '36.56%' }}></div>
+                    </div>
+                    <div className="mt-2 ml-4 space-y-1">
+                      <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                        <span>• Indigents/NHTS-PR</span>
+                        <span>8,989,996</span>
+                      </div>
+                      <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                        <span>• Senior Citizens</span>
+                        <span>9,948,757</span>
+                      </div>
+                      <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                        <span>• Sponsored Program</span>
+                        <span>2,520,129</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-300">OFWs/Migrant Workers</span>
+                      <span className="text-sm font-semibold text-gray-900 dark:text-white">3,044,054 (5.18%)</span>
+                    </div>
+                    <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#14b8a6] rounded-full" style={{ width: '5.18%' }}></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-300">Lifetime Members</span>
+                      <span className="text-sm font-semibold text-gray-900 dark:text-white">1,300,043 (2.21%)</span>
+                    </div>
+                    <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#0ea5e9] rounded-full" style={{ width: '2.21%' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Healthcare Facilities Breakdown */}
+              <div className="p-6">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <Building2 className="w-4 h-4" />
+                  Accredited Healthcare Facilities
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Hospitals</span>
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">2,925</span>
+                  </div>
+                  <div className="ml-4 space-y-2">
+                    <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                      <span>• Government</span>
+                      <span>1,327</span>
+                    </div>
+                    <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                      <span>• Private</span>
+                      <span>1,598</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Primary Care Providers</span>
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">6,150</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Maternity Clinics</span>
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">1,725</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Ambulatory Surgery Centers</span>
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">985</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Freestanding Dialysis</span>
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">428</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between py-2">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Healthcare Professionals</span>
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">375,400</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
-        {/* Additional Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-8 text-center"
-        >
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Data as of October 2025 • Updated quarterly • Click on regions for details
-          </p>
-        </motion.div>
       </div>
     </section>
   );

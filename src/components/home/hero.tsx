@@ -18,7 +18,7 @@ export function Hero() {
             transition={{ duration: 0.8 }}
           >
             <motion.p 
-              className="text-sm font-medium text-primary"
+              className="text-sm font-medium text-white/80 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
@@ -27,52 +27,27 @@ export function Hero() {
             </motion.p>
 
             <motion.h1 
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-foreground"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="text-foreground">
+              <span className="text-white">
                 PhilHealth
               </span>
               <br />
-              <span className="text-primary">
+              <span className="text-white/90">
                 Transparency Portal
               </span>
             </motion.h1>
 
-            {/* Navigation Buttons */}
-            <motion.div 
-              className="flex gap-3 pt-4 justify-center"
+
+
+            <motion.p 
+              className="text-lg sm:text-xl leading-8 text-white/90 max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <button
-                onClick={() => document.getElementById('fund-performance')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <span>Fund Performance Overview</span>
-              </button>
-              <button
-                onClick={() => document.getElementById('nationwide-coverage')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <span>PhilHealth Nationwide Coverage</span>
-              </button>
-              <button
-                onClick={() => document.getElementById('incoming-outgoing-funds')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <span>Incoming and Outgoing Funds</span>
-              </button>
-            </motion.div>
-
-            <motion.p 
-              className="text-lg sm:text-xl leading-8 text-muted-foreground max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
             >
               Track how your contributions are used. Access real-time data on financial statements, 
               claims processing, member benefits, and more.

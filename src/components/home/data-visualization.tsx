@@ -30,7 +30,7 @@ ChartJS.register(
   Filler
 );
 
-const COLORS = ["#009a3d", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"];
+const COLORS = ["#009a3d", "#eab308", "#10b981", "#fbbf24", "#22c55e", "#fcd34d"];
 
 export function DataVisualization() {
   // Quick Stats Data
@@ -126,14 +126,14 @@ export function DataVisualization() {
       {
         label: "Claims Processed",
         data: [8.5, 9.2, 10.1, 11.5, 12.7],
-        borderColor: "#3b82f6",
-        backgroundColor: "rgba(59, 130, 246, 0.1)",
+        borderColor: "#eab308",
+        backgroundColor: "rgba(234, 179, 8, 0.1)",
         borderWidth: 3,
         fill: true,
         tension: 0.4,
         pointRadius: 6,
         pointHoverRadius: 8,
-        pointBackgroundColor: "#3b82f6",
+        pointBackgroundColor: "#eab308",
         pointBorderColor: "#fff",
         pointBorderWidth: 2,
       }

@@ -1,0 +1,134 @@
+{
+  "year": 2021,
+  "theme": "Malasakit at Pag-asa sa Panahon ng Pandemya (Compassion and Hope During the Pandemic)",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2021.pdf",
+  "fileSize": "42.84 MB",
+  "vision": "Bawat Filipino, Miyembro. Bawat Miyembro, Protektado. Kalusuganing Lahat, Sigurado.",
+  "mission": "Benepisyong Pangkalusugan, Sapat at De-kalidad para sa Lahat.",
+  "coreValues": "Integridad, Inobasyon, Agarang Serbisyo, Taos-pusong Paglilingkod, Pagmamalasakit, Angkop na Benepisyo, Panlipunang Pagkakabuklod",
+  "coverage": {
+    "totalRegisteredBeneficiaries": "98,030,269",
+    "totalMembers": "54,656,545",
+    "totalDependents": "43,373,724",
+    "populationCoverageRate": "100% (All 110 Million Filipinos automatically covered per UHC Act)",
+    "registrationGrowth": "2% increase from 95,999,756 (2020)"
+  },
+  "membershipBreakdown": {
+    "directContributors": {
+      "total": "61,674,303",
+      "members": "32,624,039",
+      "dependents": "29,050,264",
+      "categories": {
+        "employedPrivate": "26,857,409",
+        "employedGovernment": "6,516,525",
+        "informalSelfEarning": "19,551,530",
+        "ofwMigrantWorkers": "6,200,865",
+        "lifetimeMembers": "2,413,001",
+        "kasambahay": "124,148",
+        "others": "10,825"
+      }
+    },
+    "indirectContributors": {
+      "total": "36,355,966",
+      "members": "22,032,506",
+      "dependents": "14,323,460",
+      "categories": {
+        "indigentsNHTSPR": "23,809,743",
+        "seniorCitizens": "11,077,579",
+        "sponsoredProgram": "1,468,644"
+      }
+    }
+  },
+  "financialHighlights": {
+    "premiumContributions": {
+      "total": "P171.17 billion",
+      "growth": "15% increase over 2020",
+      "directContributorShare": "P90.94 billion (53%)",
+      "indirectContributorShare": "P80.24 billion (47%)"
+    },
+    "claimsPaid": {
+      "amount": "P88.29 billion",
+      "count": "10,444,610 claims",
+      "processingTime": "40 days or less (within 60-day limit)",
+      "topUtilizers": "Informal/Self-Earning (23%), Senior Citizens (17%), Private Employed (16%)"
+    },
+    "benefitClaimExpenses": {
+      "total": "P140.16 billion",
+      "growth": "16% increase from P120.90B (2020)",
+      "directContributors": "P82.61 billion",
+      "indirectContributors": "P53.12 billion",
+      "others": "P4.43 billion (IFM, DCPM, Konsulta)"
+    },
+    "grossMargin": {
+      "amount": "P31.01 billion",
+      "growth": "10% (P2.9B) increase from 2020"
+    },
+    "supportValue": "66% (2019 pre-pandemic) - P66 covered for every P100 hospitalization",
+    "irmBalance": "P18.67 million unliquidated (out of P14.971B released)"
+  },
+  "covidClaims": {
+    "totalAmount": "P17.72 billion",
+    "totalCount": "2,395,649 claims",
+    "shareOfTotal": "20% of total claims amount (80% non-COVID)",
+    "breakdown": {
+      "testing": {
+        "amount": "P6.30 billion (35%)",
+        "count": "2,312,009"
+      },
+      "inpatient": {
+        "amount": "P10.59 billion (60%)",
+        "count": "46,871"
+      },
+      "isolation": {
+        "amount": "P825.42 million (5%)",
+        "count": "36,769"
+      }
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "1,889",
+      "private": "59%",
+      "government": "41%"
+    },
+    "otherFacilities": "8,124",
+    "covidTestingFacilities": "210",
+    "covidCIUs": "1,084",
+    "professionals": {
+      "total": "44,451",
+      "dentists": "667",
+      "nurses": "43",
+      "midwives": "2,711"
+    }
+  },
+  "boardAccomplishments": [
+    {
+      "achievement": "Conducted 22 Board meetings with over 90 Board Resolutions"
+    },
+    {
+      "achievement": "Approved cartridge-based RT-PCR test reimbursement"
+    },
+    {
+      "achievement": "Approved compensability for patients in hospital tents"
+    },
+    {
+      "achievement": "Exempted COVID-19 drugs not in National Formulary for reimbursement"
+    },
+    {
+      "achievement": "Continued full financial risk protection for healthcare workers"
+    },
+    {
+      "achievement": "Approved P500M National Vaccine Indemnity Fund coverage (RA 11525)"
+    },
+    {
+      "achievement": "Extended hemodialysis policy for CKD 5 patients"
+    },
+    {
+      "achievement": "Adopted PhilHealth Data Privacy Manual"
+    }
+  ],
+  "keyPersonnel": {
+    "presidentCEO": "Atty. Dante A. Gierran, CPA",
+    "chairman": "Francisco T. Duque, III, M.D., MSc. (Secretary of Health)"
+  }
+}

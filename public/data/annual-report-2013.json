@@ -1,0 +1,133 @@
+{
+  "year": 2013,
+  "theme": "Synergizing Efforts Towards Universal Health Care",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2013.pdf",
+  "fileSize": "2.81 MB",
+  "vision": "Bawat Pilipino, Miyembro, Bawat Miyembro, Protektado, Kalusugan Natin, Segurado",
+  "keyLegislation": [
+    {
+      "name": "National Health Insurance Act of 2013 (RA 10606)",
+      "detail": "Amended RA 7875, strengthened mandate for membership, benefits, and fund growth"
+    },
+    {
+      "name": "Sin Tax Reform Law of 2012 (RA 10351)",
+      "detail": "Allocated tax for annual premium subsidy of poor Filipinos",
+      "projection": "14.7 million poor families covered in 2014"
+    }
+  ],
+  "coverage": {
+    "totalCovered": "65.44 million Filipinos",
+    "coverageRate": "Almost 70% of projected population (97.70M)",
+    "sectoralContribution": "Poorest sector (Sponsored) comprises 48%, working population 40%"
+  },
+  "membershipDistribution": {
+    "sponsored": {
+      "total": "31.38M",
+      "percentage": "48%",
+      "nhtsPR": "21.01M (32%)",
+      "lguRegular": "10.37M (16%)"
+    },
+    "privateEmployed": {
+      "total": "20.43M",
+      "percentage": "31%"
+    },
+    "governmentEmployed": {
+      "total": "5.91M",
+      "percentage": "9%"
+    },
+    "individuallyPaying": {
+      "total": "4.70M",
+      "percentage": "7%"
+    },
+    "overseas": {
+      "total": "1.70M",
+      "percentage": "3%"
+    },
+    "lifetime": {
+      "total": "1.32M",
+      "percentage": "2%"
+    }
+  },
+  "sponsoredProgramDetails": {
+    "nationalGovernment": "5.16 million poor households (15.85M dependents via NHTS-PR)",
+    "lguResponsibility": "10.37 million beneficiaries"
+  },
+  "financialPerformance": {
+    "premiumCollections": {
+      "amount": "Php55.36 billion",
+      "growth": "19% higher than 2012",
+      "largestContributor": "Private sector (45%), NG/LGUs for Sponsored (31%)"
+    },
+    "benefitPayments": {
+      "amount": "Php55.56 billion",
+      "claims": "5.8 million",
+      "increase": "16% more than 2012 (amount), 21% more (claims)",
+      "caseRatePercentage": "64% paid through Case Rate mechanism"
+    }
+  },
+  "premiumCollectionsBySelector": {
+    "privateEmployed": "P24.95 billion",
+    "sponsored": "P16.90 billion",
+    "governmentEmployed": "P9.14 billion",
+    "individuallyPaying": "P3.13 billion",
+    "overseas": "P1.25 billion"
+  },
+  "claimsDistribution": {
+    "workingPopulation": "40% (highest)",
+    "sponsored": "27%",
+    "individuallyPaying": "22%",
+    "privateWorkers": "26% of benefit payments"
+  },
+  "policyInnovations": [
+    {
+      "name": "All Case Rate Payment Scheme",
+      "detail": "Circular 35 published for all types of diseases"
+    },
+    {
+      "name": "No Balance Billing (NBB) Policy",
+      "detail": "Intensified for poor members in government hospitals (at least 23 cases)"
+    },
+    {
+      "name": "Z MORPH Package",
+      "detail": "External lower limb prosthesis below knee",
+      "rates": "Php15,000 (one limb), Php30,000 (both limbs)"
+    },
+    {
+      "name": "Z Benefit Expansion",
+      "packages": [
+        "Coronary Artery Bypass Graft (Php550,000)",
+        "Tetralogy of Fallot (Php320,000)",
+        "Ventricular Septal Defect (Php250,000)",
+        "Cervical Cancer (Php120,000-175,000)"
+      ]
+    },
+    {
+      "name": "Primary Care Benefit (PCB1) Expansion",
+      "detail": "Extended to DepEd personnel"
+    },
+    {
+      "name": "Point-of-Care Enrolment",
+      "detail": "Immediate access for non-members in government hospitals"
+    }
+  ],
+  "corporateEvents": [
+    {
+      "event": "18th Anniversary Celebration"
+    },
+    {
+      "event": "PhilHealth-DOH Run 2013",
+      "date": "February 17, 2013",
+      "participants": "Over 100,000 runners in 18+ sites",
+      "fundsRaised": "Php24 million for mother and child health facilities"
+    }
+  ],
+  "systemImprovements": [
+    "EPRS mandatory expansion continued",
+    "Simplified registration (only complete PMRF required)",
+    "Online registration available"
+  ],
+  "keyPersonnel": {
+    "presidentCEO": "ALEXANDER A. PADILLA",
+    "chairman": "Hon. ENRIQUE T. ONA, M.D. (Secretary of Health)"
+  }
+}

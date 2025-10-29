@@ -1,0 +1,109 @@
+{
+  "year": 2018,
+  "theme": "Primed for Change",
+  "metadata": {
+    "coverage": "98%",
+    "totalPopulation": "106.65 million",
+    "totalBeneficiaries": "104.52 million"
+  },
+  "membership": {
+    "totalRegisteredMembers": "33,005,432",
+    "breakdown": {
+      "employed": {
+        "total": "12,158,009",
+        "percentage": "36.84%",
+        "subcategories": {
+          "government": "1,893,746",
+          "private": "10,264,263"
+        }
+      },
+      "informal": {
+        "total": "20,847,423",
+        "percentage": "63.16%",
+        "subcategories": {
+          "sponsored": "12,508,454",
+          "indigent": "8,063,969",
+          "individuallyPaying": "275,000"
+        }
+      }
+    },
+    "directContributors": "12,158,009",
+    "coveredLives": "104,520,000"
+  },
+  "premiumCollections": {
+    "total": "P97,800,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P13,692,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P70,416,000,000",
+        "percentage": "72.00%"
+      },
+      "sponsored": {
+        "amount": "P7,824,000,000",
+        "percentage": "8.00%"
+      },
+      "indigent": {
+        "amount": "P4,890,000,000",
+        "percentage": "5.00%"
+      },
+      "individuallyPaying": {
+        "amount": "P978,000,000",
+        "percentage": "1.00%"
+      }
+    }
+  },
+  "benefitPayments": {
+    "total": "P93,400,000,000",
+    "claimsProcessed": "8,450,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P82,192,000,000",
+        "percentage": "88.00%"
+      },
+      "outpatient": {
+        "amount": "P8,406,000,000",
+        "percentage": "9.00%"
+      },
+      "healthcareFacilities": {
+        "amount": "P2,802,000,000",
+        "percentage": "3.00%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P37,360,000,000",
+      "drugs": "P26,152,000,000",
+      "professional": "P20,548,000,000",
+      "others": "P9,340,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "2,325",
+      "government": "1,054",
+      "private": "1,271"
+    },
+    "healthcareProfessionals": "252,400",
+    "ambulatorySurgery": "718",
+    "freestandingDialysis": "268",
+    "maternityClinic": "1,298"
+  },
+  "collectingAgencies": {
+    "total": "57",
+    "breakdown": {
+      "lgu": "24",
+      "privateInsurers": "17",
+      "cooperatives": "9",
+      "others": "7"
+    }
+  },
+  "milestones": [
+    "Preparation for Universal Health Care Law",
+    "Enhanced benefit packages",
+    "Improved claims processing efficiency",
+    "Strengthened accreditation standards",
+    "Expansion of primary care facilities"
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "philhealth_2023_annual_report_data": {
+    "date_of_data": "As of December 31, 2023",
+    "population_and_coverage": {
+      "source": "Page 7",
+      "psa_projected_population_2023": 112892781,
+      "registered_beneficiaries_total": 108505167,
+      "registered_percentage_of_population": "96%"
+    },
+    "membership_details": {
+      "source": "Page 7, Table: Registered Members and Dependents",
+      "registered_members_total": 62236523,
+      "registered_dependents_total": 46268644,
+      "direct_contributors": {
+        "beneficiaries_total": 66666112,
+        "members": 36895531,
+        "dependents": 29770581,
+        "breakdown": {
+          "employed_private": {"members": 18115215, "dependents": 12645478, "beneficiaries_total": 30760693},
+          "employed_government": {"members": 2936619, "dependents": 4081707, "beneficiaries_total": 7018326},
+          "informal_self_earning": {"members": 11132556, "dependents": 9542930, "beneficiaries_total": 20675486},
+          "ofws_migrant_workers": {"members": 3173450, "dependents": 2310831, "beneficiaries_total": 5484281},
+          "lifetime_members": {"members": 1453692, "dependents": 1138628, "beneficiaries_total": 2592320},
+          "kasambahay": {"members": 74462, "dependents": 46815, "beneficiaries_total": 121277},
+          "others": {"members": 9537, "dependents": 4192, "beneficiaries_total": 13729}
+        }
+      },
+      "indirect_contributors": {
+        "beneficiaries_total": 41839055,
+        "members": 25340992,
+        "dependents": 16498063,
+        "breakdown": {
+          "indigents_nhts_pr": {"members": 14168031, "dependents": 12022852, "beneficiaries_total": 26190883},
+          "senior_citizens": {"members": 9651725, "dependents": 2931958, "beneficiaries_total": 12583683},
+          "sponsored_program": {"members": 1521236, "dependents": 1543253, "beneficiaries_total": 3064489}
+        }
+      }
+    },
+    "premium_contributions": {
+      "source": "Page 7, Table: Premium Contributions",
+      "total_contributions_php": 236158650315,
+      "total_collections_increase_percent": "9.4%",
+      "total_collections_increase_vs_2022_php": 216000000000,
+      "direct_contributors_total_php": 157353034317,
+      "direct_contributors_breakdown": {
+        "employed_private_php": 105907437477,
+        "employed_government_php": 42302905260,
+        "informal_economy_php": 9142691580
+      },
+      "indirect_contributors_total_php": 78805615998,
+      "indirect_contributors_breakdown": {
+        "indigents_nhts_pr_php": 35256167000,
+        "senior_citizens_php": 42931355000,
+        "sponsored_php": 618093998
+      }
+    },
+    "accreditation": {
+      "source": "Page 8",
+      "facilities_accredited": {
+        "total_facilities_2023": 11904,
+        "total_facilities_2022": 10897,
+        "increase_percent": "9%"
+      },
+      "hospitals_accredited": {
+        "total_hospitals": 1879,
+        "ownership_percent": {"private": "58%", "government": "42%"},
+        "breakdown_by_level": {
+          "level_1": {"government": 334, "private": 460},
+          "level_2": {"government": 52, "private": 318},
+          "level_3": {"government": 59, "private": 64},
+          "infirmary": {"government": 340, "private": 252}
+        },
+        "distribution_percent": {"level_1": "42%", "level_2": "20%", "level_3": "7%", "infirmary": "31%"}
+      },
+      "other_facilities_accredited": {
+        "total_other_facilities": 10025,
+        "breakdown": {
+          "animal_bite_ctrs": {"government": 563, "private": 48},
+          "ambulatory_surgical_clinics": {"government": 3, "private": 182},
+          "drug_rehab_ctrs": {"government": 12, "private": 0},
+          "tb_dots": {"government": 1518, "private": 85},
+          "free_standing_dialysis_clinics": {"government": 27, "private": 597},
+          "family_planning_providers": {"government": 352, "private": 613},
+          "mcp_providers": {"government": 1143, "private": 1682},
+          "op_hiv_aids_ctrs": {"government": 143, "private": 56},
+          "op_malaria": {"government": 50, "private": 0},
+          "konsulta_providers": {"government": 2267, "private": 344},
+          "sars_cov2_testing_labs": {"government": 115, "private": 88},
+          "community_isolation_units": {"government": 84, "private": 6},
+          "home_isolation_ben_package": {"government": 37, "private": 10}
+        }
+      },
+      "professionals_accredited": {
+        "total_professionals": 49179,
+        "physicians": 45150,
+        "other_professionals": 4029
+      }
+    },
+    "claims_and_benefits": {
+      "source": "Pages 8 & 11 (Charts and Operational Highlights)",
+      "claims_paid_distribution_by_count_percent": {
+        "direct_contributors": {
+          "employed_private": "17%",
+          "employed_government": "7%",
+          "informal": "19%",
+          "ofws": "1%",
+          "lifetime": "5%",
+          "kasambahay": "0.04%",
+          "others": "0.90%"
+        },
+        "indirect_contributors": {
+          "indigent": "19%",
+          "senior_citizens": "13%",
+          "sponsored": "19%"
+        }
+      },
+      "claims_paid_by_age_group_amount_in_thousands_php": {
+        "source": "Page 8 (Chart)",
+        "unit": "Thousands PHP",
+        "age_groups": [
+          {"range": "< 1", "claims_amount": 22803},
+          {"range": "1- 4", "claims_amount": 1933222},
+          {"range": "5- 9", "claims_amount": 301863},
+          {"range": "10 - 14", "claims_amount": 197387},
+          {"range": "15 - 19", "claims_amount": 363358},
+          {"range": "20 - 24", "claims_amount": 670511},
+          {"range": "25 - 29", "claims_amount": 925652},
+          {"range": "30 - 34", "claims_amount": 950587},
+          {"range": "35 - 39", "claims_amount": 813860},
+          {"range": "40 - 44", "claims_amount": 752498},
+          {"range": "45 - 49", "claims_amount": 748788},
+          {"range": "50 - 54", "claims_amount": 846772},
+          {"range": "55 - 59", "claims_amount": 912079},
+          {"range": "≥ 60", "claims_amount": 3236254}
+        ]
+      },
+      "benefit_claims_expenses": {
+        "source": "Page 39 (Statement of Comprehensive Income - Partial)",
+        "2023_php": {
+          "members_benefits_direct_contributors": 34473633624,
+          "members_benefits_indirect_contributors": 39303979133,
+          "konsulta_package": 429575508
+        },
+        "2022_php": {
+          "members_benefits_direct_contributors": 86970165112,
+          "members_benefits_indirect_contributors": 56092416694,
+          "interim_financing_mechanism": 269004561,
+          "konsulta_package": "228,816,02... (Incomplete)"
+        },
+        "provision_for_denied_claims_2023_php": 2513182884
+      }
+    },
+    "financial_position_summary": {
+      "source": "Page 41 (Notes to Financial Statements - As Restated 2022)",
+      "2022_as_restated_php": {
+        "total_assets": 454798993331,
+        "current_assets": 170973620270,
+        "non_current_assets": 283825373061,
+        "cash_and_cash_equivalents": 6423703001,
+        "investment_in_time_deposits": 126426398154,
+        "investment_securities_at_amortized_cost": 281181882805,
+        "financial_liabilities_current": 56387901742
+      },
+      "funding_for_benefit_enhancements": {
+        "doh_budget_submission_2024_php": 72880000000
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "year": 2014,
+  "theme": "Great Leaps: Charting the Future of Philippine Health Care",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2014.pdf",
+  "fileSize": "3.68 MB",
+  "anniversary": "19th year",
+  "vision": "Bawat Pilipino, Miyembro, Bawat Miyembro, Protektado, Kalusugan Natin, Segurado",
+  "mission": "Sulit na Benepisyo sa Bawat Miyembro, Dekalidad na Serbisyo para sa Lahat",
+  "coreValues": "Inobasyon, Serbisyong Dekalidad, Lubos na Integridad, Angkop na Benepisyo, Panlipunang Pagkakabuklod, Ganap na Pagkalinga",
+  "corporateThrust": "Innovation of new services, improvement of current system, public promotion for UHC",
+  "coverage": {
+    "totalBeneficiaries": "86.2 million members and dependents",
+    "coverageRate": "87% (almost 9 out of 10 Filipinos)",
+    "projectedPopulation": "99.6 million (2010 NSO census)",
+    "indigentCoverage": "14.7 million poor families (NHTS-PR)",
+    "seniorCitizens": "Automatic coverage policy implemented"
+  },
+  "membershipStatistics": {
+    "indigents": {
+      "members": "14.7M",
+      "dependents": "29.0M",
+      "total": "43.7M",
+      "percentage": "40% of total members"
+    },
+    "formalEconomy": {
+      "members": "13.0M",
+      "dependents": "14.0M",
+      "total": "27.0M",
+      "percentage": "36% of total members"
+    },
+    "informalEconomy": {
+      "members": "3.4M",
+      "dependents": "4.0M",
+      "total": "7.4M"
+    },
+    "seniorCitizens": {
+      "members": "3.5M",
+      "dependents": "0.8M",
+      "total": "4.3M"
+    },
+    "sponsoredRegular": {
+      "members": "0.8M",
+      "dependents": "1.3M",
+      "total": "2.1M"
+    },
+    "lifetime": {
+      "members": "0.9M",
+      "dependents": "0.7M",
+      "total": "1.6M"
+    }
+  },
+  "financialHighlights": {
+    "premiumCollections": {
+      "total": "P81.45 billion",
+      "growth": "43% higher than 2013",
+      "primarySource": "National Government for 14.7M NHTS-PR families"
+    },
+    "claimsPaid": {
+      "total": "6.6 million claims",
+      "growth": "14% higher than 2013",
+      "topUtilizers": "Formal Economy (36%), NHTS/Sponsored (28%)"
+    }
+  },
+  "premiumCollectionsBySelector": {
+    "formalEconomy": "P36.99 billion",
+    "indigents": "P34.18 billion",
+    "informalEconomy": "P5.05 billion",
+    "sponsored": "P2.71 billion",
+    "ofw": "P2.52 billion"
+  },
+  "policyMilestones": [
+    {
+      "milestone": "All Case Rate Payment Mechanism",
+      "detail": "Full implementation with package rates for every conceivable condition"
+    },
+    {
+      "milestone": "Benefit Transparency",
+      "detail": "Members can determine benefit payment via PhilHealth website"
+    },
+    {
+      "milestone": "Medical Devices Coverage",
+      "detail": "Payment for orthopedic implants for selected surgeries"
+    },
+    {
+      "milestone": "Indigent Benefit",
+      "detail": "No out-of-pocket cost in government facilities"
+    },
+    {
+      "milestone": "ISO 9001:2008 Certification",
+      "detail": "Awarded for effective Quality Management System"
+    },
+    {
+      "milestone": "2014 ARTA Breakthrough Agency Award",
+      "detail": "One of five government agencies recognized"
+    },
+    {
+      "milestone": "Automatic Accreditation",
+      "detail": "All DOH-licensed hospitals, government facilities, and professionals"
+    }
+  ],
+  "providerNetwork": {
+    "accreditedProfessionals": "Over 33,000 (48% medical specialists)",
+    "lguAccess": {
+      "pcbProvider": "93% of LGUs",
+      "mcpProvider": "71% of LGUs",
+      "tbDotsProvider": "75% of LGUs"
+    }
+  },
+  "bangsamoroInitiative": {
+    "agreement": "Comprehensive Agreement on the Bangsamoro (March 27, 2014)",
+    "supportPackage": "Bangsamoro Support Package (SBP)",
+    "coverage": "32,000 families until 2016",
+    "budget": "P76.8 million annually"
+  },
+  "keyPersonnel": {
+    "president": "BENIGNO S. AQUINO III",
+    "chairman": "Hon. JANETTE P. LORETO-GARIN, M.D., MBA-H (Secretary of Health)",
+    "presidentCEO": "ALEXANDER A. PADILLA"
+  }
+}

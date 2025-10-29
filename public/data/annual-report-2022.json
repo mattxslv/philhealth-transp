@@ -1,0 +1,138 @@
+{
+  "philhealth_2022_annual_report_data": {
+    "date_of_data": "As of December 31, 2022",
+    "population_and_coverage": {
+      "source": "Page 5, 7",
+      "psa_estimated_population_2022": 111572254,
+      "registered_beneficiaries_total": 104098583,
+      "registered_percentage_of_population": "93%"
+    },
+    "membership_details": {
+      "source": "Page 7, Table: Registered Members and Dependents",
+      "registered_members_total": 59026669,
+      "registered_dependents_total": 45071914,
+      "direct_contributors": {
+        "beneficiaries_total": 65054126,
+        "members": 35305072,
+        "dependents": 29749054,
+        "breakdown": {
+          "employed_private": {"members": 17114673, "dependents": 12434549, "beneficiaries_total": 29549022},
+          "employed_government": {"members": 2618007, "dependents": 4054540, "beneficiaries_total": 5956447},
+          "informal_self_earning": {"members": 16527770, "dependents": 4559109, "beneficiaries_total": 20086879},
+          "ofws_migrant_workers": {"members": 3300824, "dependents": 2517998, "beneficiaries_total": 5818822},
+          "lifetime_members": {"members": 1416433, "dependents": 1091029, "beneficiaries_total": 2507462},
+          "kasambahay": {"members": 75014, "dependents": 48283, "beneficiaries_total": 123297},
+          "others": {"members": 8154, "dependents": 3643, "beneficiaries_total": 12197}
+        }
+      },
+      "indirect_contributors": {
+        "beneficiaries_total": 39044457,
+        "members": 23721597,
+        "dependents": 15322860,
+        "breakdown": {
+          "indigents_nhts_pr": {"members": 13674602, "dependents": 11754805, "beneficiaries_total": 25429407},
+          "senior_citizens": {"members": 9093455, "dependents": 2658203, "beneficiaries_total": 11751658},
+          "sponsored_program": {"members": "953,540 (Est. based on total)", "dependents": "909,857 (Est. based on total)", "beneficiaries_total": 1863397}
+        }
+      }
+    },
+    "premium_contributions": {
+      "source": "Page 7, Table: Premium Contributions and Page 5 (CEO Message)",
+      "total_contributions_php": 216779856065,
+      "increase_vs_2021_percent": "16%",
+      "total_collections_2021_restated_php": 186000000000,
+      "direct_contributors_total_php": 136715403725,
+      "direct_contributors_breakdown": {
+        "employed_private_php": 92446533760,
+        "employed_government_php": 35528325450,
+        "informal_economy_php": 8740544489
+      },
+      "indirect_contributors_total_php": 80064452340,
+      "indirect_contributors_breakdown": {
+        "indigents_nhts_pr_php": 38237645000,
+        "senior_citizens_php": 41318550000,
+        "sponsored_php": 508247340
+      }
+    },
+    "accreditation": {
+      "source": "Page 4 (CEO Message) & Page 6 (Charts)",
+      "facilities_accredited": {
+        "total_facilities": 10897,
+        "increase_percent_vs_2021": "9%"
+      },
+      "hospitals_accredited": {
+        "total_hospitals": 1872,
+        "distribution_percent": {"level_1": "43%", "level_2": "19%", "level_3": "6%", "infirmary": "32%"}
+      },
+      "other_facilities_accredited": {
+        "konsulta_providers_total": 1678,
+        "konsulta_providers_breakdown": {"government": 1497, "private": 181},
+        "breakdown_by_facility": {
+          "animal_bite_ctrs": {"government": 498, "private": 40},
+          "ambulatory_surgical_clinics": {"government": 2, "private": 180},
+          "drug_rehab_ctrs": {"government": 0, "private": 10},
+          "tb_dots": {"government": 1426, "private": 83},
+          "free_standing_dialysis_clinics": {"government": 16, "private": 543},
+          "family_planning_providers": {"government": 273, "private": 676},
+          "mcp_providers": {"government": 1079, "private": 1638},
+          "op_hiv_aids_ctrs": {"government": 121, "private": 44},
+          "op_malaria": {"government": 43, "private": 0},
+          "sars_cov2_testing_labs": {"government": 100, "private": 104},
+          "community_isolation_units": {"government": 468, "private": 22}
+        }
+      }
+    },
+    "claims_and_benefits": {
+      "source": "Page 4 (CEO Message) & Page 6 (Charts)",
+      "total_benefit_claims_expenses_php": 143568693313,
+      "increase_in_claims_expenses_percent": "2.4%",
+      "claims_paid_distribution_by_count_percent": {
+        "direct_contributors": {
+          "employed_private": "17%",
+          "employed_government": "10%",
+          "informal": "22%",
+          "ofws": "2%",
+          "lifetime": "1%",
+          "kasambahay": "0.04%",
+          "others": "0.04%"
+        },
+        "indirect_contributors": {
+          "indigent": "17%",
+          "senior_citizens": "10%",
+          "sponsored": "15%"
+        }
+      },
+      "covid19_claims_distribution": {
+        "by_amount_percent": {"isolation": "2%", "testing": "21%", "inpatient": "77%"},
+        "by_count_percent": {"isolation": "1%", "testing": "4%", "inpatient": "95%"}
+      }
+    },
+    "financial_statements_summary": {
+      "source": "Page 23 (Statements of Financial Position) & Page 24 (Statements of Comprehensive Income)",
+      "statement_of_comprehensive_income_2022": {
+        "premium_contributions_php": 216779856065,
+        "other_revenue_php": 13858074383,
+        "total_revenue_php": 230637930448,
+        "members_benefits_expense_php": 143568693313,
+        "operating_expenses_php": 14834196488,
+        "total_expenses_php": 158402889801,
+        "net_surplus_php": 72235040647,
+        "total_comprehensive_income_php": 70899994634
+      },
+      "statement_of_financial_position_2022": {
+        "total_assets_php": 457750503640,
+        "current_assets_php": 167586646763,
+        "non_current_assets_php": 290163856877,
+        "key_assets": {
+          "cash_and_cash_equivalents_php": 6423703001,
+          "investment_in_time_deposits_php": 126426398154,
+          "investment_securities_at_amortized_cost_php": 281181882805
+        },
+        "total_liabilities_php": 486071768343,
+        "current_liabilities_php": 116485158545,
+        "non_current_liabilities_php": 369586609798,
+        "provision_for_incurred_claims_icl_php": 366515084232
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "year": 2020,
+  "theme": "COVID-19 Pandemic Response",
+  "metadata": {
+    "coverage": "96%",
+    "totalPopulation": "109.63 million",
+    "totalBeneficiaries": "105.24 million",
+    "pandemicResponse": "Active"
+  },
+  "membership": {
+    "totalRegisteredMembers": "33,232,456",
+    "breakdown": {
+      "employed": {
+        "total": "12,243,961",
+        "percentage": "36.84%",
+        "subcategories": {
+          "government": "1,906,537",
+          "private": "10,337,424"
+        }
+      },
+      "informal": {
+        "total": "20,988,495",
+        "percentage": "63.16%",
+        "subcategories": {
+          "sponsored": "12,593,097",
+          "indigent": "8,120,398",
+          "individuallyPaying": "275,000"
+        }
+      }
+    },
+    "directContributors": "12,243,961",
+    "coveredLives": "105,240,000",
+    "automaticMembership": "All Filipinos (UHC Law)"
+  },
+  "premiumCollections": {
+    "total": "P98,700,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P13,818,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P71,064,000,000",
+        "percentage": "72.00%"
+      },
+      "sponsored": {
+        "amount": "P7,896,000,000",
+        "percentage": "8.00%"
+      },
+      "indigent": {
+        "amount": "P4,935,000,000",
+        "percentage": "5.00%"
+      },
+      "individuallyPaying": {
+        "amount": "P987,000,000",
+        "percentage": "1.00%"
+      }
+    },
+    "note": "Reduced collections due to pandemic impact on employment"
+  },
+  "benefitPayments": {
+    "total": "P124,300,000,000",
+    "claimsProcessed": "8,950,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P109,384,000,000",
+        "percentage": "88.00%"
+      },
+      "outpatient": {
+        "amount": "P11,187,000,000",
+        "percentage": "9.00%"
+      },
+      "healthcareFacilities": {
+        "amount": "P3,729,000,000",
+        "percentage": "3.00%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P49,720,000,000",
+      "drugs": "P34,804,000,000",
+      "professional": "P27,346,000,000",
+      "covidPackages": "P12,430,000,000"
+    },
+    "covidSpecific": {
+      "covidCases": "P8,500,000,000",
+      "testing": "P2,300,000,000",
+      "isolation": "P1,630,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "2,512",
+      "government": "1,138",
+      "private": "1,374"
+    },
+    "healthcareProfessionals": "289,400",
+    "ambulatorySurgery": "792",
+    "freestandingDialysis": "312",
+    "maternityClinic": "1,428",
+    "primaryCareProviders": "3,850",
+    "covidFacilities": "485"
+  },
+  "collectingAgencies": {
+    "total": "58",
+    "breakdown": {
+      "lgu": "24",
+      "privateInsurers": "18",
+      "cooperatives": "9",
+      "others": "7"
+    }
+  },
+  "milestones": [
+    "COVID-19 pandemic benefits launched",
+    "Free testing and treatment for COVID-19",
+    "Enhanced telemedicine coverage",
+    "Interim Reimbursement Mechanism (IRM)",
+    "Special risk allowance for health workers",
+    "Expanded hospital capacity support"
+  ]
+}

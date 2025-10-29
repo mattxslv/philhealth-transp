@@ -17,7 +17,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   // Start with sidebar open on desktop, closed on mobile
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(["Overview"]);
 
   useEffect(() => {
     // On mount, set sidebar state based on screen size

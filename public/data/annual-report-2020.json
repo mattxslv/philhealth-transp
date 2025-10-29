@@ -1,0 +1,54 @@
+{
+  "year": 2020,
+  "theme": "Pinatatag na Segurong Pangkalusugan ng Bawat Filipino (Strengthened Health Insurance of Every Filipino)",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2020.pdf",
+  "fileSize": "11.08 MB",
+  "anniversary": "25th year",
+  "keyLegislation": "Universal Health Care (UHC) Act of 2019 - ensuring equal access to quality health care",
+  "context": "Year severely challenged by COVID-19 pandemic worldwide",
+  "pandemicResponse": {
+    "legislation": "Bayanihan to Heal as One Act (RA No. 11469)",
+    "healthWorkerProtection": {
+      "coverage": "Full financial risk protection for all health care workers",
+      "benefit": "Inpatient case management with no co-payment (public and private facilities)",
+      "eligibility": "All health workers hospitalized due to COVID-19, regardless of employment status"
+    }
+  },
+  "rtPCRAuditObservations": {
+    "missingInformation": "26,448 validated tests lacked CIF Reference Number and member-patient info",
+    "multipleTesting": "8,155 members tested multiple times",
+    "testingFrequency": "764 members tested twice in one day",
+    "doubleDeclaration": "1,532 RT-PCR tests declared twice in line list",
+    "action": "PRO NCR & Rizal directed to reconcile records"
+  },
+  "operationalHighlights": [
+    {
+      "commitment": "Quality and effective health benefits provision"
+    },
+    {
+      "initiative": "Strengthen referral management system for overall quality of care"
+    },
+    {
+      "program": "Konsulta package/system"
+    }
+  ],
+  "policies": {
+    "unclaimedBenefits": "May be reverted to fund after 2 years of publication on PhilHealth website"
+  },
+  "personnelManagement": [
+    {
+      "action": "Appointed 9 Executive and Managerial Officers per CSC rules"
+    },
+    {
+      "action": "Approved designations and secondments from other agencies for continuity"
+    },
+    {
+      "action": "Delegated authority to sign appointments for faster turnaround time"
+    }
+  ],
+  "financialInformation": {
+    "premiumCollection": "Major operational highlight",
+    "investingActivities": "Cash inflows from matured time deposits",
+    "receivables": "Balance for Due from LGUs noted"
+  }
+}

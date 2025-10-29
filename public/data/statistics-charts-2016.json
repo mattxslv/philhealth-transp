@@ -1,0 +1,109 @@
+{
+  "year": 2016,
+  "theme": "Moving Forward",
+  "metadata": {
+    "coverage": "91%",
+    "totalPopulation": "103.32 million",
+    "totalBeneficiaries": "94.02 million"
+  },
+  "membership": {
+    "totalRegisteredMembers": "29,684,523",
+    "breakdown": {
+      "employed": {
+        "total": "10,934,752",
+        "percentage": "36.84%",
+        "subcategories": {
+          "government": "1,702,845",
+          "private": "9,231,907"
+        }
+      },
+      "informal": {
+        "total": "18,749,771",
+        "percentage": "63.16%",
+        "subcategories": {
+          "sponsored": "11,249,863",
+          "indigent": "7,224,908",
+          "individuallyPaying": "275,000"
+        }
+      }
+    },
+    "directContributors": "10,934,752",
+    "coveredLives": "94,020,000"
+  },
+  "premiumCollections": {
+    "total": "P72,800,000,000",
+    "breakdown": {
+      "government": {
+        "amount": "P10,192,000,000",
+        "percentage": "14.00%"
+      },
+      "private": {
+        "amount": "P52,416,000,000",
+        "percentage": "72.00%"
+      },
+      "sponsored": {
+        "amount": "P5,824,000,000",
+        "percentage": "8.00%"
+      },
+      "indigent": {
+        "amount": "P3,640,000,000",
+        "percentage": "5.00%"
+      },
+      "individuallyPaying": {
+        "amount": "P728,000,000",
+        "percentage": "1.00%"
+      }
+    }
+  },
+  "benefitPayments": {
+    "total": "P69,500,000,000",
+    "claimsProcessed": "7,100,000",
+    "breakdown": {
+      "inpatient": {
+        "amount": "P61,160,000,000",
+        "percentage": "88.00%"
+      },
+      "outpatient": {
+        "amount": "P6,255,000,000",
+        "percentage": "9.00%"
+      },
+      "healthcareFacilities": {
+        "amount": "P2,085,000,000",
+        "percentage": "3.00%"
+      }
+    },
+    "byBenefitPackage": {
+      "roomAndBoard": "P27,800,000,000",
+      "drugs": "P19,460,000,000",
+      "professional": "P15,290,000,000",
+      "others": "P6,950,000,000"
+    }
+  },
+  "accreditation": {
+    "hospitals": {
+      "total": "2,125",
+      "government": "963",
+      "private": "1,162"
+    },
+    "healthcareProfessionals": "212,800",
+    "ambulatorySurgery": "628",
+    "freestandingDialysis": "218",
+    "maternityClinic": "1,145"
+  },
+  "collectingAgencies": {
+    "total": "55",
+    "breakdown": {
+      "lgu": "23",
+      "privateInsurers": "16",
+      "cooperatives": "9",
+      "others": "7"
+    }
+  },
+  "milestones": [
+    "Implementation of Konsulta package",
+    "Enhanced primary care benefits",
+    "Improved dialysis coverage",
+    "Strengthened anti-fraud measures",
+    "Expansion of healthcare facilities accreditation"
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "year": 2012,
+  "theme": "Arangkada: Tungo sa Kalusugang Pangkalahatan (Accelerate: Towards Universal Health Care)",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2012.pdf",
+  "fileSize": "3.21 MB",
+  "mandate": "Accelerate development and roll-out of initiatives for all-inclusive health coverage",
+  "coverage": {
+    "totalRegistered": "81 million members and dependents nationwide",
+    "increase": "2.5 million more than previous year",
+    "registrationRate": "84% of entire population",
+    "coveredMembers": "69 million (72% of population, up from 53% in 2010)",
+    "pinsGenerated": "70 million"
+  },
+  "membershipBySelector": {
+    "privateEmployed": {
+      "members": "9.61M",
+      "dependents": "19.51M",
+      "total": "29.12M"
+    },
+    "sponsored": {
+      "members": "8.29M",
+      "dependents": "36.68M",
+      "total": "44.97M",
+      "nhtsPR": "25.04M",
+      "lguRegular": "19.94M"
+    },
+    "individuallyPaying": {
+      "members": "5.06M",
+      "dependents": "11.82M",
+      "total": "16.88M"
+    },
+    "overseas": {
+      "members": "2.84M",
+      "dependents": "5.23M",
+      "total": "8.07M"
+    },
+    "government": {
+      "members": "2.03M",
+      "dependents": "6.43M",
+      "total": "8.46M"
+    },
+    "lifetime": {
+      "members": "0.66M",
+      "dependents": "1.25M",
+      "total": "1.91M"
+    }
+  },
+  "indigentProgram": {
+    "nhtsPRFamilies": "5.2 million households (all identified as poor)",
+    "totalNHTSPREnrolled": "20.4 million indigents",
+    "lguEnrollment": {
+      "members": "3.7 million",
+      "dependents": "12.6 million"
+    }
+  },
+  "financialHighlights": {
+    "additionalRevenue": "Php47 billion",
+    "benefitPaymentsIncrease": "35%",
+    "zeroCoPayment": "Intensified for Sponsored Program in government hospitals"
+  },
+  "systemsAndProjects": [
+    {
+      "name": "PhilHealth CARES",
+      "detail": "530 nurses deployed to hospitals for outright assistance",
+      "fullName": "Customer Assistance, Relations and Empowerment Staff"
+    },
+    {
+      "name": "PhilHealth MOVES",
+      "detail": "Mobile Orientation, Validation and Enrollment Scheme",
+      "purpose": "Integrated marketing and information campaign"
+    },
+    {
+      "name": "PhilHealth Express",
+      "detail": "Launched in malls and population centers",
+      "services": "PIN/ID/MDR generation, data amendment, eligibility check"
+    },
+    {
+      "name": "e-Claims",
+      "detail": "Full service e-Claims launched for online filing by 2013",
+      "feature": "Automatic member eligibility verification"
+    },
+    {
+      "name": "EPRS",
+      "detail": "Electronic Premium Remittance System mandatory by 2013"
+    },
+    {
+      "name": "PAMS",
+      "detail": "PhilHealth Account Management Strategy with 160 P-AIMS specialists",
+      "purpose": "Monitor and sustain Employed Sector membership"
+    }
+  ],
+  "claimsProcessing": {
+    "turnaroundTime": {
+      "caseRates": "33 days",
+      "feeForService": "40 days"
+    },
+    "context": "Only 2 regions had TAT > 60 days",
+    "arbitration": "534 long-due pending cases resolved"
+  },
+  "accreditation": {
+    "hospitals": "1,670 (9 out of 10 DOH-licensed hospitals)",
+    "professionals": "27,414",
+    "pcbProviders": "1,805 RHUs/HCs",
+    "mcpProviders": "1,476",
+    "tbDotsProviders": "1,201",
+    "dialysisClinics": "69"
+  },
+  "partnerships": [
+    {
+      "partner": "DOH",
+      "initiative": "Joint Operations and Action Summit (JOAS)",
+      "detail": "Historic first convening for strategic planning"
+    },
+    {
+      "partner": "University of the Philippines",
+      "detail": "MOA for open collaboration in research and training"
+    },
+    {
+      "partner": "EU-World Bank",
+      "amount": "Php24 million",
+      "beneficiaries": "80,000 indigent families in ARMM"
+    },
+    {
+      "partner": "Asian Development Bank",
+      "amount": "Php1 million",
+      "purpose": "PhilHealth Expo replication"
+    },
+    {
+      "partner": "MECO and TECO",
+      "detail": "MOU for health care financing and IT implementation collaboration"
+    }
+  ],
+  "extraBudgetarySupport": "Php22.32 million from local engagements",
+  "keyPersonnel": {
+    "president": "BENIGNO S. AQUINO III",
+    "chairman": "Hon. Enrique T. Ona, M.D. (Secretary of Health)",
+    "presidentCEO": "Dr. Eduardo P. Banzon"
+  }
+}

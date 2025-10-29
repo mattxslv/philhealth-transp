@@ -1,14 +1,7 @@
-﻿import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: "Statistics Download",
-  description: "Download PhilHealth statistics, charts, and data analytics reports.",
-};
-
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
-import { Download, BarChart3, X } from 'lucide-react';
+import { Download, FileText, X } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 interface StatisticsFile {
@@ -80,36 +73,24 @@ export default function StatisticsChartsPage() {
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8 mt-4">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-              <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+              <FileText className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Reports</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Total Files</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{statistics.length}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-              <BarChart3 className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Date Range</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">2007 - 2024</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Statistics Grid */}
+      {/* Statistics Table */}
       {loading ? (
         <div className="text-center py-12">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent"></div>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#009a3d] border-r-transparent"></div>
           <p className="mt-4 text-gray-600 dark:text-gray-400">Loading statistics reports...</p>
         </div>
       ) : (
@@ -119,10 +100,13 @@ export default function StatisticsChartsPage() {
               <thead className="bg-gray-50 dark:bg-gray-900/50">
                 <tr>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Document Name
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Year
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Report Name
+                    Size
                   </th>
                   <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Actions
@@ -132,43 +116,41 @@ export default function StatisticsChartsPage() {
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {statistics.map((stat) => (
                   <tr key={stat.year} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                          <BarChart3 className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-red-100 dark:bg-red-900/30 rounded-lg">
+                          <FileText className="h-5 w-5 text-red-600 dark:text-red-400" />
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900 dark:text-white">
-                            {stat.year}
+                            {stat.displayName}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900 dark:text-white font-medium">
-                        {stat.displayName}
-                      </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        PhilHealth SNC Report
-                      </div>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                      {stat.year}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                      {stat.sizeMB} MB
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center">
                       <div className="flex items-center justify-center gap-2">
-                        <button
-                          onClick={() => openPdfModal(stat.download_url, stat.displayName)}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
-                        >
-                          <BarChart3 className="h-4 w-4" />
-                          View
-                        </button>
                         <a
                           href={stat.download_url}
                           download
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-[#009a3d] hover:bg-[#007a30] text-white text-sm font-medium rounded-lg transition-colors"
                         >
                           <Download className="h-4 w-4" />
                           Download
                         </a>
+                        <button
+                          onClick={() => openPdfModal(stat.download_url, stat.displayName)}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <FileText className="h-4 w-4" />
+                          View
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -182,7 +164,7 @@ export default function StatisticsChartsPage() {
       {/* Footer Note */}
       <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
         <div className="flex items-start gap-3">
-          <BarChart3 className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+          <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
           <div className="text-sm text-blue-900 dark:text-blue-100">
             <p className="font-semibold mb-2">About Statistics and Charts (SNC)</p>
             <p className="text-blue-800 dark:text-blue-200">

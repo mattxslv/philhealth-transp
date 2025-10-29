@@ -1,0 +1,81 @@
+{
+  "year": 2011,
+  "theme": "Kambyo, SHIFTING GEAR",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2011.pdf",
+  "fileSize": "13.27 MB",
+  "strategicDirection": "Kalusugan Pangkalahatan (Universal Health Care)",
+  "coverage": {
+    "coverageRate": "Almost 82% of population",
+    "membershipGrowth": "23% increase"
+  },
+  "indigentEnrollment": {
+    "strategy": "Adopted NHTS-PR (National Household Targeting System for Poverty Reduction)",
+    "impact": "Almost 60% increase in indigent family enrollment",
+    "totalNHTSPR": "4.2 million indigent members enrolled",
+    "worldBankSupport": "US$40 million allocation for Sponsored Program premiums"
+  },
+  "lguPartnerships": [
+    {
+      "lgu": "Caloocan City",
+      "coverage": "35,500 poor families",
+      "budget": "P10 million",
+      "achievement": "Among first LGUs to achieve universal coverage"
+    },
+    {
+      "lgu": "Mina, Iloilo",
+      "coverage": "4,175 indigent families",
+      "achievement": "Attained 100% coverage"
+    },
+    {
+      "lgu": "Cebu City",
+      "coverage": "30,000 indigent families (MOA)",
+      "priority": "2,887 beneficiaries of 4Ps program"
+    },
+    {
+      "lgu": "Leyte 4th District",
+      "sponsor": "Rep. Lucy Marie Torres-Gomez",
+      "coverage": "3,640 indigent families",
+      "budget": "P2 million (PDAF)"
+    },
+    {
+      "lgu": "Manila",
+      "coverage": "4,374 PhilHealth cards (DOH-sponsored)"
+    }
+  ],
+  "financialData": {
+    "memberContributions": "P26.58 billion",
+    "accruedBenefitClaims": "P6.09 billion",
+    "benefitClaimsPayable": "P2.32 billion",
+    "salariesAllowances": "P1.55 billion"
+  },
+  "systemImprovements": [
+    {
+      "system": "Electronic Premium Reporting System (EPRS)",
+      "detail": "Web-based system for online submission of remittance reports"
+    },
+    {
+      "system": "PhilHealth Call Center",
+      "launched": "February 2011 (16th anniversary)",
+      "detail": "Easy access to information for members"
+    }
+  ],
+  "publicPerception": {
+    "survey": "Social Weather Station (SWS) - June 2011",
+    "awareness": "77% aware and satisfied",
+    "netSatisfaction": "+66 (very good)",
+    "supportProtection": "+67"
+  },
+  "milestones": [
+    "Introduced Point-of-Care enrollment",
+    "Launched No Balance Billing policy",
+    "Expanded maternity care package",
+    "Strengthened anti-fraud initiatives",
+    "Enhanced Z Benefits coverage",
+    "Implemented EPRS for improved collection efficiency",
+    "Launched PhilHealth Call Center"
+  ],
+  "keyPersonnel": {
+    "chairman": "Hon. Enrique T. Ona, M.D. (Secretary of Health)",
+    "presidentCEO": "Dr. Eduardo P. Banzon (assumed October 2011, replaced Dr. Rey Aquino)"
+  }
+}

@@ -1,0 +1,291 @@
+{
+  "year": 2010,
+  "theme": "Labinlimang Taon ng Segurong Pangkalusugan Para sa Lahat (15 Years of Health Insurance for All)",
+  "anniversary": "15th",
+  "metadata": {
+    "reportType": "Statistics and Charts",
+    "dataAsOf": "March 1, 2011"
+  },
+  "coverage": {
+    "totalRegisteredMembers": 22440000,
+    "estimatedBeneficiaries": 69980000,
+    "populationEnrolled": 74,
+    "note": "15th anniversary of the National Health Insurance Program"
+  },
+  "membership": {
+    "membersByCategory": [
+      {
+        "sector": "Private-Employed",
+        "members": 7860000,
+        "beneficiaries": 22630000,
+        "percentage": 35
+      },
+      {
+        "sector": "Sponsored Program",
+        "members": 6040000,
+        "beneficiaries": 22100000,
+        "percentage": 27
+      },
+      {
+        "sector": "Individually-Paying",
+        "members": 3750000,
+        "beneficiaries": 10920000,
+        "percentage": 17
+      },
+      {
+        "sector": "Overseas Workers Program",
+        "members": 2340000,
+        "beneficiaries": 6900000,
+        "percentage": 10
+      },
+      {
+        "sector": "Government-Employed",
+        "members": 1950000,
+        "beneficiaries": 6580000,
+        "percentage": 9
+      },
+      {
+        "sector": "Lifetime Members",
+        "members": 500000,
+        "beneficiaries": 850000,
+        "percentage": 2
+      }
+    ],
+    "geographicalDistribution": {
+      "ncrAndNorthLuzon": 41,
+      "southLuzonAndVisayas": 37,
+      "mindanao": 22
+    }
+  },
+  "premiumCollections": {
+    "totalCollections": 28600000000,
+    "yearOnYearGrowth": 11,
+    "collectionsBySector": [
+      {
+        "sector": "Private",
+        "amount2009": 16335000000,
+        "amount2010": 18348000000,
+        "percentChange": 12
+      },
+      {
+        "sector": "Government",
+        "amount2009": 5685000000,
+        "amount2010": 6290000000,
+        "percentChange": 11
+      },
+      {
+        "sector": "Sponsored Program",
+        "amount2009": 1881000000,
+        "amount2010": 1930000000,
+        "percentChange": 2.6
+      },
+      {
+        "sector": "IPP",
+        "amount2009": 1428000000,
+        "amount2010": 1770000000,
+        "percentChange": 24
+      },
+      {
+        "sector": "OFW",
+        "amount2009": 722000000,
+        "amount2010": 967000000,
+        "percentChange": 34
+      }
+    ]
+  },
+  "benefitPayments": {
+    "totalPayments": 27100000000,
+    "yearOnYearGrowth": 11,
+    "comparison2009": 24300000000,
+    "paymentsBySector": [
+      {
+        "sector": "Private",
+        "amount2009": 9360000000,
+        "amount2010": 11215000000,
+        "percentChange": 20
+      },
+      {
+        "sector": "Government",
+        "amount2009": 4688000000,
+        "amount2010": 5142000000,
+        "percentChange": 10
+      },
+      {
+        "sector": "Sponsored Program",
+        "amount2009": 4015000000,
+        "amount2010": 5090000000,
+        "percentChange": 27,
+        "note": "Benefit payments for Sponsored Program registered a 65% increase"
+      },
+      {
+        "sector": "IPP",
+        "amount2009": 3745000000,
+        "amount2010": 3365000000,
+        "percentChange": -10
+      },
+      {
+        "sector": "Lifetime Members",
+        "amount2009": 1745000000,
+        "amount2010": 1755000000,
+        "percentChange": 1
+      },
+      {
+        "sector": "OFW",
+        "amount2009": 756000000,
+        "amount2010": 557000000,
+        "percentChange": -26
+      }
+    ],
+    "claimsProcessing": {
+      "totalClaimsPaid": 3866576,
+      "averageValuePerClaim": 7011,
+      "bySector": [
+        {
+          "sector": "Private",
+          "claimsPaid": 1489523,
+          "avpc": 7530,
+          "percentage": 38
+        },
+        {
+          "sector": "Government",
+          "claimsPaid": 733565,
+          "avpc": 7010,
+          "percentage": 19
+        },
+        {
+          "sector": "Sponsored Program",
+          "claimsPaid": 675980,
+          "avpc": 7530,
+          "percentage": 17
+        },
+        {
+          "sector": "IPP",
+          "claimsPaid": 609879,
+          "avpc": 5520,
+          "percentage": 16
+        },
+        {
+          "sector": "Lifetime",
+          "claimsPaid": 258458,
+          "avpc": 6790,
+          "percentage": 7
+        },
+        {
+          "sector": "OWP",
+          "claimsPaid": 99171,
+          "avpc": 5610,
+          "percentage": 3
+        }
+      ]
+    },
+    "claimsByArea": {
+      "ncrAndNorthLuzon": 41,
+      "southLuzonAndVisayas": 36,
+      "mindanao": 23
+    },
+    "benefitItemDistribution": [
+      {
+        "item": "Drugs & Medicine",
+        "percentage": 30
+      },
+      {
+        "item": "Professional Fees",
+        "percentage": 24
+      },
+      {
+        "item": "X-Ray/Lab/Others",
+        "percentage": 23
+      },
+      {
+        "item": "Room & Board",
+        "percentage": 16
+      },
+      {
+        "item": "OR Fee",
+        "percentage": 7
+      }
+    ],
+    "top20Illnesses": [
+      {
+        "rank": 1,
+        "illness": "Pneumonia, organism unspecified",
+        "totalAmount": 1884200000,
+        "claimsPaid": 344402
+      },
+      {
+        "rank": 2,
+        "illness": "Diarrhoea and gastroenteritis",
+        "totalAmount": 817800000,
+        "claimsPaid": 241743
+      },
+      {
+        "rank": 3,
+        "illness": "Chronic renal failure",
+        "totalAmount": 851900000,
+        "claimsPaid": 224946
+      },
+      {
+        "rank": 4,
+        "illness": "Single spontaneous delivery",
+        "totalAmount": 812900000,
+        "claimsPaid": 194570
+      },
+      {
+        "rank": 5,
+        "illness": "Other disorders of urinary system",
+        "totalAmount": 586200000,
+        "claimsPaid": 136897
+      }
+    ]
+  },
+  "accreditation": {
+    "facilities": {
+      "hospitals": 1691,
+      "professionals": 21338,
+      "ruralHealthUnits": 1288,
+      "tbDotsCenters": 813,
+      "maternityClinics": 742,
+      "freestandingDialysisClinics": 93
+    },
+    "hospitalsByType": {
+      "private": 946,
+      "government": 630,
+      "subtotal": 1576,
+      "privatePercentage": 60,
+      "governmentPercentage": 40,
+      "note": "89% of almost 1,800 DOH-licensed hospitals are accredited"
+    }
+  },
+  "collectingAgencies": {
+    "totalActiveACAs": 57,
+    "totalBranches": 4879,
+    "breakdown": [
+      {
+        "type": "Commercial Banks",
+        "count": 28,
+        "branches": 4213
+      },
+      {
+        "type": "Rural Banks",
+        "count": 19,
+        "branches": 269
+      },
+      {
+        "type": "Agencies",
+        "count": 8,
+        "branches": 338
+      },
+      {
+        "type": "Non-Bank",
+        "count": 2,
+        "branches": 59
+      }
+    ]
+  },
+  "milestones": {
+    "netFinancialStatus": "First time in NHIP history that PhilHealth paid more in benefits (P30.5B) than collected in premiums (P29B)",
+    "difference": 1500000000,
+    "nationalRegistrationDay": "PhilHealth Sabado, Magseguro, Magparehistro (October 2010)",
+    "artaCompliance": "PhilHealth (QC and Manila Service Offices) topped 7 other government agencies in ARTA compliance"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "year": 2015,
+  "theme": "PhilHealth@20: Two Decades of Sustainable and Responsive Social Health Insurance",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2015.pdf",
+  "fileSize": "2.62 MB",
+  "anniversary": "20th Anniversary",
+  "vision": "Bawat Pilipino, Miyembro, Bawat Miyembro, Protektado, Kalusugan Natin, Segurado",
+  "mission": "Sulit na Benepisyo sa Bawat Miyembro, Dekalidad na Serbisyo para sa Lahat",
+  "coreValues": "Inobasyon, Serbisyong Dekalidad, Lubos na Integridad, Angkop na Benepisyo, Panlipunang Pagkakabuklod, Ganap na Pagkalinga",
+  "goal": "Achieved Universal Health Care through financial risk protection",
+  "coverage": {
+    "totalCovered": "Over 93 million people",
+    "coverageRate": "92% of estimated 2015 population",
+    "enrollmentGrowth": "From 47 million (2010) to 93 million (2015)",
+    "keyMembers": "Senior and indigent citizens made mandatory members",
+    "noBalanceBilling": "NBB policy for indigent members since 2011"
+  },
+  "financialPerformance": {
+    "benefitPayments": {
+      "amount": "Php97 billion",
+      "growth": "20-26% more than 2014"
+    },
+    "claimsPaid": {
+      "total": "8.39 million claims",
+      "growth": "27% higher than 2014"
+    },
+    "claimsProcessingTAT": "31 days average (due to All Case Rate implementation)"
+  },
+  "claimsDistributionBySector": {
+    "nhtsPRSponsored": "33% (highest)",
+    "formalEconomy": "27%",
+    "informalEconomy": "23%",
+    "lifetimeSeniorCitizens": "17%"
+  },
+  "newBenefitPackages": [
+    {
+      "name": "MERS-CoV Coverage",
+      "effectiveDate": "January 1, 2015",
+      "amounts": "Php100,000 (Health Workers), Php50,000 (Non-Health Workers)",
+      "features": "Waiver of qualifying contributions/45-day limit"
+    },
+    {
+      "name": "Ebola Virus Disease (EVD)",
+      "effectiveDate": "January 1, 2015",
+      "amounts": "Php110,000 (Basic ≤7 days), Php16,000 per day (additional)",
+      "features": "Waiver of qualifying contributions/45-day limit"
+    },
+    {
+      "name": "Z Benefits Expansion",
+      "packages": [
+        "Colon Cancer Stage I-II (Php150,000)",
+        "Colon Cancer Stage II-III (Php300,000)"
+      ],
+      "totalZBenefits": "13 packages",
+      "effectiveDate": "October 15, 2015"
+    },
+    {
+      "name": "Dialysis Package Expansion",
+      "hemodialysis": "Increased from 45 to 90 sessions per year",
+      "peritonealDialysis": "Increased from 270 to 360 days per year",
+      "rate": "Php2,600 per session"
+    },
+    {
+      "name": "Primary Care Benefit Enhancement",
+      "program": "Tamang Serbisyong Kalusugang Pampamilya (TseKAP)"
+    }
+  ],
+  "healthCareProviders": {
+    "accreditedHospitals": "1,172 DOH licensed hospitals (99% of DOH-licensed)",
+    "outpatientClinics": "2,553 PCB providers",
+    "maternityProviders": "2,981",
+    "tbDotsProviders": "1,739",
+    "lguAccess": {
+      "pcb": "99% of LGUs have at least one",
+      "mcp": "80% of LGUs",
+      "dots": "81% of LGUs"
+    }
+  },
+  "keyPersonnel": {
+    "president": "BENIGNO S. AQUINO III",
+    "chairman": "Hon. JANETTE P. LORETO-GARIN, MD, MBA-H (Secretary of Health)"
+  }
+}

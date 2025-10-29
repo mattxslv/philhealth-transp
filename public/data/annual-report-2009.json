@@ -1,0 +1,115 @@
+{
+  "year": 2009,
+  "theme": "Reaching New Heights",
+  "pdfUrl": "https://storage.googleapis.com/philhealth_transparency/Annual Reports/ar2009.pdf",
+  "fileSize": "1.78 MB",
+  "coverage": {
+    "totalBeneficiaries": "87% of populace",
+    "indigentCoverage": "26 million poor Filipinos (up from 1 million in 2001)",
+    "achievement": "Surpassed 85% coverage target by 2010"
+  },
+  "financialHighlights": {
+    "premiumCollections": {
+      "amount": "P26 billion",
+      "previous": "P28 billion (2008)",
+      "context": "Slight decline attributed to discounts and payment incentives after major calamities"
+    },
+    "benefitPayments": {
+      "amount": "P24.3 billion",
+      "growth": "34%",
+      "previous": "P18.1 billion (2008)",
+      "context": "35% increase in benefit packages"
+    },
+    "investmentPortfolio": {
+      "amount": "P92.1 billion",
+      "growth": "8%",
+      "previous": "P85.2 billion (2008)"
+    },
+    "financialPosition": {
+      "totalAssets": "P100.54 billion",
+      "totalLiabilities": "P8.92 billion",
+      "equity": "P91.62 billion",
+      "totalRevenues": "P33.57 billion",
+      "totalExpenses": "P24.42 billion",
+      "netIncome": "P9.14 billion"
+    }
+  },
+  "membership": {
+    "totalPrincipalMembers": "20.2 million",
+    "increase": "Up from 16.5 million in 2008",
+    "breakdown": {
+      "sponsored": {
+        "milestone": "Surpassed 5 million families mark",
+        "context": "Significant growth from LGU/Legislator sponsorships"
+      },
+      "informal": {
+        "total": "3.32 million",
+        "growth": "22% increase from 2.27 million (2008)"
+      },
+      "private": {
+        "growth": "10% increase",
+        "context": "Result of massive employer mapping nationwide"
+      }
+    }
+  },
+  "benefitEnhancements": [
+    {
+      "name": "General Benefit Ceiling",
+      "detail": "35% aggregate increase without premium rate increase"
+    },
+    {
+      "name": "Pandemic Coverage",
+      "detail": "Up to P150,000 per case for Novel A (H1N1)"
+    },
+    {
+      "name": "Maternity Care",
+      "detail": "Coverage of 4th Normal Spontaneous Delivery"
+    },
+    {
+      "name": "Outpatient Care",
+      "detail": "Coverage of take-home medication for Sponsored Members under DOH P100 Program"
+    },
+    {
+      "name": "Quality Assurance",
+      "detail": "Completion of PhilHealth Benchbook"
+    }
+  ],
+  "partnerships": [
+    {
+      "partner": "Antipolo City",
+      "coverage": "10,000 families"
+    },
+    {
+      "partner": "Northern Samar",
+      "coverage": "60,000 families"
+    },
+    {
+      "partner": "NATCCO (National Confederation of Cooperatives)",
+      "sector": "Informal"
+    },
+    {
+      "partner": "Gawad Kalinga",
+      "sector": "Informal"
+    }
+  ],
+  "innovations": [
+    {
+      "name": "Remittance-By-Air (RBA)",
+      "detail": "Payment via text messaging (SMS) for Individually Paying Members",
+      "launched": "October 2009"
+    },
+    {
+      "name": "MLhuillier Partnership",
+      "detail": "First 24/7 accredited collecting partner"
+    },
+    {
+      "name": "Overseas Mobile Office",
+      "detail": "First overseas mobile office in Hong Kong and Macau",
+      "partners": "DBP and LBP for OFW premium collections"
+    }
+  ],
+  "keyPersonnel": {
+    "chairman": "Hon. Francisco T. Duque III, M.D., MSc. (2005-2009)",
+    "presidentCEO": "Hon. Rey B. Aquino, M.D. (assumed June 2008)"
+  }
+}
