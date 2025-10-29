@@ -3,12 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/contexts/sidebar-context";
-import { GlobalSearch } from "@/components/ui/global-search";
 
 // Main PhilHealth website navigation links
 const navigation = [
@@ -22,7 +20,6 @@ const navigation = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { sidebarOpen, setSidebarOpen } = useSidebar();
 
@@ -89,7 +86,7 @@ export function Navbar() {
         </div>
 
         {/* Right section - Navigation links (Desktop only) */}
-        <div className="hidden lg:flex lg:items-center lg:gap-x-6 lg:flex-1 lg:justify-end">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-6 xl:gap-x-8 lg:flex-1 lg:justify-end lg:flex-nowrap">
           {navigation.map((item) => {
             const isActive = !item.external && pathname === item.href;
             
@@ -100,7 +97,7 @@ export function Navbar() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary whitespace-nowrap"
                 >
                   {item.name}
                 </a>
@@ -112,7 +109,7 @@ export function Navbar() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
+                  "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
                   isActive ? "text-primary" : "text-muted-foreground"
                 )}
               >
@@ -120,17 +117,6 @@ export function Navbar() {
               </Link>
             );
           })}
-          
-          {/* Desktop only - Search and Theme toggle */}
-          <GlobalSearch />
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
-            aria-label="Toggle theme"
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </button>
         </div>
       </nav>
       
@@ -194,27 +180,6 @@ export function Navbar() {
                       </Link>
                     );
                   })}
-                </div>
-                <div className="py-6">
-                  <button
-                    onClick={() => {
-                      setTheme(theme === "dark" ? "light" : "dark");
-                      setMobileMenuOpen(false);
-                    }}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-base font-semibold hover:bg-accent"
-                  >
-                    {theme === "dark" ? (
-                      <>
-                        <Sun className="h-5 w-5" />
-                        <span>Light Mode</span>
-                      </>
-                    ) : (
-                      <>
-                        <Moon className="h-5 w-5" />
-                        <span>Dark Mode</span>
-                      </>
-                    )}
-                  </button>
                 </div>
                 <div className="py-6">
                   <div className="text-xs text-muted-foreground mb-3">In partnership with</div>
