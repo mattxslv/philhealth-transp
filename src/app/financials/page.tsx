@@ -10,7 +10,6 @@ import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency } from "@/lib/utils";
 import { DollarSign, TrendingUp, TrendingDown, Wallet } from "lucide-react";
 import { ErrorMessage } from "@/components/ui/error-message";
-import { ExportButton } from "@/components/ui/export-button";
 import { YearSelectorDropdown } from "@/components/ui/year-selector-dropdown";
 import {
   Chart as ChartJS,
@@ -262,29 +261,19 @@ export default function FinancialsPage() {
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-foreground">Financial Information</h1>
-            <p className="text-muted-foreground mt-1">Comprehensive financial data and statements - {selectedYear}</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <YearSelectorDropdown 
-              selectedYear={selectedYear} 
-              onChange={setSelectedYear}
-              startYear={2022}
-              endYear={2024}
-            />
-            <ExportButton
-              data={{ statisticsData, annualReportData }}
-              filename={`philhealth-financials-${selectedYear}`}
-            />
-          </div>
-        </div>
-
         {/* Financial Overview Section */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-sm border border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Financial Overview {selectedYear}</h2>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Financial Overview {selectedYear}</h2>
+            <div className="flex items-center gap-3">
+              <YearSelectorDropdown 
+                selectedYear={selectedYear} 
+                onChange={setSelectedYear}
+                startYear={2022}
+                endYear={2024}
+              />
+            </div>
+          </div>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
             PhilHealth&apos;s financial performance demonstrates our commitment to providing comprehensive healthcare coverage 
             to all Filipinos while maintaining fiscal responsibility and sustainability.
