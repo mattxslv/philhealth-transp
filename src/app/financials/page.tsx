@@ -175,10 +175,10 @@ export default function FinancialsPage() {
   const expensesTrend = calculateTrend(latestData.expenditures || 0, previousYearData?.expenditures);
   const netIncomeTrend = calculateTrend(latestData.netIncome || 0, previousYearData?.netIncome);
   
-  // No detailed breakdown available for 2007 data
-  const assetDetails = null;
-  const revenueDetails = null;
-  const expenseDetails = null;
+  // Use asset details from latestData (may be undefined for 2007)
+  const assetDetails = latestData.assets || latestData.assetBreakdown;
+  const revenueDetails = latestData.revenue;
+  const expenseDetails = latestData.expenses || latestData.breakdown;
   
   // Get available years from the data
   const availableYears = data.annualReports?.map((report: any) => report.year).filter((year: number) => year !== 2022) || [2007];
