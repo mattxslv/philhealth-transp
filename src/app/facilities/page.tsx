@@ -10,7 +10,6 @@ import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { Building2, Hospital, Users, Stethoscope } from "lucide-react";
 import { ErrorMessage } from "@/components/ui/error-message";
-import { ExportButton } from "@/components/ui/export-button";
 import { YearSelectorDropdown } from "@/components/ui/year-selector-dropdown";
 import {
   Chart as ChartJS,
@@ -320,10 +319,6 @@ export default function FacilitiesPage() {
               onChange={setSelectedYear}
               startYear={2022}
               endYear={2024}
-            />
-            <ExportButton
-              data={{ facilities: otherFacilities, summary: accreditationData }}
-              filename={`philhealth-facilities-${selectedYear}`}
             />
           </div>
         </div>

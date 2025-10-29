@@ -10,7 +10,6 @@ import { PageLoadingSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { TrendingUp, DollarSign, CheckCircle, Activity } from "lucide-react";
 import { ErrorMessage } from "@/components/ui/error-message";
-import { ExportButton } from "@/components/ui/export-button";
 import { YearSelectorDropdown } from "@/components/ui/year-selector-dropdown";
 import {
   Chart as ChartJS,
@@ -311,10 +310,6 @@ export default function ClaimsPage() {
               onChange={setSelectedYear}
               startYear={2022}
               endYear={2024}
-            />
-            <ExportButton
-              data={claimsData}
-              filename={`philhealth-claims-${selectedYear}`}
             />
           </div>
         </div>
