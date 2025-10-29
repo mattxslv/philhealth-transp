@@ -36,13 +36,14 @@ export function Navbar() {
         )}
         aria-label="Global"
       >
-        {/* Left section - Logo and hamburger */}
-        <div className="flex items-center gap-12 lg:flex-1">
-          {/* Mobile hamburger - only show on mobile */}
+        {/* Left section - Logo and hamburgers */}
+        <div className="flex items-center gap-3 lg:gap-12 lg:flex-1">
+          {/* Mobile hamburger for SIDEBAR - only show on mobile */}
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden rounded-md p-2 hover:bg-primary/10 transition-colors"
             aria-label="Open sidebar"
+            title="Open sidebar"
           >
             <Menu className="h-5 w-5" />
           </button>
@@ -86,6 +87,16 @@ export function Navbar() {
             </div>
           </Link>
         </div>
+
+        {/* Mobile menu button for navigation links */}
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="lg:hidden rounded-md p-2 hover:bg-primary/10 transition-colors"
+          aria-label="Open navigation menu"
+          title="Navigation menu"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
 
         {/* Right section - Navigation links (Desktop only) */}
         <div className="hidden lg:flex lg:items-center lg:gap-x-6 lg:flex-1 lg:justify-end">
