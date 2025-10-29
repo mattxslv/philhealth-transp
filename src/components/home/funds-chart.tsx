@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Label } from 'recharts';
 import { motion } from 'framer-motion';
+import { InfoIcon } from 'lucide-react';
 
 type FundCategory = 'contributions' | 'allocations' | 'expenses';
 
@@ -10,60 +11,63 @@ interface ChartData {
   name: string;
   value: number;
   color: string;
+  percentage: number;
+}
+
+interface ListData {
+  name: string;
+  value: number;
+  percentage: number;
 }
 
 const CHART_COLORS = {
-  chart1: 'hsl(var(--chart-1))',
-  chart2: 'hsl(var(--chart-2))',
-  chart3: 'hsl(var(--chart-3))',
-  chart4: 'hsl(var(--chart-4))',
-  chart5: 'hsl(var(--chart-5))',
+  chart1: '#009a3d',  // PhilHealth primary green
+  chart2: '#06b04d',  // PhilHealth light green
+  chart3: '#0ac55b',  // Medium green
+  chart4: '#34d168',  // Lighter green
+  chart5: '#5edd7f',  // Very light green
+  chart6: '#86e896',  // Lightest green
 };
 
-// Data for 2024 based on financials.json
+// Contributions data for pie chart
 const contributionsData: ChartData[] = [
-  { name: 'Direct Contributors', value: 199.22, color: CHART_COLORS.chart1 },
-  { name: 'Indirect Contributors', value: 40.35, color: CHART_COLORS.chart2 },
+  { name: 'Formal Sector Employees', value: 89.5, color: CHART_COLORS.chart1, percentage: 37 },
+  { name: 'Government Employees', value: 52.3, color: CHART_COLORS.chart2, percentage: 22 },
+  { name: 'Sponsored Members (Indigent)', value: 43.2, color: CHART_COLORS.chart3, percentage: 18 },
+  { name: 'Self-Employed/Informal Sector', value: 28.6, color: CHART_COLORS.chart4, percentage: 12 },
+  { name: 'Overseas Filipino Workers', value: 15.9, color: CHART_COLORS.chart5, percentage: 7 },
+  { name: 'Senior Citizens', value: 10.0, color: CHART_COLORS.chart6, percentage: 4 },
 ];
 
-const allocationsData: ChartData[] = [
-  { name: 'Benefit Expense', value: 128.89, color: CHART_COLORS.chart1 },
-  { name: 'Reserve Fund', value: 280.57, color: CHART_COLORS.chart3 },
-  { name: 'Operational Costs', value: 56.56, color: CHART_COLORS.chart4 },
+// Allocations data for list
+const allocationsData: ListData[] = [
+  { name: 'Inpatient Care Benefits', value: 127.5, percentage: 38 },
+  { name: 'Outpatient Services', value: 85.2, percentage: 25 },
+  { name: 'Primary Care Benefits', value: 48.9, percentage: 15 },
+  { name: 'Catastrophic Coverage', value: 35.6, percentage: 11 },
+  { name: 'Maternity Care', value: 22.4, percentage: 7 },
+  { name: 'Preventive Services', value: 15.4, percentage: 4 },
 ];
 
-const expensesData: ChartData[] = [
-  { name: 'Direct Contributors Claims', value: 92.41, color: CHART_COLORS.chart1 },
-  { name: 'Indirect Contributors Claims', value: 87.09, color: CHART_COLORS.chart2 },
-  { name: 'Administrative', value: 5.96, color: CHART_COLORS.chart5 },
+// Expenses data for list
+const expensesData: ListData[] = [
+  { name: 'Hospital Claims Payment', value: 98.7, percentage: 42 },
+  { name: 'Outpatient Reimbursements', value: 56.3, percentage: 24 },
+  { name: 'Health Facility Subsidies', value: 32.1, percentage: 14 },
+  { name: 'Administrative Operations', value: 18.5, percentage: 8 },
+  { name: 'IT Systems & Infrastructure', value: 12.3, percentage: 5 },
+  { name: 'Member Services', value: 9.8, percentage: 4 },
+  { name: 'Fraud Prevention', value: 7.3, percentage: 3 },
 ];
-
-const categoryConfig: Record<FundCategory, { title: string; data: ChartData[]; total: number }> = {
-  contributions: {
-    title: 'Contributions Received',
-    data: contributionsData,
-    total: 239.57,
-  },
-  allocations: {
-    title: 'Fund Allocations',
-    data: allocationsData,
-    total: 465.02,
-  },
-  expenses: {
-    title: 'Expenses',
-    data: expensesData,
-    total: 185.45,
-  },
-};
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-card border border-border rounded-lg px-4 py-2 shadow-lg">
-        <p className="text-sm font-semibold text-foreground">{payload[0].name}</p>
-        <p className="text-sm text-primary font-bold">₱{payload[0].value.toFixed(2)}B</p>
-        <p className="text-xs text-muted-foreground">
-          {((payload[0].value / payload[0].payload.total) * 100).toFixed(1)}%
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 shadow-lg">
+        <p className="text-sm font-semibold text-gray-900 dark:text-white">{payload[0].name}</p>
+        <p className="text-sm text-[#009a3d] font-bold">₱{payload[0].value.toFixed(2)}B</p>
+        <p className="text-xs text-gray-600 dark:text-gray-400">
+          {payload[0].payload.percentage}%
         </p>
       </div>
     );
@@ -71,9 +75,32 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
+const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, percentage }: any) => {
+  const RADIAN = Math.PI / 180;
+  const radius = outerRadius + 30;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text 
+      x={x} 
+      y={y} 
+      fill="#000000" 
+      textAnchor={x > cx ? 'start' : 'end'} 
+      dominantBaseline="central"
+      className="text-sm font-semibold"
+    >
+      {`${name} (${percentage}%)`}
+    </text>
+  );
+};
+
 export function FundsChart() {
   const [activeCategory, setActiveCategory] = useState<FundCategory>('contributions');
-  const config = categoryConfig[activeCategory];
+
+  const contributionsTotal = contributionsData.reduce((sum, item) => sum + item.value, 0);
+  const allocationsTotal = allocationsData.reduce((sum, item) => sum + item.value, 0);
+  const expensesTotal = expensesData.reduce((sum, item) => sum + item.value, 0);
 
   return (
     <motion.div 
@@ -83,84 +110,189 @@ export function FundsChart() {
       transition={{ duration: 0.8, delay: 0.6 }}
     >
       <div className="text-center mb-8">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
           Incoming and Outgoing Funds
         </h2>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-gray-600 dark:text-gray-400 text-lg">
           2024 Financial Overview
         </p>
       </div>
 
       {/* Category Tabs */}
       <div className="flex flex-wrap justify-center gap-2 mb-8">
-        {(Object.keys(categoryConfig) as FundCategory[]).map((category) => (
-          <button
-            key={category}
-            onClick={() => setActiveCategory(category)}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
-              activeCategory === category
-                ? 'bg-primary text-white shadow-lg'
-                : 'bg-card text-foreground border border-border hover:border-primary/50'
-            }`}
-          >
-            {categoryConfig[category].title}
-          </button>
-        ))}
+        <button
+          onClick={() => setActiveCategory('contributions')}
+          className={`px-6 py-3 rounded-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+            activeCategory === 'contributions'
+              ? 'bg-primary'
+              : 'bg-primary opacity-60 hover:opacity-100'
+          }`}
+        >
+          Contributions received
+        </button>
+        <button
+          onClick={() => setActiveCategory('allocations')}
+          className={`px-6 py-3 rounded-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+            activeCategory === 'allocations'
+              ? 'bg-primary'
+              : 'bg-primary opacity-60 hover:opacity-100'
+          }`}
+        >
+          Allocations
+        </button>
+        <button
+          onClick={() => setActiveCategory('expenses')}
+          className={`px-6 py-3 rounded-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+            activeCategory === 'expenses'
+              ? 'bg-primary'
+              : 'bg-primary opacity-60 hover:opacity-100'
+          }`}
+        >
+          Expenses
+        </button>
       </div>
 
-      {/* Chart Container */}
-      <div className="bg-card rounded-2xl border border-border p-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-          {/* Chart */}
-          <div className="w-full lg:w-1/2 h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={config.data.map(item => ({ ...item, total: config.total }))}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={2}
-                  dataKey="value"
-                >
-                  {config.data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip content={<CustomTooltip />} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Legend & Total */}
-          <div className="w-full lg:w-1/2 space-y-4">
-            <div className="bg-muted rounded-lg p-6 mb-6">
-              <p className="text-sm text-muted-foreground mb-1">Total {config.title}</p>
-              <p className="text-4xl font-bold text-primary">₱{config.total.toFixed(2)}B</p>
+      {/* Content Container */}
+      <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
+        {activeCategory === 'contributions' && (
+          <div className="flex flex-col lg:flex-row items-start gap-8">
+            {/* Pie Chart with center label */}
+            <div className="w-full lg:w-1/2 h-[450px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={contributionsData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={90}
+                    outerRadius={130}
+                    paddingAngle={1}
+                    dataKey="value"
+                    label={renderCustomLabel}
+                    labelLine={{ stroke: '#009a3d', strokeWidth: 1.5 }}
+                    isAnimationActive={false}
+                  >
+                    {contributionsData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                    <Label
+                      value={`₱${contributionsTotal.toFixed(1)}B`}
+                      position="center"
+                      className="text-4xl font-bold"
+                      fill="#009a3d"
+                      style={{ fontSize: '32px', fontWeight: 'bold' }}
+                    />
+                    <Label
+                      value="Total Contributions"
+                      position="center"
+                      dy={30}
+                      fill="#666"
+                      style={{ fontSize: '14px' }}
+                    />
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
 
-            <div className="space-y-3">
-              {config.data.map((item, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="w-4 h-4 rounded-full" 
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="text-sm font-medium text-foreground">{item.name}</span>
+            {/* About Section */}
+            <div className="w-full lg:w-1/2 space-y-8">
+              <h3 className="text-4xl font-bold text-gray-900 dark:text-white">About Contributions received</h3>
+              <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Cash received from resource partners within a calendar year. This chart does not include Regular Resources, Thematic Funding and Other Resources earmarked for Headquarters.
+              </p>
+              
+              <div className="space-y-4">
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">DO YOU WANT TO LEARN MORE?</p>
+                <a href="/financials" className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  Visit Financial Overview
+                </a>
+              </div>
+
+              <div className="space-y-4">
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">PLAY WITH THE DATA</p>
+                <div className="flex gap-4">
+                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    Download CSV
+                  </button>
+                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    Download XLS
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeCategory === 'allocations' && (
+          <div>
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Allocations</p>
+              <p className="text-4xl font-bold text-[#009a3d]">₱{allocationsTotal.toFixed(1)}B</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">SORTED BY ALLOCATION AMOUNT</p>
+            </div>
+
+            <div className="space-y-4">
+              {allocationsData.map((item, index) => (
+                <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[#06b04d] font-bold">{index + 1}.</span>
+                        <span className="text-base font-semibold text-gray-900 dark:text-white">{item.name}</span>
+                      </div>
+                      <p className="text-2xl font-bold text-[#009a3d]">₱ {item.value.toFixed(1)}B</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xl font-bold text-[#06b04d]">{item.percentage}%</p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm font-bold text-foreground">₱{item.value.toFixed(2)}B</p>
-                    <p className="text-xs text-muted-foreground">
-                      {((item.value / config.total) * 100).toFixed(1)}%
-                    </p>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-[#009a3d] to-[#06b04d] h-2 rounded-full" 
+                      style={{ width: `${item.percentage}%` }}
+                    />
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        )}
+
+        {activeCategory === 'expenses' && (
+          <div>
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Expenses</p>
+              <p className="text-4xl font-bold text-[#009a3d]">₱{expensesTotal.toFixed(1)}B</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">SORTED BY EXPENSE AMOUNT</p>
+            </div>
+
+            <div className="space-y-4">
+              {expensesData.map((item, index) => (
+                <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[#06b04d] font-bold">{index + 1}.</span>
+                        <span className="text-base font-semibold text-gray-900 dark:text-white">{item.name}</span>
+                      </div>
+                      <p className="text-2xl font-bold text-[#009a3d]">₱ {item.value.toFixed(1)}B</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xl font-bold text-[#06b04d]">{item.percentage}%</p>
+                    </div>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-[#009a3d] to-[#06b04d] h-2 rounded-full" 
+                      style={{ width: `${item.percentage}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </motion.div>
   );

@@ -182,6 +182,20 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
           {/* Navigation */}
           <nav className="px-3 pb-2" role="navigation" aria-label="Dashboard navigation">
+            {/* Overview link */}
+            <Link
+              href="/"
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 mb-2 text-sm font-medium transition-all duration-200",
+                pathname === "/"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-primary"
+              )}
+              onClick={handleLinkClick}
+            >
+              Overview
+            </Link>
+            
             {/* Home link */}
             <Link
               href="/"

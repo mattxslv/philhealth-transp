@@ -60,63 +60,6 @@ export function PhilippinesMap() {
           </p>
         </motion.div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-lg rounded-2xl p-6 border border-primary/20"
-          >
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-primary/20 rounded-xl">
-                <Users className="h-8 w-8 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Total Members</p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">35.7M</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-gradient-to-br from-[#06b04d]/10 to-[#06b04d]/5 backdrop-blur-lg rounded-2xl p-6 border border-[#06b04d]/20"
-          >
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-[#06b04d]/20 rounded-xl">
-                <Building2 className="h-8 w-8 text-[#06b04d]" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Accredited Facilities</p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">6,284</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-lg rounded-2xl p-6 border border-primary/20"
-          >
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-primary/20 rounded-xl">
-                <TrendingUp className="h-8 w-8 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Average Coverage</p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">81.2%</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
         {/* Interactive Map and Regional Statistics Side by Side */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Map - Left Side */}
@@ -124,7 +67,7 @@ export function PhilippinesMap() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden p-6"
           >
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
@@ -155,13 +98,29 @@ export function PhilippinesMap() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden"
           >
             <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 Regional Statistics
               </h3>
+              
+              {/* Summary Stats as Text */}
+              <div className="grid grid-cols-3 gap-4 mb-4 text-center">
+                <div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Members</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">35.7M</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Facilities</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">6,284</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Avg Coverage</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">81.2%</p>
+                </div>
+              </div>
             </div>
             <div className="overflow-y-auto max-h-[700px]">
               <table className="w-full">

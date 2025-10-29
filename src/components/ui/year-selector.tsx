@@ -42,12 +42,12 @@ export function YearSelector({
         {hasDetailedBreakdown && (
           <>
             <span className="text-xs text-primary dark:text-primary font-medium">
-              ✓ Detailed breakdown available
+              Detailed breakdown available
             </span>
             {onToggleAll && expandedCards && (
               <button
                 onClick={onToggleAll}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#009a3d] to-[#06b04d] hover:from-[#008234] hover:to-[#059669] text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary text-sm"
               >
                 {allExpanded ? (
                   <>

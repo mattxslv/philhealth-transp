@@ -57,7 +57,7 @@ export function KPISection() {
               <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
                 Total Funds Collected in 2024
               </p>
-              <p className="text-5xl sm:text-6xl font-bold text-primary">
+              <p className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary break-words">
                 {formatCurrency(totalCollected)}
               </p>
               <p className="text-sm text-muted-foreground">
@@ -66,11 +66,11 @@ export function KPISection() {
             </div>
 
             {/* Total Spent */}
-            <div className="space-y-3">
+            <div className="space-y-3 text-left md:text-right">
               <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
                 Total Funds Utilized in 2024
               </p>
-              <p className="text-5xl sm:text-6xl font-bold text-foreground">
+              <p className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground break-words">
                 {formatCurrency(totalSpent)}
               </p>
               <p className="text-sm text-muted-foreground">
