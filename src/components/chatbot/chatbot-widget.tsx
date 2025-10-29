@@ -23,6 +23,7 @@ export default function ChatbotWidget() {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -40,6 +41,21 @@ export default function ChatbotWidget() {
     }
   }, [isOpen]);
 
+  const startNewSession = async () => {
+    try {
+      const response = await fetch('https://philhealth-ai-623960795683.asia-southeast1.run.app/session/start');
+      if (!response.ok) {
+        throw new Error('Failed to start session');
+      }
+      const data = await response.json();
+      setSessionId(data.sid);
+      return data.sid;
+    } catch (error) {
+      console.error('Error starting session:', error);
+      return null;
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -51,12 +67,22 @@ export default function ChatbotWidget() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const messageContent = inputValue;
     setInputValue('');
     setIsLoading(true);
 
     try {
+      // Get or create session
+      let currentSessionId = sessionId;
+      if (!currentSessionId) {
+        currentSessionId = await startNewSession();
+        if (!currentSessionId) {
+          throw new Error('Failed to create session');
+        }
+      }
+
       const response = await fetch(
-        `https://philhealth-ai-623960795683.asia-southeast1.run.app/ask?q=${encodeURIComponent(inputValue)}`,
+        `https://philhealth-ai-623960795683.asia-southeast1.run.app/session/ask_stream?q=${encodeURIComponent(messageContent)}&sid=${currentSessionId}`,
         {
           method: 'GET',
           headers: {
@@ -66,6 +92,35 @@ export default function ChatbotWidget() {
       );
 
       if (!response.ok) {
+        // If session expired, try creating a new one
+        if (response.status === 404 || response.status === 400) {
+          currentSessionId = await startNewSession();
+          if (currentSessionId) {
+            const retryResponse = await fetch(
+              `https://philhealth-ai-623960795683.asia-southeast1.run.app/session/ask_stream?q=${encodeURIComponent(messageContent)}&sid=${currentSessionId}`,
+              {
+                method: 'GET',
+                headers: {
+                  'accept': 'application/json',
+                },
+              }
+            );
+            if (!retryResponse.ok) {
+              throw new Error('Failed to get response after retry');
+            }
+            const retryData = await retryResponse.text();
+            
+            const assistantMessage: Message = {
+              id: (Date.now() + 1).toString(),
+              role: 'assistant',
+              content: retryData,
+              timestamp: new Date(),
+            };
+
+            setMessages((prev) => [...prev, assistantMessage]);
+            return;
+          }
+        }
         throw new Error('Failed to get response');
       }
 
