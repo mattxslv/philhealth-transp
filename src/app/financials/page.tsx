@@ -85,11 +85,18 @@ export default function FinancialsPage() {
         if (detailed2007Res.data && financialsRes.data.annualReports) {
           const yearIndex = financialsRes.data.annualReports.findIndex((r: any) => r.year === 2007);
           if (yearIndex !== -1) {
+            const detailed = detailed2007Res.data;
             financialsRes.data.annualReports[yearIndex] = {
               ...financialsRes.data.annualReports[yearIndex],
-              ...detailed2007Res.data,
+              ...detailed,
+              // Map 2007 data structure to match expected format
+              revenue: detailed.summary?.totalRevenue || detailed.revenue?.total || financialsRes.data.annualReports[yearIndex].revenue,
+              expenditures: detailed.summary?.totalExpenses || detailed.expenses?.total || financialsRes.data.annualReports[yearIndex].expenditures,
+              netIncome: detailed.summary?.netIncome || financialsRes.data.annualReports[yearIndex].netIncome,
+              totalAssets: detailed.summary?.totalAssets || financialsRes.data.annualReports[yearIndex].totalAssets,
+              totalLiabilities: detailed.summary?.totalLiabilities || financialsRes.data.annualReports[yearIndex].totalLiabilities,
               // Keep breakdown from financials.json if it exists
-              breakdown: financialsRes.data.annualReports[yearIndex].breakdown || detailed2007Res.data.revenue?.breakdown
+              breakdown: financialsRes.data.annualReports[yearIndex].breakdown || detailed.revenue?.breakdown
             };
           }
         }
@@ -171,7 +178,7 @@ export default function FinancialsPage() {
   };
   
   const assetsTrend = calculateTrend(latestData.totalAssets || 0, previousYearData?.totalAssets);
-  const revenueTrend = calculateTrend(latestData.totalRevenue || 0, previousYearData?.totalRevenue);
+  const revenueTrend = calculateTrend(latestData.revenue || 0, previousYearData?.revenue);
   const expensesTrend = calculateTrend(latestData.expenditures || 0, previousYearData?.expenditures);
   const netIncomeTrend = calculateTrend(latestData.netIncome || 0, previousYearData?.netIncome);
   
