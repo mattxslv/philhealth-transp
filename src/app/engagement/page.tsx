@@ -1,4 +1,11 @@
-﻿"use client";
+﻿import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Public Engagement",
+  description: "PhilHealth public engagement initiatives, surveys, feedback, and community participation programs.",
+};
+
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";

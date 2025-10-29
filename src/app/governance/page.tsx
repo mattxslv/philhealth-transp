@@ -1,4 +1,11 @@
-﻿"use client";
+﻿import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Governance Documents",
+  description: "PhilHealth governance documents including policies, circulars, board resolutions, and regulatory compliance.",
+};
+
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";

@@ -1,4 +1,11 @@
-﻿'use client';
+﻿import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Statistics Download",
+  description: "Download PhilHealth statistics, charts, and data analytics reports.",
+};
+
+'use client';
 
 import { useEffect, useState } from 'react';
 import { Download, BarChart3, X } from 'lucide-react';

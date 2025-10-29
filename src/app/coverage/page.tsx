@@ -1,4 +1,11 @@
-﻿"use client";
+﻿import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Coverage Statistics",
+  description: "PhilHealth coverage statistics by region, demographics, and benefit packages.",
+};
+
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";

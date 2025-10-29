@@ -1,4 +1,11 @@
-﻿"use client";
+﻿import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Claims Analytics",
+  description: "Comprehensive analysis of PhilHealth claims data including processing times, amounts, and trends.",
+};
+
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";

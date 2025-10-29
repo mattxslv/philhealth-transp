@@ -1,4 +1,11 @@
-﻿"use client";
+﻿import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Financial Reports",
+  description: "PhilHealth financial statements, revenue, expenses, and fund utilization reports.",
+};
+
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";

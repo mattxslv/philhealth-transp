@@ -1,4 +1,11 @@
-﻿"use client";
+﻿import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Procurement Contracts",
+  description: "PhilHealth procurement data including contracts, suppliers, and expenditure transparency.",
+};
+
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";

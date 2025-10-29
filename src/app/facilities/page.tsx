@@ -1,4 +1,11 @@
-﻿"use client";
+﻿import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Accredited Facilities",
+  description: "Directory of PhilHealth accredited healthcare facilities including hospitals, clinics, and dialysis centers.",
+};
+
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
