@@ -87,20 +87,6 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Center section - Search and dark mode toggle (Desktop only) */}
-        <div className="hidden lg:flex lg:items-center lg:gap-4 lg:flex-shrink-0">
-          <GlobalSearch />
-          
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-md p-2 hover:bg-primary/10 transition-colors relative"
-            aria-label="Toggle theme"
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute top-2 left-2 h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </button>
-        </div>
-
         {/* Right section - Navigation links (Desktop only) */}
         <div className="hidden lg:flex lg:items-center lg:gap-x-6 lg:flex-1 lg:justify-end">
           {navigation.map((item) => {

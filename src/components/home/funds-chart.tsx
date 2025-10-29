@@ -205,7 +205,7 @@ export function FundsChart() {
               
               <div className="space-y-4">
                 <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">DO YOU WANT TO LEARN MORE?</p>
-                <a href="/financials" className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                <a href="/financials" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                   Visit Financial Overview
                 </a>
               </div>
@@ -213,10 +213,10 @@ export function FundsChart() {
               <div className="space-y-4">
                 <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">PLAY WITH THE DATA</p>
                 <div className="flex gap-4">
-                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     Download CSV
                   </button>
-                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     Download XLS
                   </button>
                 </div>
@@ -226,71 +226,131 @@ export function FundsChart() {
         )}
 
         {activeCategory === 'allocations' && (
-          <div>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Allocations</p>
-              <p className="text-4xl font-bold text-[#009a3d]">₱{allocationsTotal.toFixed(1)}B</p>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">SORTED BY ALLOCATION AMOUNT</p>
+          <div className="flex flex-col lg:flex-row items-start gap-8">
+            {/* List Section */}
+            <div className="w-full lg:w-1/2">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Allocations</p>
+                <p className="text-4xl font-bold text-[#009a3d]">₱{allocationsTotal.toFixed(1)}B</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">SORTED BY ALLOCATION AMOUNT</p>
+              </div>
+
+              <div className="space-y-4">
+                {allocationsData.map((item, index) => (
+                  <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[#06b04d] font-bold">{index + 1}.</span>
+                          <span className="text-base font-semibold text-gray-900 dark:text-white">{item.name}</span>
+                        </div>
+                        <p className="text-2xl font-bold text-[#009a3d]">₱ {item.value.toFixed(1)}B</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xl font-bold text-[#06b04d]">{item.percentage}%</p>
+                      </div>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-[#009a3d] to-[#06b04d] h-2 rounded-full" 
+                        style={{ width: `${item.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="space-y-4">
-              {allocationsData.map((item, index) => (
-                <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[#06b04d] font-bold">{index + 1}.</span>
-                        <span className="text-base font-semibold text-gray-900 dark:text-white">{item.name}</span>
-                      </div>
-                      <p className="text-2xl font-bold text-[#009a3d]">₱ {item.value.toFixed(1)}B</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xl font-bold text-[#06b04d]">{item.percentage}%</p>
-                    </div>
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div 
-                      className="bg-gradient-to-r from-[#009a3d] to-[#06b04d] h-2 rounded-full" 
-                      style={{ width: `${item.percentage}%` }}
-                    />
-                  </div>
+            {/* About Section */}
+            <div className="w-full lg:w-1/2 space-y-8">
+              <h3 className="text-4xl font-bold text-gray-900 dark:text-white">About Allocations</h3>
+              <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Fund allocations represent the planned distribution of collected contributions across various healthcare benefit programs and services offered by PhilHealth.
+              </p>
+              
+              <div className="space-y-4">
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">DO YOU WANT TO LEARN MORE?</p>
+                <a href="/financials" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  Visit Financial Overview
+                </a>
+              </div>
+
+              <div className="space-y-4">
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">PLAY WITH THE DATA</p>
+                <div className="flex gap-4">
+                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    Download CSV
+                  </button>
+                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    Download XLS
+                  </button>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         )}
 
         {activeCategory === 'expenses' && (
-          <div>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Expenses</p>
-              <p className="text-4xl font-bold text-[#009a3d]">₱{expensesTotal.toFixed(1)}B</p>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">SORTED BY EXPENSE AMOUNT</p>
+          <div className="flex flex-col lg:flex-row items-start gap-8">
+            {/* List Section */}
+            <div className="w-full lg:w-1/2">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Expenses</p>
+                <p className="text-4xl font-bold text-[#009a3d]">₱{expensesTotal.toFixed(1)}B</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">SORTED BY EXPENSE AMOUNT</p>
+              </div>
+
+              <div className="space-y-4">
+                {expensesData.map((item, index) => (
+                  <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[#06b04d] font-bold">{index + 1}.</span>
+                          <span className="text-base font-semibold text-gray-900 dark:text-white">{item.name}</span>
+                        </div>
+                        <p className="text-2xl font-bold text-[#009a3d]">₱ {item.value.toFixed(1)}B</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xl font-bold text-[#06b04d]">{item.percentage}%</p>
+                      </div>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-[#009a3d] to-[#06b04d] h-2 rounded-full" 
+                        style={{ width: `${item.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="space-y-4">
-              {expensesData.map((item, index) => (
-                <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[#06b04d] font-bold">{index + 1}.</span>
-                        <span className="text-base font-semibold text-gray-900 dark:text-white">{item.name}</span>
-                      </div>
-                      <p className="text-2xl font-bold text-[#009a3d]">₱ {item.value.toFixed(1)}B</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xl font-bold text-[#06b04d]">{item.percentage}%</p>
-                    </div>
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div 
-                      className="bg-gradient-to-r from-[#009a3d] to-[#06b04d] h-2 rounded-full" 
-                      style={{ width: `${item.percentage}%` }}
-                    />
-                  </div>
+            {/* About Section */}
+            <div className="w-full lg:w-1/2 space-y-8">
+              <h3 className="text-4xl font-bold text-gray-900 dark:text-white">About Expenses</h3>
+              <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Operating expenses include all costs incurred in running PhilHealth's operations, from healthcare claims payments to administrative costs and system infrastructure.
+              </p>
+              
+              <div className="space-y-4">
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">DO YOU WANT TO LEARN MORE?</p>
+                <a href="/financials" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                  Visit Financial Overview
+                </a>
+              </div>
+
+              <div className="space-y-4">
+                <p className="text-gray-500 dark:text-gray-400 uppercase text-base font-semibold">PLAY WITH THE DATA</p>
+                <div className="flex gap-4">
+                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    Download CSV
+                  </button>
+                  <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    Download XLS
+                  </button>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         )}

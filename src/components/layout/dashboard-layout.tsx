@@ -182,20 +182,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
           {/* Navigation */}
           <nav className="px-3 pb-2" role="navigation" aria-label="Dashboard navigation">
-            {/* Overview link */}
-            <Link
-              href="/"
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 mb-2 text-sm font-medium transition-all duration-200",
-                pathname === "/"
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
-              )}
-              onClick={handleLinkClick}
-            >
-              Overview
-            </Link>
-            
             {/* Home link */}
             <Link
               href="/"
@@ -228,7 +214,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <div className="flex-1"></div>
 
           {/* Partnership Section */}
-          <div className="px-4 py-6">
+          <div className="px-4 py-6 border-t border-border/50">
             <div className="text-sm text-muted-foreground mb-4 font-medium text-center">In partnership with</div>
             <div className="flex items-center justify-center gap-6">
               <Image
@@ -245,14 +231,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 height={60}
                 className="object-contain"
               />
-            </div>
-          </div>
-
-          {/* Last Updated - Bottom of Sidebar */}
-          <div className="px-4 py-3 border-t border-border/50">
-            <div className="rounded-lg bg-muted/50 px-3 py-2">
-              <p className="text-xs font-medium text-muted-foreground mb-1">Last Updated</p>
-              <p className="text-xs text-foreground font-semibold">December 31, 2023</p>
             </div>
           </div>
         </div>
