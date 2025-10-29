@@ -228,8 +228,8 @@ export function FundsChart() {
         {activeCategory === 'contributions' && (
           <div className="flex flex-col lg:flex-row items-start gap-8">
             {/* Pie Chart with center label */}
-            <div className="w-full lg:w-1/2 h-[450px]">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="w-full lg:w-1/2 h-[450px] min-h-[450px]">
+              <ResponsiveContainer width="100%" height="100%" minHeight={450}>
                 <PieChart>
                   <Pie
                     data={contributionsData}
