@@ -11,33 +11,7 @@ import { formatCurrency } from "@/lib/utils";
 import { DollarSign, TrendingUp, TrendingDown, Wallet } from "lucide-react";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { YearSelectorDropdown } from "@/components/ui/year-selector-dropdown";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from "chart.js";
-import { Doughnut, Bar } from "react-chartjs-2";
-
-ChartJS.register(
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const COLORS = [
   "#009a3d", "#eab308", "#10b981", "#fbbf24",
@@ -237,25 +211,47 @@ export default function FinancialsPage() {
 
   const netIncome = totalRevenue - totalExpenses;
   
-  // Revenue Doughnut Chart
-  const revenueData = {
-    labels: Object.keys(revenueBreakdown),
-    datasets: [{
-      data: Object.values(revenueBreakdown).map((amount: any) => parseNumber(amount) / 1000000000),
-      backgroundColor: COLORS,
-      borderColor: "#fff",
-      borderWidth: 3,
-    }]
+  // Revenue Pie Chart Data
+  const revenueChartData = Object.keys(revenueBreakdown).map((key) => ({
+    name: key,
+    value: parseNumber(revenueBreakdown[key]) / 1000000000, // Convert to billions
+    fill: COLORS[Object.keys(revenueBreakdown).indexOf(key) % COLORS.length]
+  }));
+
+  // Expense Bar Chart Data
+  const expenseChartData = Object.keys(expenseBreakdown).map((key) => ({
+    name: key,
+    value: parseNumber(expenseBreakdown[key]) / 1000000000, // Convert to billions
+  }));
+
+  // Custom tooltip for Recharts
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0];
+      const total = revenueChartData.reduce((sum, item) => sum + item.value, 0);
+      const percentage = ((data.value / total) * 100).toFixed(1);
+      
+      return (
+        <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <p className="font-semibold text-gray-900 dark:text-white">{data.name}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Amount: ₱{data.value.toFixed(2)}B</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Share: {percentage}%</p>
+        </div>
+      );
+    }
+    return null;
   };
 
-  // Expense Bar Chart
-  const expenseData = {
-    labels: Object.keys(expenseBreakdown),
-    datasets: [{
-      label: 'Expenses (Billions)',
-      data: Object.values(expenseBreakdown).map((amount: any) => parseNumber(amount) / 1000000000),
-      backgroundColor: COLORS[0],
-    }]
+  const CustomBarTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <p className="font-semibold text-gray-900 dark:text-white">{payload[0].payload.name}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">₱{payload[0].value.toFixed(2)}B</p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -333,63 +329,48 @@ export default function FinancialsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ChartCard title="Premium Contributions" description={`${selectedYear} revenue sources by contributor type`}>
             <div className="h-[360px]">
-              <Doughnut data={revenueData} options={{ 
-                responsive: true, 
-                maintainAspectRatio: false,
-                plugins: {
-                  legend: { 
-                    position: 'bottom',
-                    labels: {
-                      padding: 12,
-                      font: { size: 11 },
-                      boxWidth: 15
-                    }
-                  },
-                  tooltip: {
-                    callbacks: {
-                      label: (context) => {
-                        const label = context.label || '';
-                        const value = context.parsed || 0;
-                        const total = context.dataset.data.reduce((a: number, b: number) => a + b, 0);
-                        const percentage = ((value / total) * 100).toFixed(1);
-                        return [
-                          `${label}`,
-                          `Amount: ₱${value.toFixed(2)}B`,
-                          `Share: ${percentage}%`
-                        ];
-                      }
-                    }
-                  }
-                }
-              }} />
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={revenueChartData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }: any) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={120}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {revenueChartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </ChartCard>
           
           <ChartCard title="Benefit Expense Distribution" description={`${selectedYear} benefit payments by category`}>
             <div className="h-[360px]">
-              <Bar data={expenseData} options={{ 
-                responsive: true, 
-                maintainAspectRatio: false,
-                plugins: {
-                  legend: { display: false },
-                  tooltip: {
-                    callbacks: {
-                      label: (context) => {
-                        const value = context.parsed.y || 0;
-                        return `₱${value.toFixed(2)}B`;
-                      }
-                    }
-                  }
-                },
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    ticks: {
-                      callback: (value) => `₱${value}B`
-                    }
-                  }
-                }
-              }} />
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={expenseChartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis 
+                    dataKey="name" 
+                    angle={-45}
+                    textAnchor="end"
+                    height={100}
+                    tick={{ fontSize: 11 }}
+                  />
+                  <YAxis 
+                    tickFormatter={(value) => `₱${value}B`}
+                    tick={{ fontSize: 12 }}
+                  />
+                  <Tooltip content={<CustomBarTooltip />} />
+                  <Bar dataKey="value" fill="#009a3d" radius={[8, 8, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </ChartCard>
         </div>

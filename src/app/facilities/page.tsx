@@ -354,7 +354,7 @@ export default function FacilitiesPage() {
             icon={Users}
             description={totalProfessionals === 0 
               ? "PhilHealth did not provide detailed professional counts for 2022" 
-              : `${healthcareProfessionals?.physicians?.total || 0} Physicians, ${healthcareProfessionals?.other?.total || 0} Others`}
+              : `${healthcareProfessionals?.physicians?.total || 0} Physicians, ${healthcareProfessionals?.other_professionals?.total || 0} Others`}
             className={totalProfessionals === 0 
               ? "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500" 
               : ""}

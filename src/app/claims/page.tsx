@@ -11,33 +11,7 @@ import { formatCurrency, formatNumber } from "@/lib/utils";
 import { TrendingUp, DollarSign, CheckCircle, Activity } from "lucide-react";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { YearSelectorDropdown } from "@/components/ui/year-selector-dropdown";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from "chart.js";
-import { Doughnut, Bar } from "react-chartjs-2";
-
-ChartJS.register(
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const COLORS = ["#009a3d", "#eab308", "#10b981", "#fbbf24", "#22c55e", "#fcd34d", "#4ade80", "#fde047", "#006400", "#ca8a04"];
 
@@ -345,40 +319,69 @@ export default function ClaimsPage() {
               title="Claims Distribution by Membership" 
               description="Direct vs Indirect Contributors"
             >
-              <div style={{ height: '360px' }}>
-                <Doughnut 
-                  data={{
-                    labels: membershipData
-                      .filter((item: any) => !item.category.includes('Total'))
-                      .map((item: any) => item.category),
-                    datasets: [{
-                      data: membershipData
+              <div style={{ height: '420px' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={membershipData
                         .filter((item: any) => !item.category.includes('Total'))
-                        .map((item: any) => item.amount_php),
-                      backgroundColor: COLORS,
-                      borderColor: "#fff",
-                      borderWidth: 3,
-                    }]
-                  }} 
-                  options={{ 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: { position: 'bottom' },
-                      tooltip: {
-                        callbacks: {
-                          label: function(context) {
-                            const label = context.label || '';
-                            const value = context.parsed || 0;
-                            const total = context.dataset.data.reduce((a: number, b: number) => a + b, 0);
-                            const percentage = ((value / total) * 100).toFixed(1);
-                            return `${label}: ${formatCurrency(value)} (${percentage}%)`;
-                          }
+                        .map((item: any, index: number) => ({
+                          name: item.category,
+                          value: item.amount_php,
+                          fill: COLORS[index % COLORS.length]
+                        }))}
+                      cx="50%"
+                      cy="45%"
+                      outerRadius={130}
+                      innerRadius={75}
+                      fill="#8884d8"
+                      dataKey="value"
+                      paddingAngle={3}
+                      label={({ name, percent }: any) => {
+                        const percentage = (percent * 100).toFixed(1);
+                        return parseFloat(percentage) > 3 ? `${percentage}%` : '';
+                      }}
+                    >
+                      {membershipData
+                        .filter((item: any) => !item.category.includes('Total'))
+                        .map((_: any, index: number) => (
+                          <Cell 
+                            key={`cell-${index}`} 
+                            fill={COLORS[index % COLORS.length]}
+                            stroke="#fff"
+                            strokeWidth={2}
+                          />
+                        ))}
+                    </Pie>
+                    <Tooltip 
+                      content={({ active, payload }: any) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0];
+                          const total = membershipData
+                            .filter((item: any) => !item.category.includes('Total'))
+                            .reduce((sum: number, item: any) => sum + item.amount_php, 0);
+                          const percentage = ((data.value / total) * 100).toFixed(1);
+                          
+                          return (
+                            <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+                              <p className="font-semibold text-gray-900 dark:text-white">{data.name}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">{formatCurrency(data.value)}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">{percentage}%</p>
+                            </div>
+                          );
                         }
-                      }
-                    }
-                  }} 
-                />
+                        return null;
+                      }}
+                    />
+                    <Legend 
+                      verticalAlign="bottom"
+                      height={80}
+                      wrapperStyle={{ fontSize: '11px' }}
+                      iconType="circle"
+                      iconSize={8}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
               </div>
             </ChartCard>
             
@@ -386,46 +389,46 @@ export default function ClaimsPage() {
               title="Claims Amount by Category" 
               description="Top membership categories"
             >
-              <div style={{ height: '360px' }}>
-                <Bar 
-                  data={{
-                    labels: membershipData
+              <div style={{ height: '420px' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart 
+                    data={membershipData
                       .filter((item: any) => !item.category.includes('Total'))
                       .slice(0, 6)
-                      .map((item: any) => item.category.replace(/\//g, ' / ')),
-                    datasets: [{
-                      label: 'Amount ()',
-                      data: membershipData
-                        .filter((item: any) => !item.category.includes('Total'))
-                        .slice(0, 6)
-                        .map((item: any) => item.amount_php),
-                      backgroundColor: COLORS[0],
-                    }]
-                  }} 
-                  options={{ 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: { display: false },
-                      tooltip: {
-                        callbacks: {
-                          label: function(context) {
-                            return `Amount: ${formatCurrency(context.parsed.y || 0)}`;
-                          }
+                      .map((item: any) => ({
+                        name: item.category.replace(/\//g, ' / '),
+                        value: item.amount_php
+                      }))}
+                    margin={{ top: 20, right: 30, left: 60, bottom: 80 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis 
+                      dataKey="name" 
+                      angle={-45}
+                      textAnchor="end"
+                      height={100}
+                      tick={{ fontSize: 11 }}
+                    />
+                    <YAxis 
+                      tickFormatter={(value) => `₱${(value / 1000000000).toFixed(1)}B`}
+                      tick={{ fontSize: 12 }}
+                    />
+                    <Tooltip 
+                      content={({ active, payload }: any) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+                              <p className="font-semibold text-gray-900 dark:text-white">{payload[0].payload.name}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">{formatCurrency(payload[0].value)}</p>
+                            </div>
+                          );
                         }
-                      }
-                    },
-                    scales: {
-                      y: {
-                        ticks: {
-                          callback: function(value) {
-                            return '' + (Number(value) / 1000000000).toFixed(1) + 'B';
-                          }
-                        }
-                      }
-                    }
-                  }} 
-                />
+                        return null;
+                      }}
+                    />
+                    <Bar dataKey="value" fill="#009a3d" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </ChartCard>
           </div>
