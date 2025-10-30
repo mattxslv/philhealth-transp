@@ -336,8 +336,12 @@ export default function FinancialsPage() {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ name, percent }: any) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={120}
+                    label={({ name, percent }: any) => {
+                      const percentage = (percent * 100).toFixed(0);
+                      // Only show percentage on small screens, full text on larger screens
+                      return window.innerWidth < 640 ? `${percentage}%` : `${name} ${percentage}%`;
+                    }}
+                    outerRadius={window.innerWidth < 640 ? 80 : window.innerWidth < 1024 ? 100 : 120}
                     fill="#8884d8"
                     dataKey="value"
                   >
@@ -346,6 +350,13 @@ export default function FinancialsPage() {
                     ))}
                   </Pie>
                   <Tooltip content={<CustomTooltip />} />
+                  <Legend 
+                    verticalAlign="bottom"
+                    height={40}
+                    wrapperStyle={{ fontSize: '11px' }}
+                    iconType="circle"
+                    iconSize={8}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>

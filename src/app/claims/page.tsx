@@ -332,14 +332,12 @@ export default function ClaimsPage() {
                         }))}
                       cx="50%"
                       cy="45%"
-                      outerRadius={130}
-                      innerRadius={75}
+                      outerRadius={110}
                       fill="#8884d8"
                       dataKey="value"
-                      paddingAngle={3}
-                      label={({ name, percent }: any) => {
-                        const percentage = (percent * 100).toFixed(1);
-                        return parseFloat(percentage) > 3 ? `${percentage}%` : '';
+                      label={({ percent }: any) => {
+                        const percentage = (percent * 100).toFixed(0);
+                        return parseFloat(percentage) > 2 ? `${percentage}%` : '';
                       }}
                     >
                       {membershipData
@@ -348,8 +346,6 @@ export default function ClaimsPage() {
                           <Cell 
                             key={`cell-${index}`} 
                             fill={COLORS[index % COLORS.length]}
-                            stroke="#fff"
-                            strokeWidth={2}
                           />
                         ))}
                     </Pie>
@@ -537,7 +533,7 @@ export default function ClaimsPage() {
                       
                       {/* Content */}
                       <div className="relative p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-[#009a3d] dark:hover:border-[#009a3d] transition-colors">
-                        <div className="flex items-start gap-4">
+                        <div className="flex flex-col sm:flex-row items-start gap-4">
                           {/* Rank Badge */}
                           <div className="flex-shrink-0">
                             <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
@@ -551,27 +547,27 @@ export default function ClaimsPage() {
                           </div>
                           
                           {/* Medical Condition */}
-                          <div className="flex-1 min-w-0">
+                          <div className="flex-1 min-w-0 w-full">
                             <h4 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
                               {item.illness}
                             </h4>
                             
-                            <div className="grid grid-cols-3 gap-4 mt-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-3">
                               <div>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Claims Count</p>
-                                <p className="text-lg font-bold text-[#009a3d]">
+                                <p className="text-base sm:text-lg font-bold text-[#009a3d]">
                                   {formatNumber(item.claims_count)}
                                 </p>
                               </div>
                               <div>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Amount</p>
-                                <p className="text-lg font-bold text-gray-900 dark:text-white">
+                                <p className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
                                   {formatCurrency(item.amount_php)}
                                 </p>
                               </div>
                               <div>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Avg per Claim</p>
-                                <p className="text-lg font-bold text-gray-700 dark:text-gray-300">
+                                <p className="text-base sm:text-lg font-bold text-gray-700 dark:text-gray-300">
                                   {formatCurrency(avgPerClaim)}
                                 </p>
                               </div>
@@ -624,7 +620,7 @@ export default function ClaimsPage() {
                       
                       {/* Content */}
                       <div className="relative p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-amber-500 dark:hover:border-amber-500 transition-colors">
-                        <div className="flex items-start gap-4">
+                        <div className="flex flex-col sm:flex-row items-start gap-4">
                           {/* Rank Badge */}
                           <div className="flex-shrink-0">
                             <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
@@ -638,27 +634,27 @@ export default function ClaimsPage() {
                           </div>
                           
                           {/* Procedure Name */}
-                          <div className="flex-1 min-w-0">
+                          <div className="flex-1 min-w-0 w-full">
                             <h4 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
                               {item.package_procedure}
                             </h4>
                             
-                            <div className="grid grid-cols-3 gap-4 mt-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-3">
                               <div>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Claims Count</p>
-                                <p className="text-lg font-bold text-amber-600">
+                                <p className="text-base sm:text-lg font-bold text-amber-600">
                                   {formatNumber(item.claims_count)}
                                 </p>
                               </div>
                               <div>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Amount</p>
-                                <p className="text-lg font-bold text-gray-900 dark:text-white">
+                                <p className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
                                   {formatCurrency(item.amount_php)}
                                 </p>
                               </div>
                               <div>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Avg per Claim</p>
-                                <p className="text-lg font-bold text-gray-700 dark:text-gray-300">
+                                <p className="text-base sm:text-lg font-bold text-gray-700 dark:text-gray-300">
                                   {formatCurrency(avgPerClaim)}
                                 </p>
                               </div>
