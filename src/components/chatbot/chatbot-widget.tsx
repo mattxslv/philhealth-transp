@@ -214,10 +214,13 @@ export default function ChatbotWidget() {
                 {/* Info Icon for Disclaimer */}
                 <button
                   onClick={() => setShowDisclaimer(!showDisclaimer)}
-                  className="text-white hover:text-white/80 hover:bg-white/20 p-2 rounded-full transition-colors"
+                  className="relative text-white hover:text-white/80 hover:bg-white/20 p-2 rounded-full transition-all group"
                   aria-label="AI Assistant Information"
                 >
-                  <Info className="w-5 h-5" />
+                  <Info className="w-5 h-5 relative z-10" />
+                  {/* Glowing blue pulse effect */}
+                  <span className="absolute inset-0 rounded-full bg-blue-400/50 blur-md animate-pulse"></span>
+                  <span className="absolute inset-0 rounded-full bg-blue-300/30 blur-lg animate-pulse" style={{ animationDelay: '0.5s' }}></span>
                 </button>
                 {/* Close Button */}
                 <button
