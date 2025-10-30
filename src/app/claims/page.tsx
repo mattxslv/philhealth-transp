@@ -466,44 +466,49 @@ export default function ClaimsPage() {
             description="Distribution of procedural vs medical claims"
           >
             <div style={{ height: '300px' }}>
-              <Bar 
-                data={{
-                  labels: illnessData.map((item: any) => item.type),
-                  datasets: [{
-                    label: 'Amount ()',
-                    data: illnessData.map((item: any) => item.amount_php),
-                    backgroundColor: COLORS.slice(0, illnessData.length),
-                  }]
-                }} 
-                options={{ 
-                  responsive: true, 
-                  maintainAspectRatio: false,
-                  indexAxis: 'y',
-                  plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                      callbacks: {
-                        label: function(context) {
-                          const item = illnessData[context.dataIndex];
-                          return [
-                            `Amount: ${formatCurrency(context.parsed.x || 0)}`,
-                            `Claims: ${formatNumber(item.claims_count)}`
-                          ];
-                        }
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart 
+                  data={illnessData.map((item: any, index: number) => ({
+                    name: item.type,
+                    value: item.amount_php,
+                    claims: item.claims_count,
+                    fill: COLORS[index % COLORS.length]
+                  }))}
+                  layout="horizontal"
+                  margin={{ top: 10, right: 30, left: 10, bottom: 10 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis 
+                    type="number"
+                    tickFormatter={(value) => `₱${(value / 1000000000).toFixed(1)}B`}
+                    tick={{ fontSize: 12 }}
+                  />
+                  <YAxis 
+                    type="category"
+                    dataKey="name"
+                    tick={{ fontSize: 12 }}
+                  />
+                  <Tooltip 
+                    content={({ active, payload }: any) => {
+                      if (active && payload && payload.length) {
+                        return (
+                          <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+                            <p className="font-semibold text-gray-900 dark:text-white">{payload[0].payload.name}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Amount: {formatCurrency(payload[0].value)}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Claims: {formatNumber(payload[0].payload.claims)}</p>
+                          </div>
+                        );
                       }
-                    }
-                  },
-                  scales: {
-                    x: {
-                      ticks: {
-                        callback: function(value) {
-                          return '' + (Number(value) / 1000000000).toFixed(1) + 'B';
-                        }
-                      }
-                    }
-                  }
-                }} 
-              />
+                      return null;
+                    }}
+                  />
+                  <Bar dataKey="value" radius={[0, 8, 8, 0]}>
+                    {illnessData.map((_: any, index: number) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </ChartCard>
         )}
