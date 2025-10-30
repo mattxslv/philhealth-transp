@@ -315,71 +315,73 @@ export default function ClaimsPage() {
         {/* Claims by Membership Category */}
         {membershipData.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <ChartCard 
-              title="Claims Distribution by Membership" 
-              description="Direct vs Indirect Contributors"
-            >
-              <div style={{ height: '420px' }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={membershipData
-                        .filter((item: any) => !item.category.includes('Total'))
-                        .map((item: any, index: number) => ({
-                          name: item.category,
-                          value: item.amount_php,
-                          fill: COLORS[index % COLORS.length]
-                        }))}
-                      cx="50%"
-                      cy="45%"
-                      outerRadius={110}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={({ percent }: any) => {
-                        const percentage = (percent * 100).toFixed(0);
-                        return parseFloat(percentage) > 2 ? `${percentage}%` : '';
-                      }}
-                    >
-                      {membershipData
-                        .filter((item: any) => !item.category.includes('Total'))
-                        .map((_: any, index: number) => (
-                          <Cell 
-                            key={`cell-${index}`} 
-                            fill={COLORS[index % COLORS.length]}
-                          />
-                        ))}
-                    </Pie>
-                    <Tooltip 
-                      content={({ active, payload }: any) => {
-                        if (active && payload && payload.length) {
-                          const data = payload[0];
-                          const total = membershipData
-                            .filter((item: any) => !item.category.includes('Total'))
-                            .reduce((sum: number, item: any) => sum + item.amount_php, 0);
-                          const percentage = ((data.value / total) * 100).toFixed(1);
-                          
-                          return (
-                            <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-                              <p className="font-semibold text-gray-900 dark:text-white">{data.name}</p>
-                              <p className="text-sm text-gray-600 dark:text-gray-400">{formatCurrency(data.value)}</p>
-                              <p className="text-sm text-gray-600 dark:text-gray-400">{percentage}%</p>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+              <h3 className="text-xl font-semibold mb-2">Claims Distribution by Membership</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">Direct vs Indirect Contributors</p>
+              
+              <div className="space-y-4">
+                {membershipData
+                  .filter((item: any) => !item.category.includes('Total'))
+                  .map((item: any, index: number) => {
+                    const total = membershipData
+                      .filter((i: any) => !i.category.includes('Total'))
+                      .reduce((sum: number, i: any) => sum + i.amount_php, 0);
+                    const percentage = ((item.amount_php / total) * 100).toFixed(1);
+                    
+                    return (
+                      <div key={index} className="group">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-3">
+                            <div 
+                              className="w-4 h-4 rounded-full flex-shrink-0"
+                              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                            />
+                            <span className="font-medium text-gray-900 dark:text-white text-sm">
+                              {item.category}
+                            </span>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-lg font-bold text-gray-900 dark:text-white">
+                              {percentage}%
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-4 flex-shrink-0" />
+                          <div className="flex-1">
+                            <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                              <div 
+                                className="h-full rounded-full transition-all duration-500 group-hover:opacity-80"
+                                style={{ 
+                                  width: `${percentage}%`,
+                                  backgroundColor: COLORS[index % COLORS.length]
+                                }}
+                              />
                             </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Legend 
-                      verticalAlign="bottom"
-                      height={80}
-                      wrapperStyle={{ fontSize: '11px' }}
-                      iconType="circle"
-                      iconSize={8}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+                          </div>
+                          <div className="text-right min-w-[120px]">
+                            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                              {formatCurrency(item.amount_php)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
-            </ChartCard>
+              
+              {/* Total */}
+              <div className="mt-6 pt-4 border-t-2 border-gray-300 dark:border-gray-600">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-gray-900 dark:text-white">Total Claims</span>
+                  <span className="text-xl font-bold text-[#009a3d]">
+                    {formatCurrency(membershipData
+                      .filter((item: any) => !item.category.includes('Total'))
+                      .reduce((sum: number, item: any) => sum + item.amount_php, 0))}
+                  </span>
+                </div>
+              </div>
+            </div>
             
             <ChartCard 
               title="Claims Amount by Category" 
