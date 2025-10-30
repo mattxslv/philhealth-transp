@@ -183,13 +183,13 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
     <div className="relative">
       <div
         ref={mapRef}
-        className="w-full h-[700px] rounded-xl overflow-hidden border-2 border-gray-200 dark:border-gray-700"
+        className="w-full h-[800px] rounded-xl overflow-hidden border-2 border-gray-200 dark:border-gray-700"
       />
       
       {/* Popup overlay */}
       <div
         ref={popupRef}
-        className={`absolute bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-md shadow-lg border border-gray-200/30 dark:border-gray-700/30 p-2 min-w-[160px] transition-all duration-200 pointer-events-none ${
+        className={`absolute bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-lg shadow-xl border-2 border-[#009a3d]/20 dark:border-[#06b04d]/20 p-3 min-w-[220px] transition-all duration-200 pointer-events-none ${
           popupInfo ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
         style={{
@@ -197,22 +197,53 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
         }}
       >
         {popupInfo && (
-          <div className="space-y-1.5">
-            <div className="border-b border-gray-200/30 dark:border-gray-700/30 pb-1 text-center">
-              <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+          <div className="space-y-2.5">
+            {/* Region Header */}
+            <div className="border-b-2 border-[#009a3d]/20 dark:border-[#06b04d]/20 pb-2">
+              <h3 className="font-bold text-base text-gray-900 dark:text-white text-center">
                 {popupInfo.name}
               </h3>
             </div>
             
-            <div className="space-y-1">
-              <div className="flex items-center justify-between">
-                <p className="text-[9px] text-gray-600 dark:text-gray-400">Coverage</p>
-                <p className="text-xs font-bold text-[#009a3d] dark:text-[#06b04d]">99.5%</p>
+            {/* Statistics Grid */}
+            <div className="space-y-2">
+              {/* Coverage */}
+              <div className="flex items-center justify-between bg-[#009a3d]/5 dark:bg-[#06b04d]/10 rounded-md p-2">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-6 h-6 rounded-full bg-[#009a3d] dark:bg-[#06b04d] flex items-center justify-center">
+                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Coverage</p>
+                </div>
+                <p className="text-sm font-bold text-[#009a3d] dark:text-[#06b04d]">{popupInfo.coverage}</p>
               </div>
               
-              <div className="flex items-center justify-between">
-                <p className="text-[9px] text-gray-600 dark:text-gray-400">Members</p>
-                <p className="text-[10px] font-semibold text-gray-900 dark:text-white">36.2M</p>
+              {/* Members */}
+              <div className="flex items-center justify-between bg-blue-50 dark:bg-blue-900/20 rounded-md p-2">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-6 h-6 rounded-full bg-blue-500 dark:bg-blue-400 flex items-center justify-center">
+                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Members</p>
+                </div>
+                <p className="text-sm font-bold text-blue-600 dark:text-blue-400">{popupInfo.members}</p>
+              </div>
+              
+              {/* Facilities */}
+              <div className="flex items-center justify-between bg-amber-50 dark:bg-amber-900/20 rounded-md p-2">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-6 h-6 rounded-full bg-amber-500 dark:bg-amber-400 flex items-center justify-center">
+                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  </div>
+                  <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Facilities</p>
+                </div>
+                <p className="text-sm font-bold text-amber-600 dark:text-amber-400">{popupInfo.facilities?.toLocaleString() || 'N/A'}</p>
               </div>
             </div>
           </div>
@@ -220,7 +251,7 @@ export default function MapComponent({ onRegionSelect }: MapComponentProps) {
         
         {/* Popup arrow */}
         <div className="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-full">
-          <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white/70 dark:border-t-gray-800/70"></div>
+          <div className="w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-white dark:border-t-gray-800"></div>
         </div>
       </div>
     </div>

@@ -75,7 +75,7 @@ export default function ProcurementPage() {
     return (
       <DashboardLayout>
         <div className="text-center py-12">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-purple-600 border-r-transparent"></div>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#009a3d] border-r-transparent"></div>
           <p className="mt-4 text-gray-600 dark:text-gray-400">Loading procurement documents...</p>
         </div>
       </DashboardLayout>
@@ -103,33 +103,6 @@ export default function ProcurementPage() {
           <span className="text-foreground font-medium">Procurement</span>
         </div>
 
-        {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                <FileText className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Total Documents</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{data.file_count}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-violet-100 dark:bg-violet-900/30 rounded-lg">
-                <FileText className="h-6 w-6 text-violet-600 dark:text-violet-400" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Category</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">2024 Amendments</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Search Bar */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-gray-700">
           <div className="relative">
@@ -139,7 +112,7 @@ export default function ProcurementPage() {
               placeholder="Search procurement documents..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 dark:bg-gray-700 dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009a3d] dark:bg-gray-700 dark:text-white"
             />
           </div>
         </div>
@@ -154,6 +127,9 @@ export default function ProcurementPage() {
                     Document Name
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Year
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     File Size
                   </th>
                   <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -166,8 +142,8 @@ export default function ProcurementPage() {
                   <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                          <FileText className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-[#009a3d]/10 dark:bg-[#009a3d]/30 rounded-lg">
+                          <FileText className="h-5 w-5 text-[#009a3d] dark:text-[#00c94d]" />
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900 dark:text-white">
@@ -181,6 +157,11 @@ export default function ProcurementPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900 dark:text-white">
+                        2024
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900 dark:text-white">
                         {formatFileSize(file.size_bytes)}
                       </div>
                     </td>
@@ -189,7 +170,7 @@ export default function ProcurementPage() {
                         <a
                           href={file.download_url}
                           download
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-[#009a3d] hover:bg-[#007a30] text-white text-sm font-medium rounded-lg transition-colors"
                         >
                           <Download className="h-4 w-4" />
                           Download
@@ -211,12 +192,12 @@ export default function ProcurementPage() {
         </div>
 
         {/* Footer Note */}
-        <div className="mt-8 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-6">
+        <div className="mt-8 bg-[#009a3d]/5 dark:bg-[#009a3d]/20 border border-[#009a3d]/20 dark:border-[#009a3d]/30 rounded-lg p-6">
           <div className="flex items-start gap-3">
-            <FileText className="h-5 w-5 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" />
-            <div className="text-sm text-purple-900 dark:text-purple-100">
+            <FileText className="h-5 w-5 text-[#009a3d] dark:text-[#00c94d] mt-0.5 flex-shrink-0" />
+            <div className="text-sm text-gray-900 dark:text-gray-100">
               <p className="font-semibold mb-2">About Procurement Documents</p>
-              <p className="text-purple-800 dark:text-purple-200">
+              <p className="text-gray-800 dark:text-gray-200">
                 These documents contain amendments to PhilHealth&apos;s Annual Procurement Plan for 2024. 
                 All procurement activities are conducted in accordance with the Government Procurement Policy Board (GPPB) 
                 rules and regulations, ensuring transparency and competitive bidding processes.

@@ -222,25 +222,25 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-br from-[#4a7c59] to-[#3d6449] text-white">
+        <section className="py-20 bg-white dark:bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-gray-900 dark:text-white">
               Start Exploring PhilHealth Data Today
             </h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
               Access comprehensive reports, interactive dashboards, and verified information 
               to understand how PhilHealth serves Filipino families.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/financials"
-                className="inline-block px-8 py-4 bg-white text-[#4a7c59] font-semibold rounded-lg hover:bg-gray-100 transition-colors shadow-lg"
+                className="inline-block px-8 py-4 bg-[#009a3d] text-white font-semibold rounded-lg hover:bg-[#007a30] transition-colors shadow-lg"
               >
                 View Financial Reports
               </Link>
               <Link
                 href="/claims"
-                className="inline-block px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-colors border-2 border-white/30"
+                className="inline-block px-8 py-4 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-semibold rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors border-2 border-gray-300 dark:border-gray-600"
               >
                 Explore Claims Data
               </Link>

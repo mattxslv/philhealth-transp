@@ -512,49 +512,69 @@ export default function ClaimsPage() {
               <h3 className="text-xl font-semibold">Top 10 Medical Cases</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Most common medical conditions by claim count</p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-900">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Rank
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Medical Condition
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Claims Count
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Total Amount
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Avg per Claim
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  {topMedicalCases.map((item: any) => (
-                    <tr key={item.rank} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                        #{item.rank}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
-                        {item.illness}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 dark:text-white">
-                        {formatNumber(item.claims_count)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900 dark:text-white">
-                        {formatCurrency(item.amount_php)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600 dark:text-gray-400">
-                        {formatCurrency(item.amount_php / item.claims_count)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="p-6">
+              <div className="space-y-4">
+                {topMedicalCases.map((item: any, index: number) => {
+                  const avgPerClaim = item.amount_php / item.claims_count;
+                  const maxClaims = topMedicalCases[0].claims_count;
+                  const widthPercent = (item.claims_count / maxClaims) * 100;
+                  
+                  return (
+                    <div key={item.rank} className="relative">
+                      {/* Background bar */}
+                      <div 
+                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#009a3d]/10 to-transparent rounded-lg transition-all duration-300"
+                        style={{ width: `${widthPercent}%` }}
+                      ></div>
+                      
+                      {/* Content */}
+                      <div className="relative p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-[#009a3d] dark:hover:border-[#009a3d] transition-colors">
+                        <div className="flex items-start gap-4">
+                          {/* Rank Badge */}
+                          <div className="flex-shrink-0">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
+                              index === 0 ? 'bg-amber-500' : 
+                              index === 1 ? 'bg-gray-400' : 
+                              index === 2 ? 'bg-amber-700' : 
+                              'bg-[#009a3d]'
+                            }`}>
+                              {item.rank}
+                            </div>
+                          </div>
+                          
+                          {/* Medical Condition */}
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
+                              {item.illness}
+                            </h4>
+                            
+                            <div className="grid grid-cols-3 gap-4 mt-3">
+                              <div>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Claims Count</p>
+                                <p className="text-lg font-bold text-[#009a3d]">
+                                  {formatNumber(item.claims_count)}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Amount</p>
+                                <p className="text-lg font-bold text-gray-900 dark:text-white">
+                                  {formatCurrency(item.amount_php)}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Avg per Claim</p>
+                                <p className="text-lg font-bold text-gray-700 dark:text-gray-300">
+                                  {formatCurrency(avgPerClaim)}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         ) : (
@@ -576,52 +596,72 @@ export default function ClaimsPage() {
         {topProcedures.length > 0 ? (
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
             <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold">Top 10 RVS Packages & Procedures</h3>
+              <h3 className="text-xl font-semibold">Top 10 RVS Packages &amp; Procedures</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Most utilized procedures by claim count</p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-900">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Rank
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Package/Procedure
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Claims Count
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Total Amount
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Avg per Claim
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  {topProcedures.map((item: any) => (
-                    <tr key={item.rank} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                        #{item.rank}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 max-w-md">
-                        {item.package_procedure}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 dark:text-white">
-                        {formatNumber(item.claims_count)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900 dark:text-white">
-                        {formatCurrency(item.amount_php)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600 dark:text-gray-400">
-                        {formatCurrency(item.amount_php / item.claims_count)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="p-6">
+              <div className="space-y-4">
+                {topProcedures.map((item: any, index: number) => {
+                  const avgPerClaim = item.amount_php / item.claims_count;
+                  const maxClaims = topProcedures[0].claims_count;
+                  const widthPercent = (item.claims_count / maxClaims) * 100;
+                  
+                  return (
+                    <div key={item.rank} className="relative">
+                      {/* Background bar */}
+                      <div 
+                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-500/10 to-transparent rounded-lg transition-all duration-300"
+                        style={{ width: `${widthPercent}%` }}
+                      ></div>
+                      
+                      {/* Content */}
+                      <div className="relative p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-amber-500 dark:hover:border-amber-500 transition-colors">
+                        <div className="flex items-start gap-4">
+                          {/* Rank Badge */}
+                          <div className="flex-shrink-0">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
+                              index === 0 ? 'bg-amber-500' : 
+                              index === 1 ? 'bg-gray-400' : 
+                              index === 2 ? 'bg-amber-700' : 
+                              'bg-yellow-600'
+                            }`}>
+                              {item.rank}
+                            </div>
+                          </div>
+                          
+                          {/* Procedure Name */}
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
+                              {item.package_procedure}
+                            </h4>
+                            
+                            <div className="grid grid-cols-3 gap-4 mt-3">
+                              <div>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Claims Count</p>
+                                <p className="text-lg font-bold text-amber-600">
+                                  {formatNumber(item.claims_count)}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Amount</p>
+                                <p className="text-lg font-bold text-gray-900 dark:text-white">
+                                  {formatCurrency(item.amount_php)}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Avg per Claim</p>
+                                <p className="text-lg font-bold text-gray-700 dark:text-gray-300">
+                                  {formatCurrency(avgPerClaim)}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         ) : (

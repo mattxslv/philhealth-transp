@@ -1,7 +1,7 @@
 ﻿'use client';
 
 import { useEffect, useState } from 'react';
-import { Download, FileText, X } from 'lucide-react';
+import { Download, FileText, X, Search } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 interface StatisticsFile {
@@ -19,6 +19,7 @@ export default function StatisticsChartsPage() {
   const [loading, setLoading] = useState(true);
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     async function loadStatistics() {
@@ -62,28 +63,32 @@ export default function StatisticsChartsPage() {
     setSelectedTitle('');
   };
 
+  const filteredStatistics = statistics.filter(stat =>
+    stat.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    stat.year.toString().includes(searchTerm)
+  );
+
   return (
     <DashboardLayout>
       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <span>Home</span>
         <span>/</span>
-        <span>Downloads</span>
+        <span>Documents</span>
         <span>/</span>
         <span className="text-foreground font-medium">Statistics and Charts</span>
       </div>
 
-      {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8 mt-4">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-              <FileText className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Files</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{statistics.length}</p>
-            </div>
-          </div>
+      {/* Search Bar */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-200 dark:border-gray-700 mb-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Search statistics and charts..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#009a3d] dark:bg-gray-700 dark:text-white"
+          />
         </div>
       </div>
 
@@ -114,12 +119,12 @@ export default function StatisticsChartsPage() {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {statistics.map((stat) => (
+                {filteredStatistics.map((stat) => (
                   <tr key={stat.year} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-red-100 dark:bg-red-900/30 rounded-lg">
-                          <FileText className="h-5 w-5 text-red-600 dark:text-red-400" />
+                        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center bg-[#009a3d]/10 dark:bg-[#009a3d]/30 rounded-lg">
+                          <FileText className="h-5 w-5 text-[#009a3d] dark:text-[#00c94d]" />
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900 dark:text-white">

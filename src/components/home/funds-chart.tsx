@@ -325,7 +325,7 @@ export function FundsChart() {
         {activeCategory === 'contributions' && (
           <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
             {/* Bar Chart - Left Side */}
-            <div className="w-full lg:w-[700px] h-[450px] min-h-[450px] flex-shrink-0">
+            <div className="w-full lg:flex-1 h-[450px] min-h-[450px]">
               <div className="mb-4 text-center">
                 <p className="text-3xl font-bold text-[#009a3d]">₱{(statisticsData?.premium_contributions?.data?.total || 0).toLocaleString('en-PH')}</p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Total Contributions 2024</p>
@@ -355,7 +355,7 @@ export function FundsChart() {
             </div>
 
             {/* Content - Far Right Side */}
-            <div className="w-full lg:w-auto lg:max-w-sm space-y-6 lg:ml-auto">
+            <div className="w-full lg:flex-1 space-y-6">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white">About Contributions received</h3>
               <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                 Premium contributions received from direct and indirect contributors in 2024. Direct contributors include employed (private and government) and informal sector members. Indirect contributors include indigents, senior citizens, and sponsored members.
@@ -367,24 +367,6 @@ export function FundsChart() {
                   Visit Financial Overview
                 </a>
               </div>
-
-              <div className="space-y-3">
-                <p className="text-gray-500 dark:text-gray-400 uppercase text-sm font-semibold">PLAY WITH THE DATA</p>
-                <div className="flex gap-3">
-                  <button 
-                    onClick={handleDownloadCSV}
-                    className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  >
-                    Download CSV
-                  </button>
-                  <button 
-                    onClick={handleDownloadXLS}
-                    className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  >
-                    Download XLS
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         )}
@@ -392,7 +374,7 @@ export function FundsChart() {
         {activeCategory === 'allocations' && (
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Left side - Two column list */}
-            <div className="w-full lg:w-2/3">
+            <div className="w-full lg:flex-1">
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Allocations</p>
                 <p className="text-4xl font-bold text-[#009a3d]">₱{(statisticsData?.claims_payment?.grand_total_amount_php || 0).toLocaleString('en-PH')}</p>
@@ -426,7 +408,7 @@ export function FundsChart() {
             </div>
 
             {/* Right side - About section */}
-            <div className="w-full lg:w-auto lg:max-w-sm space-y-6 lg:ml-auto">
+            <div className="w-full lg:flex-1 space-y-6">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white">About Allocations</h3>
               <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                 Fund allocations represent the planned distribution of collected contributions across various healthcare benefit programs and services offered by PhilHealth.
@@ -438,18 +420,6 @@ export function FundsChart() {
                   Visit Financial Overview
                 </a>
               </div>
-
-              <div className="space-y-3">
-                <p className="text-gray-500 dark:text-gray-400 uppercase text-sm font-semibold">PLAY WITH THE DATA</p>
-                <div className="flex gap-3">
-                  <button onClick={handleDownloadCSV} className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                    Download CSV
-                  </button>
-                  <button onClick={handleDownloadXLS} className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                    Download XLS
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         )}
@@ -457,7 +427,7 @@ export function FundsChart() {
         {activeCategory === 'expenses' && (
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Left side - Two column list */}
-            <div className="w-full lg:w-2/3">
+            <div className="w-full lg:flex-1">
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Benefit Expenses</p>
                 <p className="text-4xl font-bold text-[#009a3d]">
@@ -493,7 +463,7 @@ export function FundsChart() {
             </div>
 
             {/* Right side - About section */}
-            <div className="w-full lg:w-auto lg:max-w-sm space-y-6 lg:ml-auto">
+            <div className="w-full lg:flex-1 space-y-6">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white">About Benefit Expenses</h3>
               <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                 Benefit expenses represent the actual costs of healthcare benefits provided to PhilHealth members, broken down by membership category including direct contributors, indirect contributors, and special programs.
@@ -504,18 +474,6 @@ export function FundsChart() {
                 <a href="/financials" className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                   Visit Financial Overview
                 </a>
-              </div>
-
-              <div className="space-y-3">
-                <p className="text-gray-500 dark:text-gray-400 uppercase text-sm font-semibold">PLAY WITH THE DATA</p>
-                <div className="flex gap-3">
-                  <button onClick={handleDownloadCSV} className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                    Download CSV
-                  </button>
-                  <button onClick={handleDownloadXLS} className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                    Download XLS
-                  </button>
-                </div>
               </div>
             </div>
           </div>

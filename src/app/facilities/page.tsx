@@ -361,249 +361,274 @@ export default function FacilitiesPage() {
           />
         </div>
 
-        {/* Government vs Private Distribution */}
+        {/* Government vs Private Comparison */}
         {totalFacilities > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Government vs Private Facilities</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Ownership distribution of accredited facilities</p>
+            </div>
+
             {selectedYear === 2022 && hospitalsSummary?.government === 0 && hospitalsSummary?.private === 0 ? (
-              <>
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 dark:border-yellow-600 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
-                    Government vs Private Facilities
-                  </h3>
-                  <p className="text-yellow-800 dark:text-yellow-200 mb-4">
-                    Data Not Provided
-                  </p>
-                  <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                    PhilHealth did not provide the government vs private breakdown for hospital facilities in the 2022 annual report. 
-                    Only total facility counts and percentages by level were published.
-                  </p>
-                </div>
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 dark:border-yellow-600 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
-                    Facilities by Type
-                  </h3>
-                  <p className="text-yellow-800 dark:text-yellow-200 mb-4">
-                    Data Not Provided
-                  </p>
-                  <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                    PhilHealth did not provide the government vs private breakdown for hospitals in the 2022 annual report.
-                  </p>
-                </div>
-              </>
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 dark:border-yellow-600 rounded-lg p-6">
+                <p className="text-yellow-800 dark:text-yellow-200 mb-4 font-medium">
+                  Data Not Provided
+                </p>
+                <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                  PhilHealth did not provide the government vs private breakdown for hospital facilities in the 2022 annual report. 
+                  Only total facility counts and percentages by level were published.
+                </p>
+              </div>
             ) : (
-              <>
-                <ChartCard 
-                  title="Government vs Private Facilities" 
-                  description="Distribution of all accredited facilities"
-                >
-                  <div style={{ height: '360px' }}>
-                    <Doughnut 
-                      data={{
-                        labels: ['Government Facilities', 'Private Facilities'],
-                        datasets: [{
-                          data: [
-                            (hospitalsSummary?.government || 0) + (otherFacilitiesSummary?.government || 0),
-                            (hospitalsSummary?.private || 0) + (otherFacilitiesSummary?.private || 0)
-                          ],
-                          backgroundColor: ['#009a3d', '#eab308'],
-                          borderColor: "#fff",
-                          borderWidth: 3,
-                        }]
-                      }} 
-                      options={{ 
-                      responsive: true, 
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                          callbacks: {
-                            label: function(context) {
-                              const label = context.label || '';
-                              const value = context.parsed || 0;
-                              const total = context.dataset.data.reduce((a: number, b: number) => a + b, 0);
-                              const percentage = ((value / total) * 100).toFixed(1);
-                              return `${label}: ${formatNumber(value)} (${percentage}%)`;
-                            }
-                          }
-                        }
-                      }
-                    }} 
-                  />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Government Facilities */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 pb-4 border-b border-gray-200 dark:border-gray-700">
+                    <div className="p-3 bg-[#009a3d]/10 dark:bg-[#009a3d]/20 rounded-lg">
+                      <Building2 className="w-6 h-6 text-[#009a3d]" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Government</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Public health facilities</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Hospitals</span>
+                      <span className="text-xl font-bold text-[#009a3d]">{formatNumber(hospitalsSummary?.government || 0)}</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Other Facilities</span>
+                      <span className="text-xl font-bold text-[#009a3d]">{formatNumber(otherFacilitiesSummary?.government || 0)}</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 bg-[#009a3d]/10 dark:bg-[#009a3d]/20 rounded-lg border-2 border-[#009a3d]">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">Total Government</span>
+                      <span className="text-2xl font-bold text-[#009a3d]">
+                        {formatNumber((hospitalsSummary?.government || 0) + (otherFacilitiesSummary?.government || 0))}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </ChartCard>
-              
-              <ChartCard 
-                title="Facilities by Type" 
-                description="Hospitals vs Other Facilities"
-              >
-                <div style={{ height: '360px' }}>
-                  <Bar 
-                    data={{
-                      labels: ['Hospitals', 'Other Facilities'],
-                      datasets: [
-                        {
-                          label: 'Government',
-                          data: [hospitalsSummary?.government || 0, otherFacilitiesSummary?.government || 0],
-                          backgroundColor: '#009a3d',
-                        },
-                        {
-                          label: 'Private',
-                          data: [hospitalsSummary?.private || 0, otherFacilitiesSummary?.private || 0],
-                          backgroundColor: '#eab308',
-                        }
-                      ]
-                    }} 
-                    options={{ 
-                      responsive: true, 
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                          callbacks: {
-                            label: function(context) {
-                              return `${context.dataset.label}: ${formatNumber(context.parsed.y || 0)}`;
-                            }
-                          }
-                        }
-                      },
-                      scales: {
-                        x: { stacked: true },
-                        y: { 
-                          stacked: true,
-                          ticks: {
-                            callback: function(value) {
-                              return formatNumber(Number(value));
-                            }
-                          }
-                        }
-                      }
-                    }} 
-                  />
+
+                {/* Private Facilities */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 pb-4 border-b border-gray-200 dark:border-gray-700">
+                    <div className="p-3 bg-amber-500/10 dark:bg-amber-500/20 rounded-lg">
+                      <Building2 className="w-6 h-6 text-amber-500" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Private</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Privately-owned facilities</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Hospitals</span>
+                      <span className="text-xl font-bold text-amber-500">{formatNumber(hospitalsSummary?.private || 0)}</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Other Facilities</span>
+                      <span className="text-xl font-bold text-amber-500">{formatNumber(otherFacilitiesSummary?.private || 0)}</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 bg-amber-500/10 dark:bg-amber-500/20 rounded-lg border-2 border-amber-500">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">Total Private</span>
+                      <span className="text-2xl font-bold text-amber-500">
+                        {formatNumber((hospitalsSummary?.private || 0) + (otherFacilitiesSummary?.private || 0))}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </ChartCard>
-            </>
+              </div>
             )}
           </div>
         )}
 
         {/* Hospital Levels Distribution */}
         {hospitalLevels.length > 0 && (
-          selectedYear === 2022 && hospitalLevels.every((l: any) => l.government === 0 && l.private === 0) ? (
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 dark:border-yellow-600 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
-                Hospital Distribution by Level
-              </h3>
-              <p className="text-yellow-800 dark:text-yellow-200 mb-4">
-                Data Not Provided
-              </p>
-              <p className="text-sm text-yellow-700 dark:text-yellow-300 mb-4">
-                PhilHealth did not provide the government vs private breakdown by hospital level in the 2022 annual report. 
-                Only percentage distributions were published:
-              </p>
-              <ul className="text-sm text-yellow-700 dark:text-yellow-300 space-y-2">
-                {hospitalLevels.map((level: any) => (
-                  <li key={level.level} className="flex justify-between">
-                    <span className="font-medium">{level.level}:</span>
-                    <span>{level.percentage || '0%'} ({level.total || 0} hospitals)</span>
-                  </li>
-                ))}
-              </ul>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Hospital Distribution by Level</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Classification of accredited hospitals</p>
             </div>
-          ) : (
-            <ChartCard 
-              title="Hospital Distribution by Level" 
-              description="Classification of accredited hospitals"
-            >
-              <div style={{ height: '360px' }}>
-                <Bar 
-                    data={{
-                    labels: hospitalLevels.map((item: any) => item.level),
-                    datasets: [
-                      {
-                        label: 'Government',
-                        data: hospitalLevels.map((item: any) => item.government || 0),
-                        backgroundColor: '#009a3d',
-                      },
-                      {
-                        label: 'Private',
-                        data: hospitalLevels.map((item: any) => item.private || 0),
-                        backgroundColor: '#eab308',
-                      }
-                    ]
-                  }}
-                  options={{ 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: { position: 'bottom' },
-                      tooltip: {
-                        callbacks: {
-                          label: function(context) {
-                            return `${context.dataset.label}: ${formatNumber(context.parsed.y || 0)}`;
-                          }
-                        }
-                      }
-                    },
-                    scales: {
-                      x: { stacked: true },
-                      y: { 
-                        stacked: true,
-                        ticks: {
-                          callback: function(value) {
-                            return formatNumber(Number(value));
-                          }
-                        }
-                      }
-                    }
-                  }} 
-                />
+
+            {selectedYear === 2022 && hospitalLevels.every((l: any) => l.government === 0 && l.private === 0) ? (
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-500 dark:border-yellow-600 rounded-lg p-6">
+                <p className="text-yellow-800 dark:text-yellow-200 mb-4 font-medium">
+                  Ownership Breakdown Not Provided
+                </p>
+                <p className="text-sm text-yellow-700 dark:text-yellow-300 mb-4">
+                  PhilHealth did not provide the government vs private breakdown by hospital level in the 2022 annual report. 
+                  Only percentage distributions were published:
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {hospitalLevels.map((level: any) => (
+                    <div key={level.level} className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-yellow-400">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{level.level}</p>
+                      <p className="text-2xl font-bold text-gray-900 dark:text-white">{level.total || 0}</p>
+                      <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-1">{level.percentage || '0%'}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </ChartCard>
-          )
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {hospitalLevels.map((level: any) => {
+                  const gov = level.government || 0;
+                  const priv = level.private || 0;
+                  const total = gov + priv;
+                  const govPercent = total > 0 ? ((gov / total) * 100).toFixed(1) : 0;
+                  const privPercent = total > 0 ? ((priv / total) * 100).toFixed(1) : 0;
+
+                  return (
+                    <div key={level.level} className="p-5 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                      <div className="text-center mb-4">
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{level.level}</h4>
+                        <p className="text-3xl font-bold text-[#009a3d]">{formatNumber(total)}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total Hospitals</p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Government</span>
+                          <div className="text-right">
+                            <span className="font-semibold text-gray-900 dark:text-white">{formatNumber(gov)}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">({govPercent}%)</span>
+                          </div>
+                        </div>
+                        
+                        {/* Progress bar for government */}
+                        <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                          <div 
+                            className="bg-[#009a3d] h-2 rounded-full transition-all duration-300" 
+                            style={{ width: `${govPercent}%` }}
+                          ></div>
+                        </div>
+
+                        <div className="flex justify-between items-center mt-3">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Private</span>
+                          <div className="text-right">
+                            <span className="font-semibold text-gray-900 dark:text-white">{formatNumber(priv)}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">({privPercent}%)</span>
+                          </div>
+                        </div>
+                        
+                        {/* Progress bar for private */}
+                        <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                          <div 
+                            className="bg-amber-500 h-2 rounded-full transition-all duration-300" 
+                            style={{ width: `${privPercent}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         )}
 
         {/* Other Facilities Detail Table */}
         {otherFacilities.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold">Other Accredited Facilities</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Breakdown of specialized facilities</p>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div className="px-6 py-5 bg-gradient-to-r from-[#009a3d] to-[#007a30] border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-xl font-bold text-white">Other Accredited Facilities</h3>
+              <p className="text-sm text-white/90 mt-1">Breakdown of specialized facilities</p>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-900">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <table className="min-w-full">
+                <thead>
+                  <tr className="bg-gray-50 dark:bg-gray-900/50 border-b-2 border-[#009a3d]/20">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       Facility Type
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Government
+                    <th className="px-6 py-4 text-center text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-[#009a3d]"></span>
+                        Government
+                      </div>
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Private
+                    <th className="px-6 py-4 text-center text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-amber-500"></span>
+                        Private
+                      </div>
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-center text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                       Total
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  {otherFacilities.map((item: any, index: number) => (
-                    <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
-                        {item.facility || item.facility_type}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-700 dark:text-gray-300">
-                        {formatNumber(item.government)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-700 dark:text-gray-300">
-                        {formatNumber(item.private)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900 dark:text-white">
-                        {formatNumber((item.government || 0) + (item.private || 0))}
-                      </td>
-                    </tr>
-                  ))}
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-700/50">
+                  {otherFacilities.map((item: any, index: number) => {
+                    const total = (item.government || 0) + (item.private || 0);
+                    const govPercent = total > 0 ? ((item.government / total) * 100).toFixed(0) : 0;
+                    const privPercent = total > 0 ? ((item.private / total) * 100).toFixed(0) : 0;
+                    
+                    return (
+                      <tr 
+                        key={index} 
+                        className="hover:bg-gradient-to-r hover:from-gray-50 hover:to-transparent dark:hover:from-gray-700/30 dark:hover:to-transparent transition-all duration-200 group"
+                      >
+                        <td className="px-6 py-5">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#009a3d]/10 to-[#009a3d]/5 dark:from-[#009a3d]/20 dark:to-[#009a3d]/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                              <Building2 className="w-5 h-5 text-[#009a3d]" />
+                            </div>
+                            <div>
+                              <span className="text-sm font-semibold text-gray-900 dark:text-white block">
+                                {item.facility || item.facility_type}
+                              </span>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                {total.toLocaleString()} facilities
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-5">
+                          <div className="flex flex-col items-center gap-1">
+                            <span className="inline-flex items-center justify-center min-w-[80px] px-4 py-2 rounded-lg text-base font-bold bg-[#009a3d]/15 text-[#009a3d] dark:bg-[#009a3d]/25 dark:text-[#00c94d] border border-[#009a3d]/20">
+                              {formatNumber(item.government)}
+                            </span>
+                            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                              {govPercent}% of total
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-5">
+                          <div className="flex flex-col items-center gap-1">
+                            <span className="inline-flex items-center justify-center min-w-[80px] px-4 py-2 rounded-lg text-base font-bold bg-amber-500/15 text-amber-600 dark:bg-amber-500/25 dark:text-amber-400 border border-amber-500/20">
+                              {formatNumber(item.private)}
+                            </span>
+                            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                              {privPercent}% of total
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-5">
+                          <div className="flex flex-col items-center gap-1">
+                            <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                              {formatNumber(total)}
+                            </span>
+                            <div className="w-full max-w-[100px] bg-gray-200 dark:bg-gray-600 rounded-full h-1.5 overflow-hidden">
+                              <div className="flex h-full">
+                                <div 
+                                  className="bg-[#009a3d] h-full transition-all duration-500" 
+                                  style={{ width: `${govPercent}%` }}
+                                ></div>
+                                <div 
+                                  className="bg-amber-500 h-full transition-all duration-500" 
+                                  style={{ width: `${privPercent}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
