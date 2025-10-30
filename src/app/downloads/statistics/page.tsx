@@ -215,7 +215,7 @@ export default function StatisticsChartsPage() {
             {/* PDF Viewer */}
             <div className="flex-1 overflow-hidden">
               <iframe
-                src={selectedPdf}
+                src={`https://docs.google.com/viewer?url=${encodeURIComponent(selectedPdf)}&embedded=true`}
                 className="w-full h-full border-0"
                 title={selectedTitle}
               />
