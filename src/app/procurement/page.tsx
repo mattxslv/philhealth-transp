@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Download, FileText, Search, X } from 'lucide-react';
+import { Download, FileText, Search } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
 import { PageHeading } from '@/components/ui/page-heading';
 import { formatNumber } from '@/lib/utils';
@@ -26,8 +26,6 @@ export default function ProcurementPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
-  const [selectedTitle, setSelectedTitle] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,13 +56,34 @@ export default function ProcurementPage() {
   };
 
   const openPdfModal = (url: string, title: string) => {
-    setSelectedPdf(url);
-    setSelectedTitle(title);
+    // Open PDF in new tab with proper viewer
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const closePdfModal = () => {
-    setSelectedPdf(null);
-    setSelectedTitle('');
+  const downloadPdf = async (url: string, filename: string) => {
+    try {
+      // Fetch the file as a blob
+      const response = await fetch(url);
+      const blob = await response.blob();
+      
+      // Create a temporary URL for the blob
+      const blobUrl = window.URL.createObjectURL(blob);
+      
+      // Create a temporary anchor element and trigger download
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename + '.pdf';
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Download failed:', error);
+      // Fallback: open in new tab
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   };
 
   const filteredFiles = data?.files.filter(file =>
@@ -167,14 +186,13 @@ export default function ProcurementPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center">
                       <div className="flex items-center justify-center gap-2">
-                        <a
-                          href={file.download_url}
-                          download
+                        <button
+                          onClick={() => downloadPdf(file.download_url, formatFileName(file.name))}
                           className="inline-flex items-center gap-2 px-4 py-2 bg-[#009a3d] hover:bg-[#007a30] text-white text-sm font-medium rounded-lg transition-colors"
                         >
                           <Download className="h-4 w-4" />
                           Download
-                        </a>
+                        </button>
                         <button
                           onClick={() => openPdfModal(file.download_url, formatFileName(file.name))}
                           className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
@@ -212,34 +230,6 @@ export default function ProcurementPage() {
           <p>Storage: Google Cloud Storage (philhealth_transparency)</p>
         </div>
       </div>
-
-      {/* PDF Viewer Modal */}
-      {selectedPdf && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
-          <div className="relative w-full h-full max-w-7xl max-h-[90vh] bg-white dark:bg-gray-800 rounded-lg shadow-2xl flex flex-col">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{selectedTitle}</h3>
-              <button
-                onClick={closePdfModal}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                aria-label="Close PDF viewer"
-              >
-                <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-              </button>
-            </div>
-            
-            {/* PDF Viewer */}
-            <div className="flex-1 overflow-hidden">
-              <iframe
-                src={selectedPdf}
-                className="w-full h-full"
-                title={selectedTitle}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </DashboardLayout>
   );
 }
